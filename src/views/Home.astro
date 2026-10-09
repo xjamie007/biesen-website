@@ -23,6 +23,7 @@ import { faqJsonItems, FAQ_KEYS } from '@/lib/faq';
 import { faqPage, leistungsKatalog } from '@/lib/jsonld';
 import { LEISTUNG_ICON } from '@/lib/icons';
 import { kartenPunkte, MARKEN } from '@/lib/leistungen';
+import Markenband from '@/components/Markenband.astro';
 import { heroPaar, startseitenProjekte } from '@/lib/projekte';
 import { projektBild } from '@/lib/bilder';
 import { jobRoute, offeneJobs } from '@/lib/jobs';
@@ -300,14 +301,11 @@ const ogBild =
 
   <section class="sektion flaeche marken" aria-labelledby="marken-h">
     <div class="raster">
+      <h2 id="marken-h" class="sektion__kopf sektion__kopf--mitte">{t.home.markenH2}</h2>
+    </div>
+    <Markenband marken={MARKEN} titel={t.home.marken} />
+    <div class="raster">
       <div class="marken__inhalt">
-        <h2 id="marken-h" class="sektion__kopf">{t.home.markenH2}</h2>
-        <div class="marken__gruppe">
-          <p class="label">{t.home.marken}</p>
-          <ul class="marken__liste">
-            {MARKEN.map((m) => <li class="marke">{m}</li>)}
-          </ul>
-        </div>
         <div class="marken__gruppe">
           <p class="label">{t.seiten.ueberUns.mitgliedH2}</p>
           <ul class="stichpunkte stichpunkte--gross">

@@ -1,0 +1,39 @@
+---
+/**
+ * Markenband: die Marken als Laufband, über das ein Lichtstrahl zieht. Markennamen als Schrift,
+ * keine Hersteller-Logos (D3, E3). Die erste Liste ist für Screenreader; die Kopien für das
+ * nahtlose Laufen sind aria-hidden. Hält beim Überfahren an. Bei reduzierter Bewegung steht nur
+ * die erste Liste da, ruhig und umbrechend.
+ *
+ * Nur Marken eintragen, die der Kunde bestätigt hat (src/lib/leistungen.ts).
+ */
+interface Props {
+  marken: readonly string[];
+  /** Überschrift über dem Band; ohne Titel braucht es ein label für die Liste */
+  titel?: string;
+  label?: string;
+  id?: string;
+  groesse?: 'gross' | 'klein';
+}
+const { marken, titel, label, id = 'markenband', groesse = 'gross' } = Astro.props;
+const titelId = `${id}-titel`;
+---
+<div class:list={['markenband', `markenband--${groesse}`]}>
+  {titel && <p class="markenband__titel" id={titelId}>{titel}</p>}
+  <div class="markenband__fenster">
+    <div class="markenband__spur">
+      <ul class="markenband__liste" aria-labelledby={titel ? titelId : undefined} aria-label={titel ? undefined : label}>
+        {marken.map((m) => <li class="markenband__marke">{m}</li>)}
+      </ul>
+      {
+        [1, 2, 3].map(() => (
+          <ul class="markenband__liste" aria-hidden="true">
+            {marken.map((m) => (
+              <li class="markenband__marke">{m}</li>
+            ))}
+          </ul>
+        ))
+      }
+    </div>
+  </div>
+</div>

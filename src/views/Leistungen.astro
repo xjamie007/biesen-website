@@ -16,7 +16,8 @@ import { path, SERVICE_PAGES, type Lang } from '@/i18n/config';
 import { breadcrumbs, faqPage, leistungsKatalog } from '@/lib/jsonld';
 import { faqJsonItems, type FaqKey } from '@/lib/faq';
 import { LEISTUNG_ICON } from '@/lib/icons';
-import { ANLIEGEN, leistungsPunkte } from '@/lib/leistungen';
+import { ANLIEGEN, leistungsPunkte, MARKEN } from '@/lib/leistungen';
+import Markenband from '@/components/Markenband.astro';
 
 interface Props {
   lang: Lang;
@@ -73,6 +74,7 @@ const jsonld = [
                   </span>
                   <h3 id={`leistung-${p}-h`} class="leistungsblock__titel">{l.name}</h3>
                   <p class="leistungsblock__text" set:html={rich(l.text)} />
+                  {p === 'hausgeraete' && <Markenband marken={MARKEN} label={t.home.marken} id="markenband-hausgeraete" groesse="klein" />}
                   <p class="leistungsblock__aktionen">
                     <a class="knopf" href={path(lang, p)}>
                       {l.link}

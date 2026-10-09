@@ -2192,6 +2192,155 @@
     order: -1;
   }
 
+  /* ---------------- Markenband: Marken als Laufband mit Lichtstrahl ---------------- */
+  /* contain: inline-size, damit die Lauflänge (alle Kopien nebeneinander) nicht als Mindestbreite
+     an Raster und Flex-Container weitergegeben wird; sonst wird z. B. der Hausgeräte-Block auf dem
+     Handy über 2000 px breit */
+  .markenband {
+    position: relative;
+    min-width: 0;
+    padding-block: 28px;
+    contain: inline-size;
+  }
+
+  .markenband__titel {
+    margin-bottom: 14px;
+    color: var(--color-leiendaach);
+    font-size: 0.8125rem;
+    font-weight: 750;
+    letter-spacing: 0.1em;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  /* Ränder weich ausblenden, wie bei den Logo-Reihen bei Apple */
+  .markenband__fenster {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding-block: 10px;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+  }
+
+  /* Der Strahl: ein weiches Licht in Bletz-Giel und Noutem-Blau, das langsam durchzieht */
+  .markenband__fenster::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0;
+    z-index: -1;
+    width: 22%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgb(255 202 36 / 0.28) 30%,
+      rgb(255 226 140 / 0.7) 50%,
+      rgb(255 202 36 / 0.28) 70%,
+      transparent
+    );
+    filter: blur(6px);
+    pointer-events: none;
+    transform: translateX(-120%) skewX(-20deg);
+    animation: strahl 8s linear infinite;
+  }
+
+  .markenband__spur {
+    display: flex;
+    width: max-content;
+    animation: laufband 40s linear infinite;
+  }
+
+  .markenband:hover .markenband__spur {
+    animation-play-state: paused;
+  }
+
+  .markenband__liste {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .markenband__marke {
+    display: inline-flex;
+    align-items: center;
+    padding-inline: clamp(24px, 3vw, 48px);
+    color: color-mix(in srgb, var(--color-nuecht) 46%, transparent);
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 1.25rem + 2.6vw, 3.75rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.035em;
+    white-space: nowrap;
+    transition: color 260ms ease;
+  }
+
+  /* kleiner Blitz als Trenner */
+  .markenband__marke::after {
+    content: '';
+    width: 0.32em;
+    height: 0.32em;
+    margin-left: clamp(24px, 3vw, 48px);
+    margin-right: calc(clamp(24px, 3vw, 48px) * -1);
+    border-radius: 50%;
+    background: var(--color-bletz-giel);
+    box-shadow: 0 0 12px rgb(255 202 36 / 0.7);
+  }
+
+  .markenband__marke:hover {
+    color: var(--color-nuecht);
+  }
+
+  .markenband--klein {
+    padding-block: 12px;
+  }
+
+  .markenband--klein .markenband__marke {
+    padding-inline: 18px;
+    font-size: clamp(1.25rem, 1rem + 0.9vw, 1.625rem);
+  }
+
+  .markenband--klein .markenband__marke::after {
+    margin-left: 18px;
+    margin-right: -18px;
+  }
+
+  .markenband--klein .markenband__spur {
+    animation-duration: 28s;
+  }
+
+  /* Ruhig: nur die erste Liste, mittig und umbrechend, ohne Strahl */
+  @media (prefers-reduced-motion: reduce) {
+    .markenband__fenster {
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+
+    .markenband__fenster::before {
+      display: none;
+    }
+
+    .markenband__spur {
+      width: auto;
+      justify-content: center;
+    }
+
+    .markenband__liste {
+      flex-wrap: wrap;
+      justify-content: center;
+      row-gap: 8px;
+    }
+
+    .markenband__liste[aria-hidden='true'] {
+      display: none;
+    }
+
+    .markenband__marke:last-child::after {
+      display: none;
+    }
+  }
+
   /* ---------------- Über uns: Satz, der beim Scrollen aufleuchtet ---------------- */
   .ueber__inhalt {
     max-width: 64rem;
@@ -3288,51 +3437,36 @@
     line-height: 1.4;
   }
 
-  /* Marken und Mitgliedschaften */
+  /* Marken und Mitgliedschaften: oben das Markenband über die ganze Breite, darunter die
+     Mitgliedschaften */
+  .marken .sektion__kopf {
+    margin-bottom: 8px;
+  }
+
   .marken__inhalt {
     display: grid;
-    gap: 32px;
-  }
-
-  .marken__inhalt > .sektion__kopf {
-    margin-bottom: 0;
-  }
-
-  .marken__liste {
-    display: flex;
-    flex-wrap: wrap;
     gap: 12px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
+    max-width: 52rem;
+    margin: 12px auto 0;
+    text-align: center;
   }
 
-  .marke {
-    display: inline-flex;
-    align-items: center;
-    min-height: 64px;
-    padding: 12px 28px;
-    border: 1px solid var(--color-himmel-rand);
-    border-radius: 16px;
-    background: var(--color-weiss);
-    color: var(--color-nuecht);
-    font-family: var(--font-display);
-    font-size: 1.375rem;
-    font-weight: 800;
-    letter-spacing: -0.01em;
-    box-shadow: var(--schatten-karte);
+  .marken__inhalt .stichpunkte {
+    justify-content: center;
   }
 
   .marken__hinweis {
     margin-top: 12px;
   }
 
-  @media (min-width: 64rem) {
-    .marken__inhalt {
-      grid-template-columns: 4fr 5fr 5fr;
-      align-items: start;
-      gap: 48px;
-    }
+  /* Hausgeräte: das Band direkt unter dem Seitenkopf */
+  .markenband-sektion {
+    border-bottom: 1px solid var(--color-himmel-rand);
+    background: var(--color-weiss);
+  }
+
+  .leistungsblock .markenband {
+    margin-block: 4px 8px;
   }
 
   .team__zahl {
@@ -4958,6 +5092,17 @@
 
   to {
     transform: translate(-6%, 4%) scale(1.12);
+  }
+}
+
+@keyframes strahl {
+  0% {
+    transform: translateX(-120%) skewX(-20deg);
+  }
+
+  55%,
+  100% {
+    transform: translateX(560%) skewX(-20deg);
   }
 }
 

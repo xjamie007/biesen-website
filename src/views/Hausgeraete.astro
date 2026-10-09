@@ -1,10 +1,13 @@
 ---
-/** Hausgeräte (D3, E3). Kein Onlineshop; Markennamen als Text, keine Hersteller-Logos. */
+/** Hausgeräte (D3, E3). Kein Onlineshop; Markennamen als Text, keine Hersteller-Logos. Gleich unter dem
+ * Seitenkopf die Marken als Laufband (Markenband). */
 import LeistungsSeite from '@/components/LeistungsSeite.astro';
 import Seitenkarte from '@/components/Seitenkarte.astro';
+import Markenband from '@/components/Markenband.astro';
 import { escapeHtml, rich, useT } from '@/i18n';
 import type { Lang } from '@/i18n/config';
 import { site, telHref } from '@/lib/site';
+import { MARKEN } from '@/lib/leistungen';
 
 interface Props {
   lang: Lang;
@@ -25,6 +28,10 @@ const tel = `<a href="${telHref}" class="zahl">${escapeHtml(site.telefon.anzeige
   serviceType="Home appliance sales"
   ohneProjekte
 >
+  <section class="markenband-sektion" aria-labelledby="markenband-titel">
+    <Markenband marken={MARKEN} titel={t.home.marken} />
+  </section>
+
   <section class="sektion" aria-labelledby="was-h">
     <div class="raster">
       <div class="sp-text">
