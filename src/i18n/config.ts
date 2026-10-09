@@ -19,6 +19,13 @@ export const LANG_NAME: Record<Lang, string> = {
   en: 'English',
 };
 
+/**
+ * Reihenfolge und Kürzel im Sprachumschalter: Lëtzebuergesch, Deutsch, English, Français
+ * (Wunsch von Nave, 09.10.2026). Luxemburgisch heißt sichtbar „LU“, im Code und in hreflang bleibt es „lb“.
+ */
+export const SPRACH_REIHENFOLGE: readonly Lang[] = ['lb', 'de', 'en', 'fr'];
+export const SPRACH_KURZ: Record<Lang, string> = { lb: 'LU', de: 'DE', en: 'EN', fr: 'FR' };
+
 /** Locale für Intl (Datum). „lb“ kennt nicht jede Laufzeit, dann de-LU. */
 const INTL_LOCALE: Record<Lang, string> = { fr: 'fr-LU', de: 'de-LU', lb: 'lb', en: 'en-GB' };
 

@@ -1,0 +1,86 @@
+---
+/**
+ * „Bei Tag und am Abend“ auf der Startseite: zeigt, was Licht ausmacht. Dasselbe Motiv am
+ * Nachmittag und zur blauen Stunde, die Besucher bewegen die Überblendung mit einem Regler.
+ * Ist das Fotopaar der Startseite freigegeben, steht hier das Foto (OwendRegler), sonst das
+ * gezeichnete Haus mit Garten (OwendSzene) und der Hinweis „Fotopaar folgt“.
+ * Ohne JavaScript stehen beide Fassungen nebeneinander (ab 768 px) oder untereinander.
+ */
+import Icon from './Icon.astro';
+import OwendRegler from './OwendRegler.astro';
+import OwendSzene from './OwendSzene.astro';
+import { fmt, rich, type Dict } from '@/i18n';
+import { path, type Lang } from '@/i18n/config';
+import type { Paar } from '@/lib/projekte';
+
+interface Props {
+  lang: Lang;
+  t: Dict;
+  paar: Paar;
+}
+const { lang, t, paar } = Astro.props;
+const folgt = fmt(t.allgemein.fotopaarFolgt, { motiv: paar.motiv });
+---
+<section class="sektion flaeche flaeche--nacht tagabend" aria-labelledby="tagabend-h">
+  <div class="raster">
+    <div class="tagabend__text zeigen">
+      <p class="eyebrow eyebrow--hell"><Icon name="licht" size={16} />{t.leistungen.licht.name}</p>
+      <h2 id="tagabend-h">{t.seiten.licht.paareH2}</h2>
+      <p class="lead">{t.home.tagAbendText}</p>
+      <p class="tagabend__aktion">
+        <a class="knopf knopf--giel" href={path(lang, 'licht')}>
+          {t.leistungen.licht.link}
+          <Icon name="pfeil" size={20} />
+        </a>
+      </p>
+    </div>
+    <div class="tagabend__bild">
+      {
+        paar.bilder ? (
+          <OwendRegler t={t} paar={paar} />
+        ) : (
+          <figure class="regler regler--szene" data-regler>
+            <div class="regler__stapel" role="img" aria-label={folgt}>
+              <div class="regler__bild regler__tag">
+                <OwendSzene variante="tag" />
+              </div>
+              <div class="regler__bild regler__abend">
+                <OwendSzene variante="abend" />
+              </div>
+              <p class="regler__folgt" aria-hidden="true">
+                <Icon name="kamera" size={18} />
+                {folgt}
+              </p>
+            </div>
+            <div class="regler__steuerung" hidden>
+              <label for="regler-startseite">{t.owend.regler}</label>
+              <div class="regler__zeile">
+                <span class="regler__ende" aria-hidden="true">{t.owend.reglerTag}</span>
+                <input
+                  class="regler__eingabe"
+                  id="regler-startseite"
+                  type="range"
+                  min="0"
+                  max="100"
+                  step="1"
+                  value="20"
+                  aria-valuetext={t.owend.reglerTag}
+                  data-tag={t.owend.reglerTag}
+                  data-abend={t.owend.reglerAbend}
+                  data-uebergang={t.owend.reglerUebergang}
+                />
+                <span class="regler__ende" aria-hidden="true">{t.owend.reglerAbend}</span>
+              </div>
+            </div>
+            <figcaption class="klein" set:html={rich(t.owend.bildunterschriftFehlt)} />
+          </figure>
+        )
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  import { initRegler } from '@/scripts/regler';
+  initRegler();
+</script>

@@ -50,7 +50,7 @@ const jsonld = [
 const seo = t.seo[page];
 ---
 <Base lang={lang} route={{ page }} title={seo.title} description={seo.description} jsonld={jsonld}>
-  <Seitenkopf pfadLabel={t.a11y.pfad} pfad={pfad} h1={h1} intro={intro} icon={LEISTUNG_ICON[page]} />
+  <Seitenkopf pfadLabel={t.a11y.pfad} pfad={pfad} h1={h1} intro={intro} icon={LEISTUNG_ICON[page]} farbe={page} />
 
   <slot />
 

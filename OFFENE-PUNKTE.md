@@ -43,7 +43,7 @@ Der Schlüssel gilt in allen vier Sprachen (`src/i18n/fr.ts`, `de.ts`, `lb.ts`, 
 | Startseite (Was wir machen), Leistungen (Übersicht), Karten auf den Leistungsseiten | `leistungen.hausgeraete.text` | UNBESTÄTIGT | Ausstellung, Lieferung und Anschluss ergänzen |
 | Startseite (Hero), Licht, Projekte | `owend.bildunterschriftFehlt` | FEHLT | Ortschaft, Projekt in drei bis fünf Wörtern, Uhrzeiten aus den EXIF-Daten |
 | Startseite (26 Leute in Noutem) | `home.teamLeitung` | UNBESTÄTIGT | Leitung und Ansprechpartner mit Rollen, siehe B3 |
-| Startseite (Anrufen oder schreiben), Kontakt | `zeiten.unbestaetigt` | UNBESTÄTIGT | 08:00–12:00 und 13:30–16:30 laut heutiger Website, 07:30–16:30 durchgehend laut Google und Editus |
+| Startseite (Anrufen oder schreiben), Kontakt | `zeiten.unbestaetigt` | UNBESTÄTIGT | 08:00–12:00 und 13:30–16:30 laut alter Website und wedo.lu; 07:30–16:30 durchgehend laut Editus und Google; 07:00–12:00 und 13:00–16:00 laut SuperDrecksKëscht (Recherche 09.10.2026) |
 | Fuß (alle Seiten) | `zeiten.unbestaetigtKurz` | UNBESTÄTIGT | Zeiten |
 | Startseite, Lichtseite und Leistungen (FAQ) | `faq.gebiet.a` | UNBESTÄTIGT | Einsatzgebiet und zwei bis drei Ortsbeispiele |
 | Startseite, Leistungen, Neubau und Renovierung, Alarm (FAQ) | `faq.kostenlos.a` | UNBESTÄTIGT | so steht es auf der heutigen Website; auch für einen Termin vor Ort? |
@@ -140,7 +140,7 @@ Ohne Foto zeigt die Seite eine Fläche in Kalkputz mit „Foto folgt: …“ bzw
 | Job-Seiten | `jobs/hilfsmonteur.yaml vollzeit` | UNBESTÄTIGT | Vollzeit oder Teilzeit (employmentType) |
 | Impressum, JSON-LD | `site.json mwst` | UNBESTÄTIGT | MwSt-Nummer LU32155700 in VIES prüfen, dann bestaetigt: true |
 | Fuß, JSON-LD sameAs | `site.json facebook` | FEHLT | Facebook-URL |
-| Startseite, Kontakt, Fuß, JSON-LD | `oeffnungszeiten.json` | UNBESTÄTIGT | Zeiten 08:00–12:00/13:30–16:30 oder 07:30–16:30 durchgehend; Betriebsferien; dann bestaetigt: true |
+| Startseite, Kontakt, Fuß, JSON-LD | `oeffnungszeiten.json` | UNBESTÄTIGT | Zeiten beim Betrieb bestätigen: 08:00–12:00/13:30–16:30 (alte Website, wedo.lu), 07:30–16:30 durchgehend (Editus, Google) oder 07:00–12:00/13:00–16:00 (SuperDrecksKëscht); Betriebsferien; dann bestaetigt: true |
 | Startseite, Kontakt, JSON-LD | `oeffnungszeiten.json ausnahmen` | FEHLT | Betriebsferien und Brückentage (falls es welche gibt) |
 
 ## 5. Technik vor dem Livegang

@@ -19,7 +19,7 @@ interface Props {
 }
 const { lang, t, page } = Astro.props;
 ---
-<aside class="seitenkarte" aria-labelledby="seitenkarte-h">
+<aside class:list={['seitenkarte', `farbe--${page}`]} aria-labelledby="seitenkarte-h">
   <span class="symbol symbol--gross" aria-hidden="true"><Icon name={LEISTUNG_ICON[page]} size={36} /></span>
   <p id="seitenkarte-h" class="h3 seitenkarte__titel">{t.home.kontaktH2}</p>
   <p class="seitenkarte__nummer">

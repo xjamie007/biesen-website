@@ -1,9 +1,9 @@
 /**
  * Menü (C4, C7):
  * - mobil: Fläche in Weiß, Fokusfalle, Schließen per Escape und Knopf, Fokus zurück auf „Menü“
- * - ab 1024 px: „Leistungen“ klappt die fünf Leistungsseiten auf (Escape, Klick daneben, Fokus verlässt das Menü)
+ * - ab 768 px: „Leistungen“ klappt die fünf Leistungsseiten auf (Escape, Klick daneben, Fokus verlässt das Menü)
  */
-const DESKTOP = '(min-width: 64rem)';
+const DESKTOP = '(min-width: 48rem)';
 
 export function initMenue(): void {
   const nav = document.getElementById('navigation');
@@ -11,7 +11,13 @@ export function initMenue(): void {
   const zu = document.querySelector<HTMLButtonElement>('[data-menue-zu]');
   if (!nav || !auf || !zu) return;
 
-  const draussen = () => [document.querySelector('main'), document.querySelector('footer'), document.querySelector('.kopf__zeile > .kopf__logo'), document.querySelector('.kopf__mobil')];
+  const draussen = () => [
+    document.querySelector('.topbar'),
+    document.querySelector('main'),
+    document.querySelector('footer'),
+    document.querySelector('.kopf__zeile > .kopf__logo'),
+    document.querySelector('.kopf__mobil'),
+  ];
 
   const fokussierbar = () =>
     [...nav.querySelectorAll<HTMLElement>('a[href], button:not([disabled])')].filter(

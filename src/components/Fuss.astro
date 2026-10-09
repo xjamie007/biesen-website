@@ -1,8 +1,9 @@
 ---
 /**
- * Fuß (C4) in Nachtblau: Logo auf Weiß, alle Leistungen, Name, Adresse und Telefon genau wie im
- * JSON-LD, Zeiten kurz, E-Mail, Impressum, Datenschutz, Facebook (sobald die URL da ist),
- * Sprachumschalter, Gewerbegenehmigung. Keine Logoleiste der Partner.
+ * Fuß (C4): oben ein weißes Band mit dem Logo auf seinem eigenen Weiß, darunter in Nachtblau
+ * alle Leistungen, Name, Adresse und Telefon genau wie im JSON-LD, Zeiten kurz, E-Mail, Impressum,
+ * Datenschutz, Facebook (sobald die URL da ist), Sprachumschalter, Gewerbegenehmigung.
+ * Keine Logoleiste der Partner.
  */
 import Logo from './Logo.astro';
 import Icon from './Icon.astro';
@@ -20,10 +21,21 @@ interface Props {
 const { lang, t, alternates } = Astro.props;
 ---
 <footer class="fuss">
-  <div class="raster">
+  <div class="fuss__band">
+    <div class="raster">
+      <div class="fuss__band-zeile">
+        <a class="fuss__logo" href={path(lang, 'home')}><Logo alt={t.a11y.logo} loading="lazy" /></a>
+        <p class="fuss__claim">{t.home.h1}</p>
+        <a class="knopf fuss__aktion" href={path(lang, 'kontakt')}>
+          {t.allgemein.angebotAnfragen}
+          <Icon name="pfeil" size={20} />
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="raster fuss__unterteil">
     <div class="fuss__spalten">
       <div class="fuss__marke">
-        <a class="fuss__logo" href={path(lang, 'home')}><Logo alt={t.a11y.logo} loading="lazy" /></a>
         <p class="fuss__name">{site.name}</p>
         <address>
           <span class="fuss__zeile"><Icon name="ort" size={18} /><span>{site.adresse.strasse}<br />{site.adresse.plzAnzeige} {site.adresse.ort}</span></span>

@@ -23,7 +23,7 @@ const { lang, t, page, punkte = 4, class: klasse } = Astro.props;
 const l = t.leistungen[page];
 const liste = kartenPunkte(t, page).slice(0, punkte);
 ---
-<li class:list={['karte', `karte--${page}`, klasse]}>
+<li class:list={['karte', `farbe--${page}`, klasse]}>
   <slot name="foto" />
   <span class="symbol" aria-hidden="true"><Icon name={LEISTUNG_ICON[page]} size={28} /></span>
   <h3 class="karte__titel">{l.name}</h3>

@@ -1,5 +1,6 @@
 {
   "_hinweis": "Einzige Quelle für die Zeiten-Tabellen, den Footer und openingHoursSpecification im JSON-LD. Betriebsferien unter \"ausnahmen\" eintragen (siehe README). Feiertage schreibt npm run feiertage.",
+  "_recherche": "Recherche 09.10.2026: Mo–Fr 08:00–12:00 und 13:30–16:30 laut alter Website (biesen.lu) und Firmenprofil auf wedo.lu; Mo–Fr 07:30–16:30 durchgehend laut Editus und Google; Mo–Fr 07:00–12:00 und 13:00–16:00 laut SuperDrecksKëscht (sdk.lu). Eingetragen sind die Zeiten der eigenen Website. Erst nach Bestätigung durch den Betrieb bestaetigt auf true setzen.",
   "zeitzone": "Europe/Luxembourg",
   "bestaetigt": false,
   "woche": {

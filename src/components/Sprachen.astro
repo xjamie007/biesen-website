@@ -1,9 +1,9 @@
 ---
 /**
  * Sprachumschalter (C4, H): Liste von Links auf dieselbe Seite in der anderen Sprache,
- * mit aria-current und der Beschriftung „Sprache“ für Screenreader.
+ * in der Reihenfolge LU, DE, EN, FR, mit aria-current und der Beschriftung „Sprache“ für Screenreader.
  */
-import { LANG_NAME, type Lang } from '@/i18n/config';
+import { LANG_NAME, SPRACH_KURZ, SPRACH_REIHENFOLGE, type Lang } from '@/i18n/config';
 import type { Dict } from '@/i18n';
 
 interface Props {
@@ -13,22 +13,24 @@ interface Props {
   id: string;
 }
 const { lang, t, alternates, id } = Astro.props;
+const sortiert = [...alternates].sort((a, b) => SPRACH_REIHENFOLGE.indexOf(a.lang) - SPRACH_REIHENFOLGE.indexOf(b.lang));
 ---
 <div class="sprachen">
   <span class="sr-only" id={id}>{t.a11y.sprache}</span>
   <ul class="sprachen__liste" aria-labelledby={id}>
     {
-      alternates.map((a) => (
+      sortiert.map((a) => (
         <li>
           <a
             class="sprachen__link"
             href={a.href}
             hreflang={a.lang}
             lang={a.lang}
+            title={LANG_NAME[a.lang]}
             aria-current={a.lang === lang ? 'page' : undefined}
           >
-            {a.lang.toUpperCase()}
-            <span class="sr-only">, {LANG_NAME[a.lang]}</span>
+            <span aria-hidden="true">{SPRACH_KURZ[a.lang]}</span>
+            <span class="sr-only">{LANG_NAME[a.lang]}</span>
           </a>
         </li>
       ))

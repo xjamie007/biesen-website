@@ -3,7 +3,7 @@
 Jeder luxemburgische Text ist ein Entwurf und trägt das Flag `review: "lb-native"`, bis er in `src/i18n/lb-geprueft.json` eingetragen ist.
 Diese Datei schreibt `npm run lb-review`; bitte nicht von Hand ändern. Korrekturen direkt in `src/i18n/lb.ts` bzw. in den YAML-Dateien, danach den Schlüssel in `lb-geprueft.json` eintragen.
 
-Stand: 494 Texte offen, 0 geprüft.
+Stand: 502 Texte offen, 0 geprüft.
 
 ## Übersetzungsdatei src/i18n/lb.ts
 
@@ -71,6 +71,14 @@ Stand: 494 Texte offen, 0 geprüft.
 | `home.leistungenH2` | Was wir machen | Wat mir maachen |
 | `home.leistungenIntro` | Wir arbeiten in fünf Bereichen, in Wohnhäusern, auf Höfen und in Betrieben. Wählen Sie einen Bereich, um mehr zu erfahren. | Mir schaffen a fënnef Beräicher, an Haiser, op Häff an a Betriber. Wielt e Beräich, fir méi ze erfueren. |
 | `home.alleLeistungen` | Alle Leistungen im Überblick | All d’Leeschtungen op ee Bléck |
+| `home.fakten.leute` | Leute auf den Baustellen und im Büro | Leit op de Chantieren an am Büro |
+| `home.fakten.bereiche` | Leistungen für Haus, Hof und Betrieb | Beräicher fir Haus, Haff a Betrib |
+| `home.fakten.ortTitel` | Noutem | Noutem |
+| `home.fakten.ort` | in der Stauseegemeinde, etwa 8 km von Wiltz | an der Stauséigemeng, ongeféier 8 km vu Wolz |
+| `home.tagAbendText` | Am Tag sieht man Licht kaum. Am Abend zeigt sich, wo es hinfällt: an der Fassade, am Weg zur Tür und im Garten. Bewegen Sie den Regler. | Am Dag gesäit een d’Liicht kaum. Owes gesäit een, wou et hifält: op d’Fassad, op de Wee bei d’Dier an an de Gaart. Beweegt de Regler. |
+| `home.markenH2` | Marken und Mitgliedschaften | Marken a Memberschaften |
+| `home.marken` | Hausgeräte, die wir verkaufen | Haushaltsapparater, déi mir verkafen |
+| `home.bildAlt` | Zeichnung eines Hauses, eines Hofs und einer Halle im Ösling am Abend, mit eingeschaltetem Licht | Zeechnung vun engem Haus, engem Haff an enger Hal am Éislek owes, mat ugeschaltem Liicht |
 | `home.projekteH2` | Wo wir gearbeitet haben | Wou mir geschafft hunn |
 | `home.alleProjekte` | Alle Projekte | All d’Projeten |
 | `home.teamH2` | 26 Leute in Noutem | 26 Leit zu Noutem |

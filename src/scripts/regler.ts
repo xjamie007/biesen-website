@@ -16,7 +16,8 @@ export function initRegler(): void {
     };
     input.addEventListener('input', setzen);
     fig.classList.add('regler--aktiv');
-    input.parentElement!.hidden = false;
+    const steuerung = input.closest<HTMLElement>('.regler__steuerung');
+    if (steuerung) steuerung.hidden = false;
     setzen();
   }
 }

@@ -8,6 +8,8 @@ import { rich } from '@/i18n';
 import type { IconName } from '@/lib/icons';
 
 interface Props {
+  /** Leistungsseite: setzt die Akzentfarbe des Symbols */
+  farbe?: string;
   pfadLabel: string;
   pfad: { name: string; href: string }[];
   h1: string;
@@ -15,9 +17,9 @@ interface Props {
   introHtml?: Record<string, string>;
   icon?: IconName;
 }
-const { pfadLabel, pfad, h1, intro, introHtml = {}, icon } = Astro.props;
+const { pfadLabel, pfad, h1, intro, introHtml = {}, icon, farbe } = Astro.props;
 ---
-<div class="raster seitenkopf">
+<div class:list={['raster', 'seitenkopf', farbe && `farbe--${farbe}`]}>
   <div class="seitenkopf__inhalt">
     <nav aria-label={pfadLabel}>
       <ol class="pfad__liste klein">

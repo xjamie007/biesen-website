@@ -90,7 +90,7 @@ for (const datei of readdirSync(jobDir).filter((f) => f.endsWith('.yaml'))) {
 
 if (!site.mwst.bestaetigt) daten.push({ seite: 'Impressum, JSON-LD', key: 'site.json mwst', art: 'UNBESTÄTIGT', was: 'MwSt-Nummer LU32155700 in VIES prüfen, dann bestaetigt: true' });
 if (!site.facebook) daten.push({ seite: 'Fuß, JSON-LD sameAs', key: 'site.json facebook', art: 'FEHLT', was: 'Facebook-URL' });
-if (!zeiten.bestaetigt) daten.push({ seite: 'Startseite, Kontakt, Fuß, JSON-LD', key: 'oeffnungszeiten.json', art: 'UNBESTÄTIGT', was: 'Zeiten 08:00–12:00/13:30–16:30 oder 07:30–16:30 durchgehend; Betriebsferien; dann bestaetigt: true' });
+if (!zeiten.bestaetigt) daten.push({ seite: 'Startseite, Kontakt, Fuß, JSON-LD', key: 'oeffnungszeiten.json', art: 'UNBESTÄTIGT', was: 'Zeiten beim Betrieb bestätigen: 08:00–12:00/13:30–16:30 (alte Website, wedo.lu), 07:30–16:30 durchgehend (Editus, Google) oder 07:00–12:00/13:00–16:00 (SuperDrecksKëscht); Betriebsferien; dann bestaetigt: true' });
 if (zeiten.ausnahmen.length === 0) daten.push({ seite: 'Startseite, Kontakt, JSON-LD', key: 'oeffnungszeiten.json ausnahmen', art: 'FEHLT', was: 'Betriebsferien und Brückentage (falls es welche gibt)' });
 
 const esc = (s: string) => s.replace(/\|/g, '\\|');

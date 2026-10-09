@@ -38,7 +38,7 @@ const jsonld = [breadcrumbs(pfad.map((p) => ({ name: p.name, url: p.href }))), .
         {
           SERVICE_PAGES.map((p) => (
             <li>
-              <a class="chip chip--hell" href={`#leistung-${p}`}>
+              <a class:list={['chip', 'chip--hell', `farbe--${p}`]} href={`#leistung-${p}`}>
                 <Icon name={LEISTUNG_ICON[p]} size={20} />
                 {t.leistungen[p].name}
               </a>
@@ -57,7 +57,7 @@ const jsonld = [breadcrumbs(pfad.map((p) => ({ name: p.name, url: p.href }))), .
           SERVICE_PAGES.map((p, i) => {
             const l = t.leistungen[p];
             return (
-              <li class:list={['leistungsblock', i > 0 && 'zeigen']} id={`leistung-${p}`}>
+              <li class:list={['leistungsblock', `farbe--${p}`, i > 0 && 'zeigen']} id={`leistung-${p}`}>
                 <div class="leistungsblock__haupt">
                   <span class="symbol symbol--gross" aria-hidden="true">
                     <Icon name={LEISTUNG_ICON[p]} size={36} />

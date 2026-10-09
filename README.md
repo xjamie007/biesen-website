@@ -71,8 +71,8 @@ src/
   pages/404.astro               eine 404-Seite für alle Sprachen
   pages/sitemap.xml.ts, robots.txt.ts, og/[name].png.ts
   views/                        eine Datei pro Seite (Home, Leistungen, Installation, Licht, …)
-  components/                   Kopf, Fuß, Owend (Hero), OwendSzene, OwendRegler, Foto, Faq, Zeiten, Anfrageformular,
-                                Leistungskarte, Seitenkarte, Aufruf, Icon …
+  components/                   Kopf (mit Kontaktleiste), Fuß, HeroDorf, TagAbend, OwendSzene, OwendRegler, Foto, Faq,
+                                Zeiten, Anfrageformular, Leistungskarte, Seitenkarte, Aufruf, Icon …
   i18n/                         config.ts (Sprachen, URLs), de.ts (Ausgangssprache), fr.ts, lb.ts, en.ts
   lib/                          projekte.ts, leistungen.ts, icons.ts, zeiten.ts, feiertage.ts, jsonld.ts, faq.ts, bilder.ts, exif.ts
   content/projekte/*.yaml       ein Projekt pro Datei
@@ -132,7 +132,7 @@ owend:
     abend: { de: "Derselbe Stall am Abend, …", fr: …, lb: …, en: … }
 ```
 
-- **Startseite:** das erste Projekt mit Fotopaar und `startseite: true` nach `reihenfolge` (heute das Ösling-Haus als Kandidat).
+- **Startseite:** das erste Projekt mit Fotopaar und `startseite: true` nach `reihenfolge` (heute das Ösling-Haus als Kandidat). Es steht im Abschnitt „Bei Tag und am Abend“ mit Regler und ersetzt dort die Zeichnung.
 - **Lichtseite:** alle anderen Projekte mit Fotopaar, höchstens fünf. Geplante Paare erscheinen bis zum Shooting als „Fotopaar folgt: [Motiv]“.
 - **Uhrzeiten:** Bleibt `uhrzeit` leer, liest der Build die Aufnahmezeit (EXIF DateTimeOriginal) aus der JPEG-Datei. Die Bildunterschrift lautet dann z. B. „Eschweiler, Milchviehstall mit LED-Licht. Fotografiert um 14:10 und um 21:40 Uhr.“
 - **Open-Graph-Bild:** Ist das Startseiten-Paar freigegeben, erzeugt der Build `og/startseite.png` aus dem Abendfoto (Logo klein unten links auf einem weißen Streifen). Bis dahin gilt `public/og/biesen.png`.
@@ -147,7 +147,9 @@ Eine YAML-Datei pro Stelle in `src/content/jobs/`. Nur `offen: true` bekommt ein
 
 ### Öffnungszeiten, Feiertage, Betriebsferien
 
-Alles steht in `src/content/oeffnungszeiten.json`. Daraus entstehen die Zeiten-Tabelle (Startseite, Kontakt), die Kurzform im Fuß, die Liste „Geschlossen an diesen Tagen“ (die nächsten drei Schließtage an Werktagen, höchstens 75 Tage voraus) und `openingHoursSpecification` im JSON-LD.
+**Recherche 09.10.2026:** Die Quellen widersprechen sich. Mo–Fr 08:00–12:00 und 13:30–16:30 nennen die alte Website und das Firmenprofil auf wedo.lu; Editus und Google nennen Mo–Fr 07:30–16:30 durchgehend; SuperDrecksKëscht nennt Mo–Fr 07:00–12:00 und 13:00–16:00. Eingetragen sind die Zeiten der eigenen Website, weiter mit `[UNBESTÄTIGT]`, bis der Betrieb sie bestätigt.
+
+Alles steht in `src/content/oeffnungszeiten.json`. Daraus entstehen die Zeiten-Tabelle (Startseite, Kontakt), die Kurzform in Kontaktleiste und Fuß, die Liste „Geschlossen an diesen Tagen“ (die nächsten drei Schließtage an Werktagen, höchstens 75 Tage voraus) und `openingHoursSpecification` im JSON-LD.
 
 **Betriebsferien eintragen** (für das Büro): unter `ausnahmen` einen Eintrag ergänzen, Daten im Format JJJJ-MM-TT:
 
@@ -172,7 +174,7 @@ Sind die Zeiten mit dem Kunden geklärt, `"bestaetigt": true` setzen; dann versc
 
 ### Luxemburgisch prüfen lassen
 
-Jeder luxemburgische Text ist ein Entwurf und trägt das Flag `review: "lb-native"` (`src/i18n/lb.ts`, gilt auch für alle `lb`-Felder in `src/content/` und die luxemburgischen URLs). Die vollständige Liste mit deutschem Ausgangstext steht in [`LB-REVIEW.md`](LB-REVIEW.md) (heute 494 Texte), gruppiert nach Datei. Ablauf:
+Jeder luxemburgische Text ist ein Entwurf und trägt das Flag `review: "lb-native"` (`src/i18n/lb.ts`, gilt auch für alle `lb`-Felder in `src/content/` und die luxemburgischen URLs). Die vollständige Liste mit deutschem Ausgangstext steht in [`LB-REVIEW.md`](LB-REVIEW.md) (heute 502 Texte), gruppiert nach Datei. Ablauf:
 
 1. Muttersprachler korrigiert direkt in `src/i18n/lb.ts` bzw. in den YAML-Dateien.
 2. Geprüfte Schlüssel in `src/i18n/lb-geprueft.json` eintragen (z. B. `"home.h1"`, `"projekte/milchviehstall.titel"`, `"slug.licht"`).
@@ -182,13 +184,11 @@ Die Liste steht in einer eigenen Datei und nicht in diesem README, weil sie mit 
 
 ## Owend: wie es funktioniert
 
-- **Hero:** Tag- und Abendfoto liegen im selben Grid-Feld übereinander. Nur die Deckkraft des Abendfotos ändert sich; kein Zoom, kein Parallax, kein Filter. Die Überschrift bewegt sich nicht.
-- **Mobil (unter 1024 px):** `animation-timeline: view()` am Foto selbst, `animation-range: cover 36% cover 68%`. Der Übergang beginnt, wenn das Foto ganz zu sehen ist, und ist fertig, wenn seine Unterkante die Bildschirmmitte erreicht. Gemessen bei 375 × 812: Deckkraft 0 / 25 / 50 / 75 / 100 % bei 232 / 334 / 437 / 539 / 642 px Scrollweg (Deutsch); auf Französisch mit längerem Text entsprechend später, aber am selben Punkt des Fotos.
-- **Desktop:** `animation-timeline: scroll(root block)`, `animation-range: 4vh 60vh`. Bei 1440 × 900: 0 / 25 / 50 / 75 / 100 % bei 36 / 162 / 288 / 414 / 540 px.
-- **Rückwärts scrollen** macht wieder Tag.
-- **Fallbacks:** Ohne Scroll-Driven Animations mit JavaScript schaltet ein Intersection Observer auf eine unsichtbare Marke 30 vh unter dem Seitenanfang (Überblendung 900 ms). Ohne beides steht das Abendfoto. Bei reduzierter Bewegung stehen beide Fotos als Paar nebeneinander (ab 768 px) bzw. untereinander, jedes mit seiner Uhrzeit.
-- **Lichtseite:** `<input type="range">` setzt `--abend` als Deckkraft und `aria-valuetext` („Tag“, „Abend“, „Übergang, 40 Prozent“). Ohne JavaScript ist der Regler versteckt und beide Fotos stehen nebeneinander.
-- **Bildgrößen:** Das Original ist ein Querformat, gezeigt wird mobil ein 4:5-Ausschnitt. `sizes` rechnet deshalb mit der Breite, die das Bild bei `object-fit: cover` wirklich bekommt (bei 3:2: `188vw` mobil, `81vw` am Desktop).
+- **Startseite, Abschnitt „Bei Tag und am Abend“** (`TagAbend.astro`): zeigt, was Licht ausmacht. Tag- und Abendfassung liegen übereinander, die Besucher bewegen die Überblendung mit einem Regler (Startwert 20 %). Ist das Startseiten-Paar freigegeben, stehen hier die Fotos (`OwendRegler.astro`), bis dahin das gezeichnete Haus mit Garten (`OwendSzene.astro`) mit dem Hinweis „Fotopaar folgt: …“.
+- **Lichtseite:** dieselbe Technik für alle weiteren Paare (`OwendRegler.astro`).
+- **Regler:** `<input type="range">` setzt `--abend` als Deckkraft des Abendbildes und `aria-valuetext` („Tag“, „Abend“, „Übergang, 40 Prozent“) (`src/scripts/regler.ts`). Ohne JavaScript ist der Regler versteckt und beide Fassungen stehen nebeneinander (ab 768 px) bzw. untereinander, jede mit ihrer Uhrzeit.
+- **Bildgrößen:** Das Original ist ein Querformat; `sizes` rechnet mit der Breite, die das Bild bei `object-fit: cover` wirklich bekommt.
+- **Früher im Hero:** Bis 09.10.2026 blendete das Paar im Hero beim ersten Scrollen über. Die Überblendung ohne eigenes Zutun war dort schwer zu verstehen; mit Regler im eigenen Abschnitt und erklärendem Satz ist klar, was sie zeigt. Der Hero zeigt jetzt das gezeichnete Dorf (siehe „Gestaltung“).
 
 ## Shooting-Anleitung (für Nave und den Fotografen)
 
@@ -303,19 +303,22 @@ Bis die Vektordatei des Logos da ist: ein „B“ in Weiß auf Noutem-Blau (Favi
 
 ## Gestaltung (seit 09.10.2026)
 
-Die erste Fassung war sehr zurückhaltend (Weiß und Kalkputz, keine Symbole, keine Schatten, nicht stickyer Kopf). Auf Wunsch von Nave ist sie jetzt farbiger und lebendiger. Die Inhaltsregeln (keine Werbewörter, keine erfundenen Angaben, offene Punkte sichtbar) gelten unverändert.
+Die erste Fassung war sehr zurückhaltend (Weiß und Kalkputz, keine Symbole, keine Schatten, nicht stickyer Kopf). Auf Wunsch von Nave ist sie jetzt farbiger, voller und lebendiger. Die Inhaltsregeln (keine Werbewörter, keine erfundenen Angaben, offene Punkte sichtbar) gelten unverändert.
 
-- **Farben:** aus dem Logo Noutem-Blau `#0070c0` und Bletz-Giel `#ffca24`; dazu aus dem Owend-Konzept die blaue Stunde: Blo-Stonn `#0d2c54` und Nuecht `#071a33` für Hero, Seitenköpfe und Fuß, Himmel `#eef5fc` als helle Fläche, Mound `#c6d5e9` für Text auf Dunkel. Gelb nur für den Hauptknopf auf dunklem Grund, Akzente und den Blitz in den Überzeilen.
-- **Logo:** steht immer auf Weiß und wird nie verändert: im Kopf 48 px (mobil) bzw. 64 px hoch (Desktop, beim Scrollen 52 px), im Fuß auf einer weißen Karte. Ausgeliefert als WebP in 64 und 128 px Höhe.
-- **Kopf:** bleibt oben stehen (`position: sticky`, Milchglas über einem Pseudo-Element, damit das mobile Menü mit `position: fixed` nicht im Kopf eingesperrt wird). Beim Scrollen bekommt er einen Schatten und wird flacher. Ohne JavaScript scrollt er mobil normal mit, weil dann die ganze Navigation darin steht.
-- **Leistungen:** eigene Seite mit allen fünf Bereichen (Text, alles, was dazugehört, Link zur Leistungsseite, „Angebot anfragen“ mit vorgewähltem Anliegen), Sprungleiste, Weg zum Angebot in vier Schritten [UNBESTÄTIGT]. Auf der Startseite stehen die fünf Leistungen als Karten (zwei große, drei kleine), im Hero als Chips, im Fuß als Liste. Jede Leistungsseite zeigt die anderen vier als Karten und am Desktop eine mitlaufende Kontaktkarte.
-- **Hero ohne Fotopaar:** `OwendSzene.astro` zeichnet ein Haus im Ösling (Schieferdach, Hügel, Pollerleuchten) am Nachmittag und zur blauen Stunde. Beide Fassungen liegen übereinander wie die Fotos und blenden mit derselben Animation über. Sobald ein Fotopaar freigegeben ist, ersetzt es die Zeichnung.
-- **Effekte:** Karten heben sich beim Überfahren, das Symbol wird gelb, oben wächst eine Leiste von Blau nach Gelb; Lichtstreifen über den Knöpfen; Unterstrich der Navigation wächst in Gelb; Inhalte kommen beim Scrollen leicht von unten (nur `forwards`, damit nichts unsichtbar bleibt); ein warmer Lichtschein wandert langsam durch Hero und Seitenköpfe; Sterne und Leuchten der Zeichnung flackern leicht. Bei reduzierter Bewegung steht alles still.
+- **Farben:** aus dem Logo Noutem-Blau `#0070c0` und Bletz-Giel `#ffca24`; dazu aus dem Owend-Konzept die blaue Stunde: Blo-Stonn `#0d2c54` und Nuecht `#071a33` für Hero, Seitenköpfe, Kontaktleiste und Fuß, Himmel `#eef5fc` und Sonn `#fff7e3` als helle Flächen, Mound `#c6d5e9` für Text auf Dunkel. Das Fakten-Band unter dem Hero steht in Bletz-Giel.
+- **Akzentfarbe je Leistung** (`.farbe--…`): Neubau Blau, Licht Gelb, Photovoltaik Grün, Alarm Violett, Hausgeräte Orange. Sie färbt Symbole, Leisten, Stichpunkte und die Punkte im Hero; Text in Akzentfarbe erreicht auf der hellen Fassung mindestens 4,5 : 1.
+- **Logo:** steht immer auf reinem Weiß, weil das PNG selbst einen weißen Grund hat. Deshalb ist der Kopf nie durchscheinend, und im Fuß hat das Logo ein eigenes weißes Band. Höhe 52 px mobil, 60 px ab 768 px, 72 px ab 1024 px (beim Scrollen 56 px). Ausgeliefert verlustfrei als PNG in einfacher, doppelter und dreifacher Dichte. Nicht nachgezeichnet, nicht verändert.
+- **Kopf:** oben eine Kontaktleiste in Nachtblau (Telefon, Zeiten, E-Mail, Sprachen LU · DE · EN · FR), sie scrollt weg. Darunter der weiße Hauptkopf mit Logo, allen Seiten und „Angebot anfragen“; er bleibt oben stehen und wird beim Scrollen flacher. Alle Seiten stehen ab 768 px im Kopf, darunter im Menü. Ohne JavaScript scrollt der Kopf mobil normal mit, weil dann die ganze Navigation darin steht.
+- **Sprachen im Umschalter:** Reihenfolge LU, DE, EN, FR; Luxemburgisch heißt sichtbar „LU“, im Code, in den Adressen und in `hreflang` bleibt es `lb`. Französisch bleibt x-default.
+- **Hero:** `HeroDorf.astro` zeichnet ein Stück Ösling zur blauen Stunde mit allem, wofür Biesen arbeitet: Hof mit Stall und Silo, Wohnhaus mit Carport und Ladestation, Halle mit Photovoltaik, Straßenlaternen, Pollerleuchten. Beim Laden gehen die Lichter nacheinander an. Fünf Punkte im Bild führen zu den Leistungen (Name beim Überfahren); für Tastatur und Screenreader stehen dieselben Links als Chips daneben, deshalb sind die Punkte `aria-hidden`. Überfährt man einen Chip, hebt sich der passende Punkt hervor. Mobil zeigt das Bild nur die rechte Hälfte mit den Gebäuden.
+- **Mehr Inhalt auf der Startseite:** Fakten-Band (26 Leute, 5 Leistungen, Ort, Telefon und Zeiten), Leistungskarten, „Bei Tag und am Abend“, Weg zum Angebot [UNBESTÄTIGT], Projekte, Team mit den offenen Stellen, Marken der Hausgeräte (als Text, keine Hersteller-Logos) und Mitgliedschaften [UNBESTÄTIGT], Fragen, Kontakt.
+- **Leistungen:** eigene Seite mit allen fünf Bereichen (Text, alles, was dazugehört, Link zur Leistungsseite, „Angebot anfragen“ mit vorgewähltem Anliegen), Sprungleiste, Weg zum Angebot. Im Fuß als Liste. Jede Leistungsseite zeigt die anderen vier als Karten und am Desktop eine mitlaufende Kontaktkarte.
+- **Effekte:** Karten heben sich beim Überfahren, das Symbol nimmt die Akzentfarbe an, oben wächst eine Leiste; Lichtstreifen über den Knöpfen; Unterstrich der Navigation wächst in Gelb; Inhalte kommen beim Scrollen leicht von unten (nur `forwards`, damit nichts unsichtbar bleibt); Lichter im Hero gehen an, Punkte pulsieren; ein warmer Lichtschein wandert langsam durch Hero und Seitenköpfe. Bei reduzierter Bewegung steht alles still und die Lichter sind sofort an.
 - **Scroll-Animationen nur als Einzel-Eigenschaften:** Der CSS-Optimierer von Tailwind zieht `animation-timeline` sonst in die Kurzschreibweise `animation`, und Chrome verwirft die ganze Angabe. Genau das war in der ersten Fassung passiert: Owend stand dort sofort auf Abend. Deshalb in `global.css` nie `animation:` zusammen mit `animation-timeline` schreiben.
 
 ## Entscheidungen und Abweichungen vom Briefing
 
-- **Owend mobil mit View-Timeline statt `scroll(root)`:** Mit `scroll(root)` hängt der Zeitpunkt von der Textlänge der Sprache ab (das Foto steht auf Französisch 96 px tiefer). Die View-Timeline misst am Foto und trifft das Ziel („Abend ist da, wenn die Unterkante die Bildschirmmitte erreicht“) in allen Sprachen. Am Desktop gilt `scroll(root)` mit 4–60 vh wie vorgegeben. Das Foto-Feld nutzt `overflow: clip` statt `hidden`, sonst misst die Timeline am falschen Container.
+- **Owend nicht mehr im Hero:** Das Briefing (C5) sah die Überblendung beim ersten Scrollen im Hero vor. Seit 09.10.2026 steht sie mit Regler im Abschnitt „Bei Tag und am Abend“, siehe „Owend: wie es funktioniert“.
 - **Titles ohne „Nothum“:** A.5 verlangt Nothum in jedem Title, die Tabelle G2 gibt aber für einige Seiten Titles ohne Ort vor (z. B. „Beleuchtung für Haus, Stall und Halle | Electricité Biesen“). Übernommen ist die Tabelle G2 wörtlich; EN, LB, Jobs, Impressum und Datenschutz tragen den Ort. Vorschlag zur Entscheidung: Für die Lichtseite wäre „Licht für Haus, Stall und Halle, Nothum | Electricité Biesen“ (60 Zeichen) wegen der Verwechslungsgefahr mit dem anderen Betrieb sinnvoll.
 - **JobPosting erst mit Datum:** `datePosted` fehlt [FEHLT]; ohne Datum wären die strukturierten Daten ungültig. Die Job-Seiten stehen, das `JobPosting` erscheint, sobald `veroeffentlicht` eingetragen ist.
 - **FAQPage nur mit bestätigten Antworten:** Fragen mit `[UNBESTÄTIGT]`/`[FEHLT]` stehen sichtbar auf der Seite, aber nicht im JSON-LD. Heute sind es zwei (Angebot, Fertighaus).
@@ -331,6 +334,8 @@ Die erste Fassung war sehr zurückhaltend (Weiß und Kalkputz, keine Symbole, ke
 - **TypeScript 6 statt 7:** `astro check` unterstützt TypeScript 7 noch nicht.
 
 ## Prüfprotokoll
+
+**09.10.2026, zweite Runde (Kopf mit Kontaktleiste, Hero-Dorf, Tag und Abend mit Regler, mehr Inhalt, Akzentfarben):** Vitest 102 Tests grün, `astro check` 0 Fehler, Build-Prüfung 73 HTML-Seiten ohne Befund. Screenshots bei 390, 800 und 1440 px (DE, FR, LB), Regler bedient (Tag, Übergang, Abend), Menü bei 390 px und Aufklapp-Menü am Desktop geprüft; kein waagerechtes Scrollen, keine Konsolenfehler. Lighthouse noch nicht neu gemessen.
 
 **09.10.2026, nach der Neugestaltung (lokal):** Vitest 102 Tests grün (dazu Title/Description der Seite „Leistungen“ in vier Sprachen), `astro check` 0 Fehler, Build-Prüfung 73 HTML-Seiten ohne Befund. Screenshots in Chromium bei 390, 1024 und 1440 px (DE, FR, LB, EN), reduzierte Bewegung und ohne JavaScript; kein waagerechtes Scrollen, keine Konsolenfehler. Lighthouse nach der Neugestaltung noch nicht gemessen.
 

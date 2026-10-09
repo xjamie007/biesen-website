@@ -1,26 +1,32 @@
 ---
 /**
  * Startseite (D2), in dieser Reihenfolge:
- * Hero in Blaue-Stunde-Blau mit Owend, Leistungen als Karten, Wo wir gearbeitet haben,
- * 26 Leute in Noutem, Häufige Fragen, Anrufen oder schreiben, Fuß.
+ * Hero mit dem gezeichneten Dorf (Lichter gehen an, Punkte führen zu den Leistungen), Fakten,
+ * Leistungen als Karten, Bei Tag und am Abend (Regler), Weg zum Angebot, Wo wir gearbeitet haben,
+ * 26 Leute in Noutem mit offenen Stellen, Marken und Mitgliedschaften, Häufige Fragen,
+ * Anrufen oder schreiben, Fuß.
  */
 import Base from '@/layouts/Base.astro';
-import Owend from '@/components/Owend.astro';
+import HeroDorf from '@/components/HeroDorf.astro';
+import TagAbend from '@/components/TagAbend.astro';
 import Foto from '@/components/Foto.astro';
 import Icon from '@/components/Icon.astro';
 import Leistungskarte from '@/components/Leistungskarte.astro';
 import ProjektEintrag from '@/components/ProjektEintrag.astro';
 import Faq from '@/components/Faq.astro';
 import AnrufenSchreiben from '@/components/AnrufenSchreiben.astro';
-import { rich, useT } from '@/i18n';
-import { path, SERVICE_PAGES, type Lang } from '@/i18n/config';
+import { rich, typo, useT } from '@/i18n';
+import { path, pathFor, SERVICE_PAGES, type Lang } from '@/i18n/config';
 import { faqJsonItems, FAQ_KEYS } from '@/lib/faq';
 import { faqPage } from '@/lib/jsonld';
 import { LEISTUNG_ICON } from '@/lib/icons';
+import { MARKEN } from '@/lib/leistungen';
 import { heroPaar, startseitenProjekte } from '@/lib/projekte';
 import { projektBild } from '@/lib/bilder';
+import { jobRoute, offeneJobs } from '@/lib/jobs';
 import { getEntry } from 'astro:content';
 import { site, telHref, DEV } from '@/lib/site';
+import { kurzText } from '@/lib/zeiten';
 import { withBase } from '@/i18n/config';
 
 interface Props {
@@ -31,6 +37,7 @@ const t = useT(lang);
 const testTexte = { tag: t.owend.testTag, abend: t.owend.testAbend };
 const paar = await heroPaar(lang, testTexte, t.owend.motivStartseite);
 const projekte = await startseitenProjekte();
+const jobs = await offeneJobs();
 
 /** Fotos der Leistungskarten: aus freigegebenen Projekten, sonst ohne Foto */
 async function leistungsFoto(id: string, index = 0) {
@@ -47,6 +54,8 @@ const fotos = {
 /** „26 Leute in Noutem“: die Zahl wird groß gesetzt, der Rest bleibt die Überschrift */
 const [teamZahl, ...teamRest] = t.home.teamH2.split(' ');
 const teamMitZahl = /^\d+$/.test(teamZahl);
+const u = t.seiten.ueberUns;
+const ablauf = t.seiten.leistungen;
 
 const ogBild =
   paar.bilder && !paar.test && paar.freigegeben
@@ -61,38 +70,72 @@ const ogBild =
   ogBild={ogBild}
   jsonld={faqJsonItems(t, FAQ_KEYS).length ? [faqPage(faqJsonItems(t, FAQ_KEYS))] : []}
 >
-  <section class="raster hero" aria-labelledby="hero-titel">
-    <div class="hero__text">
-      <p class="eyebrow eyebrow--hell auftritt"><Icon name="blitz" size={16} />{t.meta.ogAlt}</p>
-      <h1 id="hero-titel" class="auftritt">{t.home.h1}</h1>
-      <p class="lead auftritt">{t.home.lead}</p>
-      <p class="hero__aktionen auftritt">
-        <a class="knopf knopf--giel" href={path(lang, 'kontakt')}>
-          {t.allgemein.angebotAnfragen}
-          <Icon name="pfeil" size={20} />
-        </a>
-        <a class="knopf knopf--rand" href={telHref}>
-          <Icon name="telefon" size={20} />
-          <span class="sr-only">{t.allgemein.telefon} </span><span class="zahl">{site.telefon.anzeige}</span>
-        </a>
-      </p>
-      <nav class="hero__leistungen auftritt" aria-labelledby="hero-leistungen-h">
-        <p id="hero-leistungen-h" class="label label--hell">{t.nav.leistungen}</p>
-        <ul class="chips">
-          {
-            SERVICE_PAGES.map((p) => (
-              <li>
-                <a class="chip chip--hell" href={path(lang, p)}>
-                  <Icon name={LEISTUNG_ICON[p]} size={18} />
-                  {t.leistungen[p].name}
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </nav>
+  <section class="hero" aria-labelledby="hero-titel">
+    <div class="raster hero__oben">
+      <div class="hero__titel">
+        <p class="eyebrow eyebrow--hell auftritt"><Icon name="blitz" size={16} />{t.meta.ogAlt}</p>
+        <h1 id="hero-titel" class="auftritt">{t.home.h1}</h1>
+      </div>
+      <div class="hero__seite">
+        <p class="lead auftritt">{t.home.lead}</p>
+        <p class="hero__aktionen auftritt">
+          <a class="knopf knopf--giel" href={path(lang, 'kontakt')}>
+            {t.allgemein.angebotAnfragen}
+            <Icon name="pfeil" size={20} />
+          </a>
+          <a class="knopf knopf--rand" href={telHref}>
+            <Icon name="telefon" size={20} />
+            <span class="sr-only">{t.allgemein.telefon} </span><span class="zahl">{site.telefon.anzeige}</span>
+          </a>
+        </p>
+      </div>
     </div>
-    <Owend t={t} paar={paar} />
+    <div class="hero__unten">
+      <HeroDorf lang={lang} t={t} />
+      <div class="raster hero__leistungen-raster">
+        <nav class="hero__leistungen auftritt" aria-labelledby="hero-leistungen-h">
+          <p id="hero-leistungen-h" class="label label--hell">{t.nav.leistungen}</p>
+          <ul class="chips">
+            {
+              SERVICE_PAGES.map((p) => (
+                <li>
+                  <a class:list={['chip', 'chip--hell', `farbe--${p}`]} href={path(lang, p)} data-punkt={p}>
+                    <Icon name={LEISTUNG_ICON[p]} size={18} />
+                    {t.leistungen[p].name}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <section class="fakten" aria-label={t.nav.ueberUns}>
+    <div class="raster">
+      <ul class="fakten__liste">
+        <li class="fakt">
+          <span class="fakt__symbol farbe--installation" aria-hidden="true"><Icon name="team" size={26} /></span>
+          <p><strong class="fakt__wert zahl">{site.mitarbeitende}</strong> <span>{t.home.fakten.leute}</span></p>
+        </li>
+        <li class="fakt">
+          <span class="fakt__symbol farbe--licht" aria-hidden="true"><Icon name="blitz" size={26} /></span>
+          <p><strong class="fakt__wert zahl">{SERVICE_PAGES.length}</strong> <span>{t.home.fakten.bereiche}</span></p>
+        </li>
+        <li class="fakt">
+          <span class="fakt__symbol farbe--photovoltaik" aria-hidden="true"><Icon name="ort" size={26} /></span>
+          <p><strong class="fakt__wert">{t.home.fakten.ortTitel}</strong> <span>{t.home.fakten.ort}</span></p>
+        </li>
+        <li class="fakt">
+          <span class="fakt__symbol farbe--hausgeraete" aria-hidden="true"><Icon name="telefon" size={26} /></span>
+          <p>
+            <a class="fakt__wert zahl" href={telHref}><span class="sr-only">{t.allgemein.telefon} </span>{site.telefon.anzeige}</a>
+            <span class="zahl">{kurzText(t)}</span>
+          </p>
+        </li>
+      </ul>
+    </div>
   </section>
 
   <section class="sektion" id="leistungen" aria-labelledby="leistungen-h">
@@ -130,6 +173,26 @@ const ogBild =
           <Icon name="pfeil" size={20} />
         </a>
       </p>
+    </div>
+  </section>
+
+  <TagAbend lang={lang} t={t} paar={paar} />
+
+  <section class="sektion flaeche flaeche--warm" aria-labelledby="weg-h">
+    <div class="raster">
+      <div>
+        <h2 id="weg-h" class="sektion__kopf">{ablauf.ablaufH2}</h2>
+        <ol class="schritte">
+          {ablauf.ablauf.map((x) => <li class="schritt zeigen">{x}</li>)}
+        </ol>
+        <p class="klein schritte__hinweis" set:html={rich(ablauf.ablaufHinweis)} />
+        <p class="sektion__fuss">
+          <a class="knopf" href={path(lang, 'kontakt')}>
+            {t.allgemein.angebotAnfragen}
+            <Icon name="pfeil" size={20} />
+          </a>
+        </p>
+      </div>
     </div>
   </section>
 
@@ -181,16 +244,60 @@ const ogBild =
         <div class="prosa sektion__text">
           <p>{t.home.team}</p>
           <p set:html={rich(t.home.teamLeitung)} />
-          <p>
-            {t.home.jobs} <a href={path(lang, 'jobs')}>{t.home.jobsLink}</a>
-          </p>
         </div>
+        {
+          jobs.length > 0 && (
+            <div class="team__jobs">
+              <p class="label">{t.seiten.jobs.offenH2}</p>
+              <ul class="jobliste">
+                {jobs.map((j) => (
+                  <li>
+                    <a class="jobkarte" href={pathFor(lang, jobRoute(j))}>
+                      <span class="symbol symbol--klein" aria-hidden="true">
+                        <Icon name="team" size={20} />
+                      </span>
+                      <span class="jobkarte__text">
+                        <span class="jobkarte__titel">{j.data.titel[lang]}</span>
+                        <span class="jobkarte__kurz">{typo(lang, j.data.kurz[lang])}</span>
+                      </span>
+                      <Icon name="pfeil" size={20} />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )
+        }
+        <p class="sektion__text">
+          {t.home.jobs} <a href={path(lang, 'jobs')}>{t.home.jobsLink}</a>
+        </p>
       </div>
       <Foto class="team__foto zeigen" bild={null} alt="" folgt={t.allgemein.fotoFolgt} motiv={t.home.teamFoto} sizes="(min-width: 1024px) 50vw, 100vw" />
     </div>
   </section>
 
-  <section class="sektion" aria-labelledby="faq-h">
+  <section class="sektion marken" aria-labelledby="marken-h">
+    <div class="raster">
+      <div class="marken__inhalt">
+        <h2 id="marken-h" class="sektion__kopf">{t.home.markenH2}</h2>
+        <div class="marken__gruppe">
+          <p class="label">{t.home.marken}</p>
+          <ul class="marken__liste">
+            {MARKEN.map((m) => <li class="marke">{m}</li>)}
+          </ul>
+        </div>
+        <div class="marken__gruppe">
+          <p class="label">{u.mitgliedH2}</p>
+          <ul class="stichpunkte stichpunkte--gross">
+            {u.mitglied.map((m) => <li>{m}</li>)}
+          </ul>
+          <p class="klein marken__hinweis" set:html={rich(u.mitgliedHinweis)} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sektion flaeche" aria-labelledby="faq-h">
     <div class="raster">
       <div>
         <h2 id="faq-h" class="sektion__kopf">{t.home.faqH2}</h2>

@@ -38,3 +38,6 @@ export function kartenPunkte(t: Dict, page: ServicePage): string[] {
   if (page === 'photovoltaik') return [t.arten.photovoltaik, t.arten.ladestation];
   return leistungsPunkte(t, page);
 }
+
+/** Marken der Hausgeräte, als Text (keine Hersteller-Logos), wie in den Texten der Hausgeräte */
+export const MARKEN = ['AEG', 'Miele', 'Liebherr', 'Bosch', 'Siemens'] as const;
