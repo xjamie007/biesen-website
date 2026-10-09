@@ -65,6 +65,7 @@ const json = (d: unknown) => JSON.stringify(d).replace(/\u00AD/g, '').replace(/<
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogUrl} />
+    <meta name="twitter:image:alt" content={og.alt} />
     <script is:inline>document.documentElement.classList.add('js');</script>
     {ld.map((d) => <script type="application/ld+json" set:html={json(d)} />)}
     <slot name="head" />

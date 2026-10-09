@@ -1353,36 +1353,34 @@
 
     .nav__liste--haupt {
       flex-wrap: nowrap;
-      gap: 28px;
+      gap: 4px;
     }
 
     .nav__haupt-li {
       position: relative;
     }
 
-    /* Unterstrich wächst beim Überfahren von links nach rechts, in Bletz-Giel */
+    /* Wie bei Nave: jede Seite eine Pille, beim Überfahren hell hinterlegt, die aktuelle Seite
+       gefüllt in Nuecht */
     .nav__liste--haupt > li > .nav__link,
     .nav__knopf {
-      background-image: linear-gradient(var(--color-bletz-giel), var(--color-bletz-giel));
-      background-position: 0 calc(100% - 6px);
-      background-repeat: no-repeat;
-      background-size: 0% 3px;
+      padding-inline: 14px;
+      border-radius: 999px;
       transition:
-        background-size 260ms var(--sanft),
+        background-color 200ms ease,
         color 160ms ease;
     }
 
     .nav__liste--haupt > li > .nav__link:hover,
     .nav__knopf:hover,
     .nav__knopf[aria-expanded='true'] {
-      background-size: 100% 3px;
+      background-color: var(--color-himmel);
     }
 
     .nav__liste--haupt > li > .nav__link[aria-current='page'],
     .nav__knopf[data-aktiv] {
-      color: var(--color-noutem-blau);
-      background-size: 100% 3px;
-      background-image: linear-gradient(var(--color-noutem-blau), var(--color-noutem-blau));
+      background-color: var(--color-nuecht);
+      color: var(--color-weiss);
     }
 
     .nav__extra {
@@ -3939,7 +3937,7 @@
     top: var(--kopf-ist, var(--kopf-hoehe));
     z-index: 50;
     border-block: 1px solid var(--color-himmel-rand);
-    background: rgb(255 255 255 / 0.86);
+    background: rgb(255 255 255 / 0.95);
     -webkit-backdrop-filter: saturate(180%) blur(20px);
     backdrop-filter: saturate(180%) blur(20px);
   }
@@ -3961,7 +3959,13 @@
     display: none;
   }
 
+  /* Wie die lokale Navigation bei Nave und Apple: schlichte Einträge ohne Rahmen, der aktuelle
+     Abschnitt als gefüllte Pille in Nuecht */
   .sprungleiste .chip {
+    border-color: transparent;
+    background: transparent;
+    color: var(--color-leiendaach);
+    font-weight: 600;
     white-space: nowrap;
   }
 
@@ -3969,10 +3973,20 @@
     color: var(--akzent-text, var(--color-noutem-blau));
   }
 
+  .sprungleiste .chip:hover {
+    border-color: transparent;
+    background: var(--color-himmel);
+    color: var(--color-nuecht);
+    transform: none;
+  }
+
   .sprungleiste .chip[aria-current='true'] {
-    border-color: var(--akzent, var(--color-noutem-blau));
-    background: var(--akzent-hell, var(--color-himmel));
-    box-shadow: inset 0 0 0 1px var(--akzent, var(--color-noutem-blau));
+    background: var(--color-nuecht);
+    color: var(--color-weiss);
+  }
+
+  .sprungleiste .chip[aria-current='true'] svg {
+    color: var(--akzent);
   }
 
   /* Was unter dem Kopf klebt, rückt auf Seiten mit Sprungleiste um deren Höhe weiter nach unten
