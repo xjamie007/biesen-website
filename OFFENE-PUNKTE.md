@@ -41,7 +41,7 @@ Der Schlüssel gilt in allen vier Sprachen (`src/i18n/fr.ts`, `de.ts`, `lb.ts`, 
 |---|---|---|---|
 | Startseite, Projekte, Leistungsseiten | `allgemein.projekteFehlen` | FEHLT | freigegebene Projekte mit Ortschaft, Jahr und Text |
 | Startseite (Was wir machen), Leistungen (Übersicht), Karten auf den Leistungsseiten | `leistungen.hausgeraete.text` | UNBESTÄTIGT | Ausstellung, Lieferung und Anschluss ergänzen |
-| Startseite (Hero), Licht, Projekte | `owend.bildunterschriftFehlt` | FEHLT | Ortschaft, Projekt in drei bis fünf Wörtern, Uhrzeiten aus den EXIF-Daten |
+| Licht, Projekte | `owend.bildunterschriftFehlt` | FEHLT | Ortschaft, Projekt in drei bis fünf Wörtern, Uhrzeiten aus den EXIF-Daten |
 | Startseite (26 Leute in Noutem) | `home.teamLeitung` | UNBESTÄTIGT | Leitung und Ansprechpartner mit Rollen, siehe B3 |
 | Startseite (Anrufen oder schreiben), Kontakt | `zeiten.unbestaetigt` | UNBESTÄTIGT | 08:00–12:00 und 13:30–16:30 laut alter Website und wedo.lu; 07:30–16:30 durchgehend laut Editus und Google; 07:00–12:00 und 13:00–16:00 laut SuperDrecksKëscht (Recherche 09.10.2026) |
 | Fuß (alle Seiten) | `zeiten.unbestaetigtKurz` | UNBESTÄTIGT | Zeiten |

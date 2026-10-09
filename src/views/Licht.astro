@@ -8,7 +8,7 @@ import OwendRegler from '@/components/OwendRegler.astro';
 import ProjektEintrag from '@/components/ProjektEintrag.astro';
 import { rich, useT } from '@/i18n';
 import type { Lang } from '@/i18n/config';
-import { heroPaar, lichtPaare, projekteNachArt, type Art } from '@/lib/projekte';
+import { lichtPaare, projekteNachArt, type Art } from '@/lib/projekte';
 
 interface Props {
   lang: Lang;
@@ -17,8 +17,8 @@ const { lang } = Astro.props;
 const t = useT(lang);
 const s = t.seiten.licht;
 const testTexte = { tag: t.owend.testTag, abend: t.owend.testAbend };
-const hero = await heroPaar(lang, testTexte, t.owend.motivStartseite);
-const paare = await lichtPaare(lang, testTexte, hero.id);
+// Seit 09.10.2026 zeigt die Startseite kein Fotopaar mehr: hier stehen alle Paare, auch das der Startseite
+const paare = await lichtPaare(lang, testTexte, '');
 const BEREICHE: { key: keyof typeof s.bereiche; arten: Art[] }[] = [
   { key: 'innen', arten: ['licht-innen'] },
   { key: 'aussen', arten: ['licht-aussen'] },

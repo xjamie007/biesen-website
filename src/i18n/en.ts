@@ -50,26 +50,31 @@ const en: Dict = {
   leistungen: {
     installation: {
       name: 'New builds and renovation',
+      kurz: 'Wiring for new and old houses',
       text: 'We plan and install the wiring for new houses, prefabricated houses included, and bring old installations up to date: consumer units, cables, sockets, shared aerials and KNX building control.',
       link: 'More on new builds and renovation',
     },
     licht: {
       name: 'Lighting',
+      kurz: 'Light for house, garden, cowshed and hall',
       text: 'Light for living rooms, stairs and gardens, for cowsheds and halls, for streets and squares. We work out with you which light belongs where, and we install it.',
       link: 'See our projects by day and in the evening',
     },
     photovoltaik: {
       name: 'Solar power and EV charging',
+      kurz: 'Power from your own roof, charging at home',
       text: 'Solar installations for the roof of your house, farm or hall that can be extended later. Charging points for electric cars, at home or at work.',
       link: 'More on solar power and charging points',
     },
     sicherheit: {
       name: 'Alarms, cameras, fire detection',
+      kurz: 'Security for homes and businesses',
       text: 'Alarm systems, video surveillance and fire detection, designed for your building and installed by us.',
       link: 'More on security systems',
     },
     hausgeraete: {
       name: 'Home appliances',
+      kurz: 'AEG, Miele, Liebherr, Bosch, Siemens',
       text: 'Washing machines, fridges, ovens and kitchen appliances from AEG, Miele, Liebherr, Bosch and Siemens. [UNBESTÄTIGT — Ausstellung, Lieferung und Anschluss ergänzen]',
       link: 'See home appliances',
     },
@@ -90,9 +95,10 @@ const en: Dict = {
   },
 
   home: {
-    h1: 'Power and light for homes, farms and businesses',
-    lead: 'We are an electrical contractor with 26 people in Nothum, in the Lac de la Haute-Sûre municipality. We wire new and old houses, cowsheds and halls, and install lighting, solar power and charging points.',
-    leistungenH2: 'What we do',
+    h1: 'Your electrician in the north of Luxembourg',
+    lead: 'Electrical installation, lighting, solar power, EV charging, alarms and home appliances for homes, farms and businesses. A family business of 26 people in Nothum, near Wiltz.',
+    leistungenH2: 'Electrician for homes, farms and businesses',
+    wahl: 'What do you need?',
     leistungenIntro: 'We work in five areas, in homes, on farms and in businesses. Choose an area to find out more.',
     alleLeistungen: 'All services at a glance',
     fakten: {
@@ -442,6 +448,10 @@ const en: Dict = {
     pflicht: 'required',
     freiwillig: 'optional',
     hinweisPflicht: 'You can leave fields marked “optional” empty. We need all the others for the quote.',
+    schrittProjekt: 'Your project',
+    schrittKontakt: 'Your contact details',
+    vertrauen: 'Your enquiry and your files are stored in a data centre in the European Union.',
+    dateienZiehen: 'Choose files or drop them here',
     anliegen: {
       legende: 'What is it about?',
       optionen: {
@@ -541,6 +551,12 @@ const en: Dict = {
     text: 'Please check your details and send the request again. We need the type of building (for home appliances, the appliance), the village or town, a short description, your name, your email address and your consent. Files: at most 5 images or PDFs, 10 MB each at most.',
     zuViele: 'We received a lot of requests from your connection in a short time. Please call us.',
     technisch: 'The request could not be saved. Please call us or write to info@biesen.lu.',
+  },
+
+  /** Prüfmodus der Vorschau (intern, in allen Sprachen deutsch) */
+  pruefung: {
+    zeigen: 'Offene Punkte zeigen',
+    ausblenden: 'Offene Punkte ausblenden',
   },
 
   footer: {

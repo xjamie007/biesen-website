@@ -104,3 +104,24 @@ export function jobPosting(opts: {
     url: absolute(opts.url),
   };
 }
+
+/** Die Leistungen als Katalog (Startseite, Übersicht), genau wie sie sichtbar auf der Seite stehen. */
+export function leistungsKatalog(name: string, items: { name: string; description: string; url: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'OfferCatalog',
+    name,
+    provider: { '@id': ORG_ID },
+    itemListElement: items.map((it, i) => ({
+      '@type': 'Offer',
+      position: i + 1,
+      itemOffered: {
+        '@type': 'Service',
+        name: it.name,
+        description: it.description,
+        url: absolute(it.url),
+        provider: { '@id': ORG_ID },
+      },
+    })),
+  };
+}

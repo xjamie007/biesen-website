@@ -2,6 +2,7 @@
 /**
  * Grundlayout: <html lang>, Title/Description, Canonical, hreflang (4 + x-default),
  * Open Graph/Twitter, JSON-LD (Firma auf jeder Seite), Schrift-Preload, Skip-Link, Kopf, Fuß.
+ * In der Vorschau (und im Dev-Modus) ein Schalter unten links, der die offenen Punkte ganz zeigt.
  * Keine externen Einbindungen, keine Cookies.
  */
 import '@/styles/global.css';
@@ -11,7 +12,7 @@ import Fuss from '@/components/Fuss.astro';
 import { useT } from '@/i18n';
 import { alternates as alts, pathFor, withBase, type Lang, type Route } from '@/i18n/config';
 import { firma } from '@/lib/jsonld';
-import { absolute, VORSCHAU } from '@/lib/site';
+import { absolute, DEV, VORSCHAU } from '@/lib/site';
 
 interface Props {
   lang: Lang;
@@ -75,6 +76,44 @@ const json = (d: unknown) => JSON.stringify(d).replace(/\u00AD/g, '').replace(/<
       <slot />
     </main>
     <Fuss lang={lang} t={t} alternates={alternates} />
+    {
+      (VORSCHAU || DEV) && (
+        <>
+          <button
+            class="pruefschalter"
+            type="button"
+            hidden
+            aria-pressed="false"
+            data-pruefschalter
+            data-zeigen={t.pruefung.zeigen}
+            data-ausblenden={t.pruefung.ausblenden}
+          >
+            {t.pruefung.zeigen}
+          </button>
+          <script is:inline>
+            (function () {
+              var b = document.querySelector('[data-pruefschalter]');
+              var n = document.querySelectorAll('mark.offen').length;
+              if (!b || !n) return;
+              var d = document.documentElement;
+              var k = 'biesen-pruefmodus';
+              var an = false;
+              try { an = localStorage.getItem(k) === '1'; } catch (e) {}
+              function setzen(v) {
+                an = v;
+                d.classList.toggle('pruefmodus', v);
+                b.textContent = (v ? b.dataset.ausblenden : b.dataset.zeigen) + ' (' + n + ')';
+                b.setAttribute('aria-pressed', String(v));
+                try { localStorage.setItem(k, v ? '1' : '0'); } catch (e) {}
+              }
+              b.hidden = false;
+              setzen(an);
+              b.addEventListener('click', function () { setzen(!an); });
+            })();
+          </script>
+        </>
+      )
+    }
   </body>
 </html>
 

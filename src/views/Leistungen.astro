@@ -9,9 +9,9 @@ import Seitenkopf from '@/components/Seitenkopf.astro';
 import Icon from '@/components/Icon.astro';
 import Faq from '@/components/Faq.astro';
 import Aufruf from '@/components/Aufruf.astro';
-import { rich, useT } from '@/i18n';
+import { rich, stripOpenPoints, useT } from '@/i18n';
 import { path, SERVICE_PAGES, type Lang } from '@/i18n/config';
-import { breadcrumbs, faqPage } from '@/lib/jsonld';
+import { breadcrumbs, faqPage, leistungsKatalog } from '@/lib/jsonld';
 import { faqJsonItems, type FaqKey } from '@/lib/faq';
 import { LEISTUNG_ICON } from '@/lib/icons';
 import { ANLIEGEN, leistungsPunkte } from '@/lib/leistungen';
@@ -28,7 +28,14 @@ const pfad = [
 ];
 const FRAGEN: readonly FaqKey[] = ['angebot', 'kostenlos', 'gebiet'];
 const faqItems = faqJsonItems(t, FRAGEN);
-const jsonld = [breadcrumbs(pfad.map((p) => ({ name: p.name, url: p.href }))), ...(faqItems.length ? [faqPage(faqItems)] : [])];
+const jsonld = [
+  breadcrumbs(pfad.map((p) => ({ name: p.name, url: p.href }))),
+  leistungsKatalog(
+    s.h1,
+    SERVICE_PAGES.map((p) => ({ name: t.leistungen[p].name, description: stripOpenPoints(t.leistungen[p].text), url: path(lang, p) })),
+  ),
+  ...(faqItems.length ? [faqPage(faqItems)] : []),
+];
 ---
 <Base lang={lang} route={{ page: 'leistungen' }} title={t.seo.leistungen.title} description={t.seo.leistungen.description} jsonld={jsonld}>
   <Seitenkopf pfadLabel={t.a11y.pfad} pfad={pfad} h1={s.h1} intro={s.intro}>
@@ -38,7 +45,7 @@ const jsonld = [breadcrumbs(pfad.map((p) => ({ name: p.name, url: p.href }))), .
         {
           SERVICE_PAGES.map((p) => (
             <li>
-              <a class:list={['chip', 'chip--hell', `farbe--${p}`]} href={`#leistung-${p}`}>
+              <a class:list={['chip', `farbe--${p}`]} href={`#leistung-${p}`}>
                 <Icon name={LEISTUNG_ICON[p]} size={20} />
                 {t.leistungen[p].name}
               </a>

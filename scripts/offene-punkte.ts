@@ -25,7 +25,7 @@ function seiteVon(key: string): string {
     [/^faq\./, 'Startseite (FAQ)'],
     [/^zeiten\.unbestaetigtKurz/, 'Fuß (alle Seiten)'],
     [/^zeiten\./, 'Startseite (Anrufen oder schreiben), Kontakt'],
-    [/^owend\./, 'Startseite (Hero), Licht, Projekte'],
+    [/^owend\./, 'Licht, Projekte'],
     [/^allgemein\.projekteFehlen/, 'Startseite, Projekte, Leistungsseiten'],
     [/^seiten\.leistungen/, 'Leistungen (Übersicht)'],
     [/^seiten\.installation/, 'Neubau und Renovierung'],

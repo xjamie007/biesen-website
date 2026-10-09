@@ -53,26 +53,31 @@ const fr: Dict = {
   leistungen: {
     installation: {
       name: 'Neuf et rénovation',
+      kurz: 'L’électricité des maisons neuves et anciennes',
       text: 'Nous concevons et posons l’électricité des maisons neuves, y compris préfabriquées, et remettons à niveau les installations anciennes : tableau électrique, câblage, prises, antennes collectives et domotique KNX.',
       link: 'En savoir plus sur le neuf et la rénovation',
     },
     licht: {
       name: 'Éclairage',
+      kurz: 'La lumière pour la maison, le jardin, l’étable et le hall',
       text: 'De la lumière pour les pièces de vie, les escaliers et les jardins, pour les étables et les halls, pour les rues et les places. Nous réfléchissons avec vous à la lumière qui convient à chaque endroit, puis nous l’installons.',
       link: 'Voir nos projets de jour et le soir',
     },
     photovoltaik: {
       name: 'Photovoltaïque et bornes de recharge',
+      kurz: 'L’électricité de votre toit, la recharge à la maison',
       text: 'Des installations photovoltaïques pour le toit de la maison, de la ferme ou du hall, extensibles par la suite. Des bornes de recharge pour voitures électriques, à la maison ou dans l’entreprise.',
       link: 'En savoir plus sur le photovoltaïque et les bornes',
     },
     sicherheit: {
       name: 'Alarme, caméras, détection incendie',
+      kurz: 'La sécurité de la maison et de l’entreprise',
       text: 'Alarmes, vidéosurveillance et détection incendie, adaptées à votre bâtiment et installées par nos soins.',
       link: 'En savoir plus sur la sécurité',
     },
     hausgeraete: {
       name: 'Électroménager',
+      kurz: 'AEG, Miele, Liebherr, Bosch, Siemens',
       text: 'Lave-linge, réfrigérateurs, fours et appareils de cuisine AEG, Miele, Liebherr, Bosch et Siemens. [UNBESTÄTIGT — Ausstellung, Lieferung und Anschluss ergänzen]',
       link: 'Voir l’électroménager',
     },
@@ -93,9 +98,10 @@ const fr: Dict = {
   },
 
   home: {
-    h1: 'Électricité et lumière pour maison, ferme et entreprise',
-    lead: 'Nous sommes une entreprise d’électricité de 26 personnes à Nothum, dans la commune du Lac de la Haute-Sûre. Nous réalisons l’électricité des maisons neuves et anciennes, des étables et des halls, et installons éclairage, photovoltaïque et bornes de recharge.',
-    leistungenH2: 'Ce que nous faisons',
+    h1: 'Votre électricien dans le nord du Luxembourg',
+    lead: 'Installation électrique, éclairage, photovoltaïque, bornes de recharge, alarmes et électroménager pour la maison, la ferme et l’entreprise. Une entreprise familiale de 26 personnes à Nothum, près de Wiltz.',
+    leistungenH2: 'Électricien pour la maison, la ferme et l’entreprise',
+    wahl: 'De quoi avez-vous besoin ?',
     leistungenIntro: 'Nous travaillons dans cinq domaines, dans les maisons, les fermes et les entreprises. Choisissez un domaine pour en savoir plus.',
     alleLeistungen: 'Tous nos services en un coup d’œil',
     fakten: {
@@ -445,6 +451,10 @@ const fr: Dict = {
     pflicht: 'obligatoire',
     freiwillig: 'facultatif',
     hinweisPflicht: 'Les champs marqués « facultatif » peuvent rester vides. Nous avons besoin de tous les autres pour le devis.',
+    schrittProjekt: 'Votre projet',
+    schrittKontakt: 'Vos coordonnées',
+    vertrauen: 'Votre demande et vos fichiers sont enregistrés dans un centre de données situé dans l’Union européenne.',
+    dateienZiehen: 'Choisir des fichiers ou les déposer ici',
     anliegen: {
       legende: 'De quoi s’agit-il ?',
       optionen: {
@@ -544,6 +554,12 @@ const fr: Dict = {
     text: 'Vérifiez vos informations et envoyez à nouveau la demande. Nous avons besoin du type de bâtiment (pour l’électroménager, de l’appareil), de la localité, d’une courte description, de votre nom, de votre adresse e-mail et de votre accord. Fichiers : 5 images ou PDF au maximum, de 10 Mo maximum chacun.',
     zuViele: 'Nous avons reçu beaucoup de demandes de votre connexion en peu de temps. Appelez-nous, s’il vous plaît.',
     technisch: 'La demande n’a pas pu être enregistrée. Appelez-nous ou écrivez à info@biesen.lu.',
+  },
+
+  /** Prüfmodus der Vorschau (intern, in allen Sprachen deutsch) */
+  pruefung: {
+    zeigen: 'Offene Punkte zeigen',
+    ausblenden: 'Offene Punkte ausblenden',
   },
 
   footer: {

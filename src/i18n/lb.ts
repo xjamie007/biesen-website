@@ -58,26 +58,31 @@ const lb: Dict = {
   leistungen: {
     installation: {
       name: 'Neibau a Renovatioun',
+      kurz: 'Elektresch fir nei an al Haiser',
       text: 'Mir plangen a leeën d’Elektresch fir nei Haiser, och fir Fäerdeghaiser, a bréngen al Installatiounen op den aktuelle Stand: Verdeeler, Leitungen, Steckdousen, Gemeinschaftsantennen a Gebaisteierung mat KNX.',
       link: 'Méi iwwer Neibau a Renovatioun',
     },
     licht: {
       name: 'Liicht',
+      kurz: 'Liicht fir Haus, Gaart, Stall an Hal',
       text: 'Liicht fir Wunnraim, Trapen a Gäert, fir Ställ an Hallen, fir Stroossen a Plazen. Mir iwwerleeë mat Iech, wou wéi e Liicht higehéiert, a mir montéieren et.',
       link: 'Projeten am Dag an am Owend kucken',
     },
     photovoltaik: {
       name: 'Photovoltaik a Luedstatiounen',
+      kurz: 'Stroum vum eegenen Daach, Lueden doheem',
       text: 'Photovoltaikanlage fir den Daach vun Haus, Haff oder Hal, déi sech spéider erweidere loossen. Luedstatioune fir Elektroautoen, doheem oder am Betrib.',
       link: 'Méi iwwer Photovoltaik a Luedstatiounen',
     },
     sicherheit: {
       name: 'Alarm, Kameraen, Brandmelder',
+      kurz: 'Sécherheet fir Haus a Betrib',
       text: 'Alarmanlagen, Videoiwwerwaachung a Brandmeldeanlagen, ofgestëmmt op Äert Gebai an vun eis installéiert.',
       link: 'Méi iwwer d’Sécherheetstechnik',
     },
     hausgeraete: {
       name: 'Haushaltsapparater',
+      kurz: 'AEG, Miele, Liebherr, Bosch, Siemens',
       text: 'Wäschmaschinnen, Frigoen, Bakuewen a Kichenapparater vun AEG, Miele, Liebherr, Bosch a Siemens. [UNBESTÄTIGT — Ausstellung, Lieferung und Anschluss ergänzen]',
       link: 'Bei d’Haushaltsapparater',
     },
@@ -98,9 +103,10 @@ const lb: Dict = {
   },
 
   home: {
-    h1: 'Stroum a Liicht fir Haus, Haff a Betrib',
-    lead: 'Mir sinn en Elektrobetrib mat 26 Leit zu Noutem, an der Stauséigemeng. Mir leeën d’Elektresch an neien an alen Haiser, a Ställ an Hallen a montéieren Liicht, Photovoltaik a Luedstatiounen.',
-    leistungenH2: 'Wat mir maachen',
+    h1: 'Ären Elektriker am Norde vu Lëtzebuerg',
+    lead: 'Elektroinstallatioun, Liicht, Photovoltaik, Luedstatiounen, Alarmanlagen an Haushaltsapparater fir Haus, Haff a Betrib. E Familljebetrib mat 26 Leit zu Noutem, no bei Wolz.',
+    leistungenH2: 'Elektriker fir Haus, Haff a Betrib',
+    wahl: 'Ëm wat geet et bei Iech?',
     leistungenIntro: 'Mir schaffen a fënnef Beräicher, an Haiser, op Häff an a Betriber. Wielt e Beräich, fir méi ze erfueren.',
     alleLeistungen: 'All d’Leeschtungen op ee Bléck',
     fakten: {
@@ -450,6 +456,10 @@ const lb: Dict = {
     pflicht: 'Pflichtfeld',
     freiwillig: 'fräiwëlleg',
     hinweisPflicht: 'Felder mam Zousaz „fräiwëlleg“ kënnt Dir eidel loossen. All déi aner brauche mir fir d’Offer.',
+    schrittProjekt: 'Äre Projet',
+    schrittKontakt: 'Är Kontaktdaten',
+    vertrauen: 'Är Ufro an Är Fichieren ginn an engem Rechenzentrum an der Europäescher Unioun gespäichert.',
+    dateienZiehen: 'Fichieren auswielen oder heihinner zéien',
     anliegen: {
       legende: 'Ëm wat geet et?',
       optionen: {
@@ -549,6 +559,12 @@ const lb: Dict = {
     text: 'Iwwerpréift w.e.g. Är Informatiounen a schéckt d’Ufro nach eng Kéier. Mir brauchen d’Zort vu Gebai (bei Haushaltsapparater den Apparat), d’Uertschaft, eng kuerz Beschreiwung, Ären Numm, Är E-Mail-Adress an Är Zoustëmmung. Fichieren: héchstens 5 Biller oder PDF mat all héchstens 10 MB.',
     zuViele: 'Vun Ärem Uschloss koumen a kuerzer Zäit ganz vill Ufroen. Rufft eis w.e.g. un.',
     technisch: 'D’Ufro konnt net gespäichert ginn. Rufft eis w.e.g. un oder schreift op info@biesen.lu.',
+  },
+
+  /** Prüfmodus der Vorschau (intern, in allen Sprachen deutsch) */
+  pruefung: {
+    zeigen: 'Offene Punkte zeigen',
+    ausblenden: 'Offene Punkte ausblenden',
   },
 
   footer: {

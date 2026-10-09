@@ -128,12 +128,17 @@ export function hasContent(s: string): boolean {
 }
 
 /**
- * Text → HTML für set:html: maskiert, markiert Platzhalter sichtbar (<mark class="offen">)
+ * Text → HTML für set:html: maskiert, markiert Platzhalter als kleine Marke (<mark class="offen">,
+ * Wortlaut im title und im Prüfmodus sichtbar)
  * und ersetzt {name} durch vorbereitetes HTML (Links, Telefon).
  */
 export function rich(s: string, html: Record<string, string> = {}): string {
   return escapeHtml(s)
-    .replace(OPEN_POINT_RE, (m) => `<mark class="offen">${m}</mark>`)
+    .replace(
+      OPEN_POINT_RE,
+      (m, art: string) =>
+        `<mark class="offen" data-art="${art === 'FEHLT' ? 'fehlt' : 'offen'}" title="${m}"><span class="offen__text">${m}</span></mark>`,
+    )
     .replace(/\{(\w+)\}/g, (m, k) => (k in html ? html[k] : m));
 }
 

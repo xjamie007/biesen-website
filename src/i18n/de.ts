@@ -58,26 +58,31 @@ const de = {
   leistungen: {
     installation: {
       name: 'Neubau und Renovierung',
+      kurz: 'Elektrik für neue und alte Häuser',
       text: 'Wir planen und verlegen die Elektrik für neue Häuser, auch für Fertighäuser, und bringen alte Anlagen auf den heutigen Stand: Verteiler, Leitungen, Steckdosen, Gemeinschaftsantennen und Gebäudesteuerung mit KNX.',
       link: 'Mehr zu Neubau und Renovierung',
     },
     licht: {
       name: 'Licht',
+      kurz: 'Licht für Haus, Garten, Stall und Halle',
       text: 'Licht für Wohnräume, Treppen und Gärten, für Ställe und Hallen, für Straßen und Plätze. Wir überlegen mit Ihnen, wo welches Licht hingehört, und montieren es.',
       link: 'Projekte bei Tag und am Abend ansehen',
     },
     photovoltaik: {
       name: 'Photovoltaik und Ladestationen',
+      kurz: 'Strom vom eigenen Dach, Laden zu Hause',
       text: 'Photovoltaikanlagen für das Dach von Haus, Hof oder Halle, die sich später erweitern lassen. Ladestationen für Elektroautos, zu Hause oder im Betrieb.',
       link: 'Mehr zu Photovoltaik und Ladestationen',
     },
     sicherheit: {
       name: 'Alarm, Kameras, Brandmelder',
+      kurz: 'Sicherheit für Haus und Betrieb',
       text: 'Alarmanlagen, Videoüberwachung und Brandmeldeanlagen, abgestimmt auf Ihr Gebäude und von uns installiert.',
       link: 'Mehr zur Sicherheitstechnik',
     },
     hausgeraete: {
       name: 'Hausgeräte',
+      kurz: 'AEG, Miele, Liebherr, Bosch, Siemens',
       text: 'Waschmaschinen, Kühlschränke, Backöfen und Küchengeräte von AEG, Miele, Liebherr, Bosch und Siemens. [UNBESTÄTIGT — Ausstellung, Lieferung und Anschluss ergänzen]',
       link: 'Zu den Hausgeräten',
     },
@@ -99,9 +104,10 @@ const de = {
   },
 
   home: {
-    h1: 'Strom und Licht für Haus, Hof und Betrieb',
-    lead: 'Wir sind ein Elektrobetrieb mit 26 Leuten in Noutem, in der Stauseegemeinde. Wir verlegen die Elektrik in neuen und alten Häusern, in Ställen und Hallen und montieren Licht, Photovoltaik und Ladestationen.',
-    leistungenH2: 'Was wir machen',
+    h1: 'Ihr Elektriker im Norden Luxemburgs',
+    lead: 'Elektroinstallation, Licht, Photovoltaik, Ladestationen, Alarmanlagen und Hausgeräte für Haus, Hof und Betrieb. Ein Familienbetrieb mit 26 Leuten in Noutem, nahe Wiltz.',
+    leistungenH2: 'Elektriker für Haus, Hof und Betrieb',
+    wahl: 'Worum geht es bei Ihnen?',
     leistungenIntro: 'Wir arbeiten in fünf Bereichen, in Wohnhäusern, auf Höfen und in Betrieben. Wählen Sie einen Bereich, um mehr zu erfahren.',
     alleLeistungen: 'Alle Leistungen im Überblick',
     fakten: {
@@ -452,6 +458,10 @@ const de = {
     pflicht: 'Pflichtfeld',
     freiwillig: 'freiwillig',
     hinweisPflicht: 'Felder mit dem Zusatz „freiwillig“ können Sie leer lassen. Alle anderen brauchen wir für das Angebot.',
+    schrittProjekt: 'Ihr Projekt',
+    schrittKontakt: 'Ihre Kontaktdaten',
+    vertrauen: 'Ihre Anfrage und Ihre Dateien werden in einem Rechenzentrum in der Europäischen Union gespeichert.',
+    dateienZiehen: 'Dateien auswählen oder hierher ziehen',
     anliegen: {
       legende: 'Worum geht es?',
       optionen: {
@@ -552,6 +562,12 @@ const de = {
     text: 'Bitte prüfen Sie Ihre Angaben und senden Sie die Anfrage noch einmal. Wir brauchen die Art des Gebäudes (bei Hausgeräten das Gerät), die Ortschaft, eine kurze Beschreibung, Ihren Namen, Ihre E-Mail-Adresse und Ihr Einverständnis. Dateien: höchstens 5 Bilder oder PDF mit je höchstens 10 MB.',
     zuViele: 'Es kamen in kurzer Zeit sehr viele Anfragen von Ihrem Anschluss. Bitte rufen Sie uns an.',
     technisch: 'Die Anfrage konnte nicht gespeichert werden. Bitte rufen Sie uns an oder schreiben Sie an info@biesen.lu.',
+  },
+
+  /** Prüfmodus der Vorschau (intern, in allen Sprachen deutsch) */
+  pruefung: {
+    zeigen: 'Offene Punkte zeigen',
+    ausblenden: 'Offene Punkte ausblenden',
   },
 
   footer: {

@@ -109,7 +109,7 @@ export async function heroPaar(lang: Lang, testTexte: { tag: string; abend: stri
 }
 
 /**
- * Die weiteren Paare für die Lichtseite (C6): alle Projekte mit Fotopaar außer dem Hero-Paar.
+ * Die Paare für die Lichtseite (C6): alle Projekte mit Fotopaar außer `heroId` (leer: alle).
  * Geplante Paare nicht freigegebener Projekte erscheinen im Produktiv-Build nur als Platzhalter
  * mit ihrem Motiv.
  */

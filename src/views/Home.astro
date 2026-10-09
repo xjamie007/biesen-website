@@ -1,32 +1,33 @@
 ---
 /**
- * Startseite (D2), in dieser Reihenfolge:
- * Hero mit dem gezeichneten Dorf (Lichter gehen an, Punkte führen zu den Leistungen), Fakten,
- * Leistungen als Karten, Bei Tag und am Abend (Regler), Weg zum Angebot, Wo wir gearbeitet haben,
- * 26 Leute in Noutem mit offenen Stellen, Marken und Mitgliedschaften, Häufige Fragen,
- * Anrufen oder schreiben, Fuß.
+ * Startseite (D2). Ziel: In 15 Sekunden ist klar, wer Biesen ist, was der Betrieb macht, wo er
+ * arbeitet und wie man ihn erreicht. Reihenfolge:
+ * 1. Hero: „Ihr Elektriker im Norden Luxemburgs“, alle Leistungen in einem Satz, Anfrage und
+ *    Telefon, drei Fakten, darunter die fünf Leistungen als Kacheln.
+ * 2. Laufband mit den Leistungen.
+ * 3. Die Leistungen ausführlich (Karten).
+ * 4. Über uns: ein Satz, der beim Scrollen Wort für Wort aufleuchtet, Zahlen, offene Stellen.
+ * 5. Weg zum Angebot in vier Schritten mit Fortschrittslinie.
+ * 6. Projekte (erst, wenn welche freigegeben sind), Marken und Mitgliedschaften, Fragen, Kontakt.
  */
 import Base from '@/layouts/Base.astro';
-import HeroDorf from '@/components/HeroDorf.astro';
-import TagAbend from '@/components/TagAbend.astro';
 import Foto from '@/components/Foto.astro';
 import Icon from '@/components/Icon.astro';
 import Leistungskarte from '@/components/Leistungskarte.astro';
 import ProjektEintrag from '@/components/ProjektEintrag.astro';
 import Faq from '@/components/Faq.astro';
 import AnrufenSchreiben from '@/components/AnrufenSchreiben.astro';
-import { rich, typo, useT } from '@/i18n';
+import { rich, stripOpenPoints, typo, useT } from '@/i18n';
 import { path, pathFor, SERVICE_PAGES, type Lang } from '@/i18n/config';
 import { faqJsonItems, FAQ_KEYS } from '@/lib/faq';
-import { faqPage } from '@/lib/jsonld';
+import { faqPage, leistungsKatalog } from '@/lib/jsonld';
 import { LEISTUNG_ICON } from '@/lib/icons';
-import { MARKEN } from '@/lib/leistungen';
+import { kartenPunkte, MARKEN } from '@/lib/leistungen';
 import { heroPaar, startseitenProjekte } from '@/lib/projekte';
 import { projektBild } from '@/lib/bilder';
 import { jobRoute, offeneJobs } from '@/lib/jobs';
 import { getEntry } from 'astro:content';
 import { site, telHref, DEV } from '@/lib/site';
-import { kurzText } from '@/lib/zeiten';
 import { withBase } from '@/i18n/config';
 
 interface Props {
@@ -51,96 +52,101 @@ const fotos = {
   licht: await leistungsFoto('milchviehstall'),
 };
 
-/** „26 Leute in Noutem“: die Zahl wird groß gesetzt, der Rest bleibt die Überschrift */
-const [teamZahl, ...teamRest] = t.home.teamH2.split(' ');
-const teamMitZahl = /^\d+$/.test(teamZahl);
-const u = t.seiten.ueberUns;
-const ablauf = t.seiten.leistungen;
+/** Der Satz über den Betrieb, Wort für Wort (leuchtet beim Scrollen auf) */
+const woerter = t.home.team.split(' ');
 
+/** Laufband: alle Leistungen und was dazugehört, ohne Dopplungen */
+const band = [...new Set(SERVICE_PAGES.flatMap((p) => [t.leistungen[p].name, ...kartenPunkte(t, p).slice(0, 2)]))];
+
+const ablauf = t.seiten.leistungen;
+const jsonld = [
+  leistungsKatalog(
+    t.home.leistungenH2,
+    SERVICE_PAGES.map((p) => ({ name: t.leistungen[p].name, description: stripOpenPoints(t.leistungen[p].text), url: path(lang, p) })),
+  ),
+  ...(faqJsonItems(t, FAQ_KEYS).length ? [faqPage(faqJsonItems(t, FAQ_KEYS))] : []),
+];
 const ogBild =
   paar.bilder && !paar.test && paar.freigegeben
     ? { src: withBase('/og/startseite.png'), width: 1200, height: 630, alt: paar.bilder.abend.alt }
     : undefined;
 ---
-<Base
-  lang={lang}
-  route={{ page: 'home' }}
-  title={t.seo.home.title}
-  description={t.seo.home.description}
-  ogBild={ogBild}
-  jsonld={faqJsonItems(t, FAQ_KEYS).length ? [faqPage(faqJsonItems(t, FAQ_KEYS))] : []}
->
+<Base lang={lang} route={{ page: 'home' }} title={t.seo.home.title} description={t.seo.home.description} ogBild={ogBild} jsonld={jsonld}>
   <section class="hero" aria-labelledby="hero-titel">
-    <div class="raster hero__oben">
-      <div class="hero__titel">
-        <p class="eyebrow eyebrow--hell auftritt"><Icon name="blitz" size={16} />{t.meta.ogAlt}</p>
-        <h1 id="hero-titel" class="auftritt">{t.home.h1}</h1>
-      </div>
-      <div class="hero__seite">
-        <p class="lead auftritt">{t.home.lead}</p>
+    <div class="hero__licht" aria-hidden="true"></div>
+    <div class="raster">
+      <div class="hero__inhalt">
+        <p class="eyebrow eyebrow--pille auftritt"><Icon name="blitz" size={16} />{t.meta.ogAlt}</p>
+        <h1 id="hero-titel" class="hero__titel">
+          {
+            t.home.h1.split(' ').map((w, i) => (
+              <>
+                <span class="hero__wort" style={`--i:${i}`}>{w}</span>{' '}
+              </>
+            ))
+          }
+        </h1>
+        <p class="hero__lead auftritt">{t.home.lead}</p>
         <p class="hero__aktionen auftritt">
-          <a class="knopf knopf--giel" href={path(lang, 'kontakt')}>
+          <a class="knopf knopf--gross" href={path(lang, 'kontakt')}>
             {t.allgemein.angebotAnfragen}
             <Icon name="pfeil" size={20} />
           </a>
-          <a class="knopf knopf--rand" href={telHref}>
+          <a class="knopf knopf--gross knopf--hell" href={telHref}>
             <Icon name="telefon" size={20} />
             <span class="sr-only">{t.allgemein.telefon} </span><span class="zahl">{site.telefon.anzeige}</span>
           </a>
         </p>
+        <ul class="hero__fakten auftritt">
+          <li><Icon name="team" size={18} /><span><strong class="zahl">{site.mitarbeitende}</strong> {t.home.fakten.leute}</span></li>
+          <li><Icon name="ort" size={18} /><span><strong>{t.home.fakten.ortTitel}</strong>, {t.home.fakten.ort}</span></li>
+        </ul>
       </div>
     </div>
-    <div class="hero__unten">
-      <HeroDorf lang={lang} t={t} />
-      <div class="raster hero__leistungen-raster">
-        <nav class="hero__leistungen auftritt" aria-labelledby="hero-leistungen-h">
-          <p id="hero-leistungen-h" class="label label--hell">{t.nav.leistungen}</p>
-          <ul class="chips">
-            {
-              SERVICE_PAGES.map((p) => (
-                <li>
-                  <a class:list={['chip', 'chip--hell', `farbe--${p}`]} href={path(lang, p)} data-punkt={p}>
-                    <Icon name={LEISTUNG_ICON[p]} size={18} />
-                    {t.leistungen[p].name}
-                  </a>
-                </li>
-              ))
-            }
-          </ul>
-        </nav>
-      </div>
+
+    <div class="raster">
+      <nav class="wahl" aria-labelledby="wahl-h">
+        <p id="wahl-h" class="wahl__titel">{t.home.wahl}</p>
+        <ul class="wahl__liste">
+          {
+            SERVICE_PAGES.map((p, i) => (
+              <li class:list={['kachel', `farbe--${p}`]} style={`--i:${i}`}>
+                <a class="kachel__link" href={path(lang, p)} data-licht>
+                  <span class="kachel__symbol" aria-hidden="true">
+                    <Icon name={LEISTUNG_ICON[p]} size={30} />
+                  </span>
+                  <span class="kachel__name">{t.leistungen[p].name}</span>
+                  <span class="kachel__kurz">{t.leistungen[p].kurz}</span>
+                  <span class="kachel__pfeil" aria-hidden="true"><Icon name="pfeil" size={18} /></span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
     </div>
   </section>
 
-  <section class="fakten" aria-label={t.nav.ueberUns}>
-    <div class="raster">
-      <ul class="fakten__liste">
-        <li class="fakt">
-          <span class="fakt__symbol farbe--installation" aria-hidden="true"><Icon name="team" size={26} /></span>
-          <p><strong class="fakt__wert zahl">{site.mitarbeitende}</strong> <span>{t.home.fakten.leute}</span></p>
-        </li>
-        <li class="fakt">
-          <span class="fakt__symbol farbe--licht" aria-hidden="true"><Icon name="blitz" size={26} /></span>
-          <p><strong class="fakt__wert zahl">{SERVICE_PAGES.length}</strong> <span>{t.home.fakten.bereiche}</span></p>
-        </li>
-        <li class="fakt">
-          <span class="fakt__symbol farbe--photovoltaik" aria-hidden="true"><Icon name="ort" size={26} /></span>
-          <p><strong class="fakt__wert">{t.home.fakten.ortTitel}</strong> <span>{t.home.fakten.ort}</span></p>
-        </li>
-        <li class="fakt">
-          <span class="fakt__symbol farbe--hausgeraete" aria-hidden="true"><Icon name="telefon" size={26} /></span>
-          <p>
-            <a class="fakt__wert zahl" href={telHref}><span class="sr-only">{t.allgemein.telefon} </span>{site.telefon.anzeige}</a>
-            <span class="zahl">{kurzText(t)}</span>
-          </p>
-        </li>
-      </ul>
+  <div class="laufband" aria-hidden="true">
+    <div class="laufband__spur">
+      {
+        [0, 1].map(() => (
+          <ul class="laufband__liste">
+            {band.map((x) => (
+              <li>
+                <Icon name="blitz" size={18} />
+                {x}
+              </li>
+            ))}
+          </ul>
+        ))
+      }
     </div>
-  </section>
+  </div>
 
   <section class="sektion" id="leistungen" aria-labelledby="leistungen-h">
     <div class="raster">
-      <div class="sektion__kopf">
+      <div class="sektion__kopf sektion__kopf--mitte">
         <p class="eyebrow"><Icon name="blitz" size={16} />{t.nav.leistungen}</p>
         <h2 id="leistungen-h">{t.home.leistungenH2}</h2>
         <p class="lead sektion__lead">{t.home.leistungenIntro}</p>
@@ -167,7 +173,7 @@ const ogBild =
           })
         }
       </ul>
-      <p class="sektion__fuss">
+      <p class="sektion__fuss sektion__fuss--mitte">
         <a class="knopf knopf--hell" href={path(lang, 'leistungen')}>
           {t.home.alleLeistungen}
           <Icon name="pfeil" size={20} />
@@ -176,79 +182,40 @@ const ogBild =
     </div>
   </section>
 
-  <TagAbend lang={lang} t={t} paar={paar} />
-
-  <section class="sektion flaeche flaeche--warm" aria-labelledby="weg-h">
+  <section class="sektion flaeche ueber" aria-labelledby="ueber-h">
     <div class="raster">
-      <div>
-        <h2 id="weg-h" class="sektion__kopf">{ablauf.ablaufH2}</h2>
-        <ol class="schritte">
-          {ablauf.ablauf.map((x) => <li class="schritt zeigen">{x}</li>)}
-        </ol>
-        <p class="klein schritte__hinweis" set:html={rich(ablauf.ablaufHinweis)} />
-        <p class="sektion__fuss">
-          <a class="knopf" href={path(lang, 'kontakt')}>
-            {t.allgemein.angebotAnfragen}
-            <Icon name="pfeil" size={20} />
-          </a>
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <section class="sektion" aria-labelledby="projekte-h">
-    <div class="raster">
-      <div class="sektion__kopf">
-        <p class="eyebrow"><Icon name="blitz" size={16} />{t.nav.projekte}</p>
-        <h2 id="projekte-h">{t.home.projekteH2}</h2>
-      </div>
-    </div>
-    {
-      projekte.length > 0 ? (
-        <div class="projekte">
-          {projekte.map((p, i) => (
-            <ProjektEintrag lang={lang} t={t} projekt={p} variante="startseite" seite={i % 2 === 0 ? 'rechts' : 'links'} />
-          ))}
-        </div>
-      ) : (
-        <div class="raster">
-          <p class="hinweisflaeche" set:html={rich(t.allgemein.projekteFehlen)} />
-        </div>
-      )
-    }
-    <div class="raster">
-      <p class="sektion__fuss">
-        <a class="textlink" href={path(lang, 'projekte')}>
-          {t.home.alleProjekte}
-          <Icon name="pfeil" size={20} />
-        </a>
-      </p>
-    </div>
-  </section>
-
-  <section class="sektion flaeche" aria-labelledby="team-h">
-    <div class="raster team">
-      <div class="team__text zeigen">
+      <div class="ueber__inhalt">
         <p class="eyebrow"><Icon name="blitz" size={16} />{t.nav.ueberUns}</p>
-        <h2 id="team-h" class="team__titel">
+        <h2 id="ueber-h" class="sr-only">{t.home.teamH2}</h2>
+        <p class="aufleuchten">
           {
-            teamMitZahl ? (
+            woerter.map((w) => (
               <>
-                <span class="team__zahl zahl">{teamZahl}</span> <span>{teamRest.join(' ')}</span>
+                <span class="aufleuchten__wort">{w}</span>{' '}
               </>
-            ) : (
-              t.home.teamH2
-            )
+            ))
           }
-        </h2>
-        <div class="prosa sektion__text">
-          <p>{t.home.team}</p>
-          <p set:html={rich(t.home.teamLeitung)} />
-        </div>
+        </p>
+        <ul class="zahlen">
+          <li class="zahl-kachel zeigen">
+            <span class="zahl-kachel__wert zaehler" style={`--ziel:${site.mitarbeitende}`}><span class="zaehler__text">{site.mitarbeitende}</span></span>
+            <span class="zahl-kachel__text">{t.home.fakten.leute}</span>
+          </li>
+          <li class="zahl-kachel zeigen">
+            <span class="zahl-kachel__wert zaehler" style={`--ziel:${SERVICE_PAGES.length}`}><span class="zaehler__text">{SERVICE_PAGES.length}</span></span>
+            <span class="zahl-kachel__text">{t.home.fakten.bereiche}</span>
+          </li>
+          <li class="zahl-kachel zeigen">
+            <span class="zahl-kachel__wert">{t.home.fakten.ortTitel}</span>
+            <span class="zahl-kachel__text">{t.home.fakten.ort}</span>
+          </li>
+        </ul>
         {
           jobs.length > 0 && (
-            <div class="team__jobs">
-              <p class="label">{t.seiten.jobs.offenH2}</p>
+            <div class="ueber__jobs">
+              <p class="ueber__jobs-titel">
+                <strong>{t.home.jobs}</strong> <a href={path(lang, 'jobs')}>{t.home.jobsLink}</a>
+              </p>
               <ul class="jobliste">
                 {jobs.map((j) => (
                   <li>
@@ -268,15 +235,67 @@ const ogBild =
             </div>
           )
         }
-        <p class="sektion__text">
-          {t.home.jobs} <a href={path(lang, 'jobs')}>{t.home.jobsLink}</a>
-        </p>
       </div>
-      <Foto class="team__foto zeigen" bild={null} alt="" folgt={t.allgemein.fotoFolgt} motiv={t.home.teamFoto} sizes="(min-width: 1024px) 50vw, 100vw" />
     </div>
   </section>
 
-  <section class="sektion marken" aria-labelledby="marken-h">
+  <section class="sektion weg" aria-labelledby="weg-h">
+    <div class="raster">
+      <div class="weg__inhalt">
+        <div class="weg__kopf">
+          <p class="eyebrow"><Icon name="blitz" size={16} />{t.allgemein.angebotAnfragen}</p>
+          <h2 id="weg-h">{ablauf.ablaufH2}</h2>
+          <p class="klein schritte__hinweis" set:html={rich(ablauf.ablaufHinweis)} />
+          <p class="weg__aktion">
+            <a class="knopf" href={path(lang, 'kontakt')}>
+              {t.allgemein.angebotAnfragen}
+              <Icon name="pfeil" size={20} />
+            </a>
+          </p>
+        </div>
+        <ol class="weg__schritte">
+          {
+            ablauf.ablauf.map((x) => (
+              <li class="weg__schritt">
+                <span>{x}</span>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  {
+    projekte.length > 0 && (
+      <section class="sektion" aria-labelledby="projekte-h">
+        <div class="raster">
+          <div class="sektion__kopf">
+            <p class="eyebrow">
+              <Icon name="blitz" size={16} />
+              {t.nav.projekte}
+            </p>
+            <h2 id="projekte-h">{t.home.projekteH2}</h2>
+          </div>
+        </div>
+        <div class="projekte">
+          {projekte.map((p, i) => (
+            <ProjektEintrag lang={lang} t={t} projekt={p} variante="startseite" seite={i % 2 === 0 ? 'rechts' : 'links'} />
+          ))}
+        </div>
+        <div class="raster">
+          <p class="sektion__fuss">
+            <a class="textlink" href={path(lang, 'projekte')}>
+              {t.home.alleProjekte}
+              <Icon name="pfeil" size={20} />
+            </a>
+          </p>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="sektion flaeche marken" aria-labelledby="marken-h">
     <div class="raster">
       <div class="marken__inhalt">
         <h2 id="marken-h" class="sektion__kopf">{t.home.markenH2}</h2>
@@ -287,20 +306,20 @@ const ogBild =
           </ul>
         </div>
         <div class="marken__gruppe">
-          <p class="label">{u.mitgliedH2}</p>
+          <p class="label">{t.seiten.ueberUns.mitgliedH2}</p>
           <ul class="stichpunkte stichpunkte--gross">
-            {u.mitglied.map((m) => <li>{m}</li>)}
+            {t.seiten.ueberUns.mitglied.map((m) => <li>{m}</li>)}
           </ul>
-          <p class="klein marken__hinweis" set:html={rich(u.mitgliedHinweis)} />
+          <p class="klein marken__hinweis" set:html={rich(t.seiten.ueberUns.mitgliedHinweis)} />
         </div>
       </div>
     </div>
   </section>
 
-  <section class="sektion flaeche" aria-labelledby="faq-h">
+  <section class="sektion" aria-labelledby="faq-h">
     <div class="raster">
-      <div>
-        <h2 id="faq-h" class="sektion__kopf">{t.home.faqH2}</h2>
+      <div class="faq-bereich">
+        <h2 id="faq-h" class="sektion__kopf sektion__kopf--mitte">{t.home.faqH2}</h2>
         <Faq lang={lang} t={t} keys={FAQ_KEYS} />
       </div>
     </div>
@@ -308,3 +327,16 @@ const ogBild =
 
   <AnrufenSchreiben lang={lang} t={t} />
 </Base>
+
+<script>
+  // Lichtpunkt unter dem Mauszeiger auf den Kacheln und Karten (nur Maus, nur ohne reduzierte Bewegung)
+  if (matchMedia('(hover: hover) and (prefers-reduced-motion: no-preference)').matches) {
+    document.addEventListener('pointermove', (e) => {
+      const el = (e.target as HTMLElement).closest<HTMLElement>('[data-licht], .karte');
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      el.style.setProperty('--mx', `${e.clientX - r.left}px`);
+      el.style.setProperty('--my', `${e.clientY - r.top}px`);
+    });
+  }
+</script>

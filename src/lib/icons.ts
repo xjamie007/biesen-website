@@ -26,9 +26,40 @@ export const ICONS = {
   team: '<circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.6"/><path d="M16 14.2c2.8.2 5 2.6 5 5.8"/>',
   kamera: '<path d="M4 7.5h3l1.5-2.5h7L17 7.5h3a1 1 0 0 1 1 1V18a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8.5a1 1 0 0 1 1-1Z"/><circle cx="12" cy="13" r="3.5"/>',
   blitz: '<path d="M13.6 2 5 13.4h6.2L9.6 22 19 10.4h-6.3Z" fill="currentColor" stroke="none"/>',
+  werkzeug:
+    '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.8-3.8a6 6 0 0 1-7.9 7.9l-6.9 6.9a2.1 2.1 0 0 1-3-3l6.9-6.9a6 6 0 0 1 7.9-7.9l-3.8 3.8Z"/>',
+  frage:
+    '<path d="M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-9l-5 4v-4H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/><path d="M10 9.5a2 2 0 1 1 2.8 1.8c-.5.2-.8.7-.8 1.2"/><path d="M12 14.5h.01"/>',
+  wohnhaus: '<path d="M3 10.5 12 3l9 7.5"/><path d="M5 9v11.5h14V9"/><path d="M10 20.5v-6h4v6"/>',
+  wohnung: '<rect x="5" y="3" width="14" height="18" rx="1"/><path d="M9 7h1M14 7h1M9 11h1M14 11h1M9 15h1M14 15h1"/><path d="M11 21v-3h2v3"/>',
+  halle: '<path d="M3 21V10l5 3V10l5 3V7l8 4v10Z"/><path d="M3 21h18"/><path d="M8 17h2M13 17h2"/>',
+  hof: '<path d="M3 10 7 5h10l4 5"/><path d="M4 10v11h16V10"/><path d="M9 21v-6h6v6"/><path d="m9 15 6 6M15 15l-6 6"/>',
+  gemeinde: '<path d="M3 9 12 4l9 5"/><path d="M5 9v9M9 9v9M15 9v9M19 9v9"/><path d="M3 21h18M3 18h18"/>',
+  hochladen: '<path d="M12 16V4"/><path d="m7 9 5-5 5 5"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/>',
+  schloss: '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
 } as const;
 
 export type IconName = keyof typeof ICONS;
+
+/** Symbol je Anliegen und je Gebäude im Anfrageformular */
+export const ANLIEGEN_ICON = {
+  neubau: 'haus',
+  renovierung: 'werkzeug',
+  licht: 'licht',
+  photovoltaik: 'solar',
+  ladestation: 'ladestation',
+  sicherheit: 'schild',
+  hausgeraet: 'geraet',
+  anderes: 'frage',
+} as const satisfies Record<string, IconName>;
+
+export const GEBAEUDE_ICON = {
+  haus: 'wohnhaus',
+  wohnung: 'wohnung',
+  betrieb: 'halle',
+  landwirtschaft: 'hof',
+  oeffentlich: 'gemeinde',
+} as const satisfies Record<string, IconName>;
 
 /** Symbol je Leistung (Navigation, Karten, Seitenkopf) */
 export const LEISTUNG_ICON: Record<ServicePage, IconName> = {

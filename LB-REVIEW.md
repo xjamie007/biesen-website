@@ -3,7 +3,7 @@
 Jeder luxemburgische Text ist ein Entwurf und trägt das Flag `review: "lb-native"`, bis er in `src/i18n/lb-geprueft.json` eingetragen ist.
 Diese Datei schreibt `npm run lb-review`; bitte nicht von Hand ändern. Korrekturen direkt in `src/i18n/lb.ts` bzw. in den YAML-Dateien, danach den Schlüssel in `lb-geprueft.json` eintragen.
 
-Stand: 502 Texte offen, 0 geprüft.
+Stand: 514 Texte offen, 0 geprüft.
 
 ## Übersetzungsdatei src/i18n/lb.ts
 
@@ -42,18 +42,23 @@ Stand: 502 Texte offen, 0 geprüft.
 | `allgemein.passendeProjekte` | Projekte | Projeten |
 | `allgemein.passendeFragen` | Häufige Fragen | Heefeg Froen |
 | `leistungen.installation.name` | Neubau und Renovierung | Neibau a Renovatioun |
+| `leistungen.installation.kurz` | Elektrik für neue und alte Häuser | Elektresch fir nei an al Haiser |
 | `leistungen.installation.text` | Wir planen und verlegen die Elektrik für neue Häuser, auch für Fertighäuser, und bringen alte Anlagen auf den heutigen Stand: Verteiler, Leitungen, Steckdosen, Gemeinschaftsantennen und Gebäudesteuerung mit KNX. | Mir plangen a leeën d’Elektresch fir nei Haiser, och fir Fäerdeghaiser, a bréngen al Installatiounen op den aktuelle Stand: Verdeeler, Leitungen, Steckdousen, Gemeinschaftsantennen a Gebaisteierung mat KNX. |
 | `leistungen.installation.link` | Mehr zu Neubau und Renovierung | Méi iwwer Neibau a Renovatioun |
 | `leistungen.licht.name` | Licht | Liicht |
+| `leistungen.licht.kurz` | Licht für Haus, Garten, Stall und Halle | Liicht fir Haus, Gaart, Stall an Hal |
 | `leistungen.licht.text` | Licht für Wohnräume, Treppen und Gärten, für Ställe und Hallen, für Straßen und Plätze. Wir überlegen mit Ihnen, wo welches Licht hingehört, und montieren es. | Liicht fir Wunnraim, Trapen a Gäert, fir Ställ an Hallen, fir Stroossen a Plazen. Mir iwwerleeë mat Iech, wou wéi e Liicht higehéiert, a mir montéieren et. |
 | `leistungen.licht.link` | Projekte bei Tag und am Abend ansehen | Projeten am Dag an am Owend kucken |
 | `leistungen.photovoltaik.name` | Photovoltaik und Ladestationen | Photovoltaik a Luedstatiounen |
+| `leistungen.photovoltaik.kurz` | Strom vom eigenen Dach, Laden zu Hause | Stroum vum eegenen Daach, Lueden doheem |
 | `leistungen.photovoltaik.text` | Photovoltaikanlagen für das Dach von Haus, Hof oder Halle, die sich später erweitern lassen. Ladestationen für Elektroautos, zu Hause oder im Betrieb. | Photovoltaikanlage fir den Daach vun Haus, Haff oder Hal, déi sech spéider erweidere loossen. Luedstatioune fir Elektroautoen, doheem oder am Betrib. |
 | `leistungen.photovoltaik.link` | Mehr zu Photovoltaik und Ladestationen | Méi iwwer Photovoltaik a Luedstatiounen |
 | `leistungen.sicherheit.name` | Alarm, Kameras, Brandmelder | Alarm, Kameraen, Brandmelder |
+| `leistungen.sicherheit.kurz` | Sicherheit für Haus und Betrieb | Sécherheet fir Haus a Betrib |
 | `leistungen.sicherheit.text` | Alarmanlagen, Videoüberwachung und Brandmeldeanlagen, abgestimmt auf Ihr Gebäude und von uns installiert. | Alarmanlagen, Videoiwwerwaachung a Brandmeldeanlagen, ofgestëmmt op Äert Gebai an vun eis installéiert. |
 | `leistungen.sicherheit.link` | Mehr zur Sicherheitstechnik | Méi iwwer d’Sécherheetstechnik |
 | `leistungen.hausgeraete.name` | Hausgeräte | Haushaltsapparater |
+| `leistungen.hausgeraete.kurz` | AEG, Miele, Liebherr, Bosch, Siemens | AEG, Miele, Liebherr, Bosch, Siemens |
 | `leistungen.hausgeraete.text` | Waschmaschinen, Kühlschränke, Backöfen und Küchengeräte von AEG, Miele, Liebherr, Bosch und Siemens. [UNBESTÄTIGT — Ausstellung, Lieferung und Anschluss ergänzen] | Wäschmaschinnen, Frigoen, Bakuewen a Kichenapparater vun AEG, Miele, Liebherr, Bosch a Siemens. [UNBESTÄTIGT — Ausstellung, Lieferung und Anschluss ergänzen] |
 | `leistungen.hausgeraete.link` | Zu den Hausgeräten | Bei d’Haushaltsapparater |
 | `owend.bildunterschrift` | {ort}, {projekt}. Fotografiert um {tag} und um {abend} Uhr. | {ort}, {projekt}. Fotograféiert um {tag} an um {abend} Auer. |
@@ -66,9 +71,10 @@ Stand: 502 Texte offen, 0 geprüft.
 | `owend.testTag` | Test Tag | Test Dag |
 | `owend.testAbend` | Test Abend | Test Owend |
 | `owend.motivStartseite` | Wohnhaus mit Außen- und Gartenbeleuchtung | Wunnhaus mat Liicht dobaussen an am Gaart |
-| `home.h1` | Strom und Licht für Haus, Hof und Betrieb | Stroum a Liicht fir Haus, Haff a Betrib |
-| `home.lead` | Wir sind ein Elektrobetrieb mit 26 Leuten in Noutem, in der Stauseegemeinde. Wir verlegen die Elektrik in neuen und alten Häusern, in Ställen und Hallen und montieren Licht, Photovoltaik und Ladestationen. | Mir sinn en Elektrobetrib mat 26 Leit zu Noutem, an der Stauséigemeng. Mir leeën d’Elektresch an neien an alen Haiser, a Ställ an Hallen a montéieren Liicht, Photovoltaik a Luedstatiounen. |
-| `home.leistungenH2` | Was wir machen | Wat mir maachen |
+| `home.h1` | Ihr Elektriker im Norden Luxemburgs | Ären Elektriker am Norde vu Lëtzebuerg |
+| `home.lead` | Elektroinstallation, Licht, Photovoltaik, Ladestationen, Alarmanlagen und Hausgeräte für Haus, Hof und Betrieb. Ein Familienbetrieb mit 26 Leuten in Noutem, nahe Wiltz. | Elektroinstallatioun, Liicht, Photovoltaik, Luedstatiounen, Alarmanlagen an Haushaltsapparater fir Haus, Haff a Betrib. E Familljebetrib mat 26 Leit zu Noutem, no bei Wolz. |
+| `home.leistungenH2` | Elektriker für Haus, Hof und Betrieb | Elektriker fir Haus, Haff a Betrib |
+| `home.wahl` | Worum geht es bei Ihnen? | Ëm wat geet et bei Iech? |
 | `home.leistungenIntro` | Wir arbeiten in fünf Bereichen, in Wohnhäusern, auf Höfen und in Betrieben. Wählen Sie einen Bereich, um mehr zu erfahren. | Mir schaffen a fënnef Beräicher, an Haiser, op Häff an a Betriber. Wielt e Beräich, fir méi ze erfueren. |
 | `home.alleLeistungen` | Alle Leistungen im Überblick | All d’Leeschtungen op ee Bléck |
 | `home.fakten.leute` | Leute auf den Baustellen und im Büro | Leit op de Chantieren an am Büro |
@@ -326,6 +332,10 @@ Stand: 502 Texte offen, 0 geprüft.
 | `formular.pflicht` | Pflichtfeld | Pflichtfeld |
 | `formular.freiwillig` | freiwillig | fräiwëlleg |
 | `formular.hinweisPflicht` | Felder mit dem Zusatz „freiwillig“ können Sie leer lassen. Alle anderen brauchen wir für das Angebot. | Felder mam Zousaz „fräiwëlleg“ kënnt Dir eidel loossen. All déi aner brauche mir fir d’Offer. |
+| `formular.schrittProjekt` | Ihr Projekt | Äre Projet |
+| `formular.schrittKontakt` | Ihre Kontaktdaten | Är Kontaktdaten |
+| `formular.vertrauen` | Ihre Anfrage und Ihre Dateien werden in einem Rechenzentrum in der Europäischen Union gespeichert. | Är Ufro an Är Fichieren ginn an engem Rechenzentrum an der Europäescher Unioun gespäichert. |
+| `formular.dateienZiehen` | Dateien auswählen oder hierher ziehen | Fichieren auswielen oder heihinner zéien |
 | `formular.anliegen.legende` | Worum geht es? | Ëm wat geet et? |
 | `formular.anliegen.optionen.neubau` | Neubau | Neibau |
 | `formular.anliegen.optionen.renovierung` | Renovierung oder Umbau | Renovatioun oder Ëmbau |
@@ -408,6 +418,8 @@ Stand: 502 Texte offen, 0 geprüft.
 | `serverFehler.text` | Bitte prüfen Sie Ihre Angaben und senden Sie die Anfrage noch einmal. Wir brauchen die Art des Gebäudes (bei Hausgeräten das Gerät), die Ortschaft, eine kurze Beschreibung, Ihren Namen, Ihre E-Mail-Adresse und Ihr Einverständnis. Dateien: höchstens 5 Bilder oder PDF mit je höchstens 10 MB. | Iwwerpréift w.e.g. Är Informatiounen a schéckt d’Ufro nach eng Kéier. Mir brauchen d’Zort vu Gebai (bei Haushaltsapparater den Apparat), d’Uertschaft, eng kuerz Beschreiwung, Ären Numm, Är E-Mail-Adress an Är Zoustëmmung. Fichieren: héchstens 5 Biller oder PDF mat all héchstens 10 MB. |
 | `serverFehler.zuViele` | Es kamen in kurzer Zeit sehr viele Anfragen von Ihrem Anschluss. Bitte rufen Sie uns an. | Vun Ärem Uschloss koumen a kuerzer Zäit ganz vill Ufroen. Rufft eis w.e.g. un. |
 | `serverFehler.technisch` | Die Anfrage konnte nicht gespeichert werden. Bitte rufen Sie uns an oder schreiben Sie an info@biesen.lu. | D’Ufro konnt net gespäichert ginn. Rufft eis w.e.g. un oder schreift op info@biesen.lu. |
+| `pruefung.zeigen` | Offene Punkte zeigen | Offene Punkte zeigen |
+| `pruefung.ausblenden` | Offene Punkte ausblenden | Offene Punkte ausblenden |
 | `footer.zeitenKurz` | Telefon und Büro | Telefon a Büro |
 | `footer.genehmigung` | Gewerbegenehmigung Nr. {nr} | Geweerbegenehmegung Nr. {nr} |
 | `footer.facebook` | Facebook | Facebook |

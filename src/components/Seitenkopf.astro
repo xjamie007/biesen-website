@@ -1,6 +1,6 @@
 ---
 /**
- * Kopf der Unterseiten als Band in Blaue-Stunde-Blau: sichtbarer Pfad (passt zur BreadcrumbList),
+ * Kopf der Unterseiten als helles Band: sichtbarer Pfad (passt zur BreadcrumbList),
  * auf Leistungsseiten das Symbol der Leistung, h1, Einleitung. Der Slot steht unter der Einleitung.
  */
 import Icon from './Icon.astro';
@@ -36,7 +36,7 @@ const { pfadLabel, pfad, h1, intro, introHtml = {}, icon, farbe } = Astro.props;
         }
       </ol>
     </nav>
-    {icon && <span class="symbol symbol--hell seitenkopf__symbol" aria-hidden="true"><Icon name={icon} size={32} /></span>}
+    {icon && <span class="symbol symbol--gross seitenkopf__symbol" aria-hidden="true"><Icon name={icon} size={32} /></span>}
     <h1>{h1}</h1>
     {intro && <p class="lead" set:html={rich(intro, introHtml)} />}
     <slot />
