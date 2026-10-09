@@ -1,0 +1,47 @@
+# Treppenbeleuchtung und LED-Lichtprofile (alte Galerie, Lichtprojekte 2025/07).
+# Fotopaar für die Lichtseite möglich (Treppenhaus).
+# [UNBESTÄTIGT] welches Haus, Ortschaft, Jahr, Erlaubnis.
+titel:
+  de: Licht für eine Treppe
+  fr: Éclairage d’un escalier
+  lb: Liicht fir eng Trap
+  en: Lighting for a staircase
+ortschaft: ""
+jahr: null
+art: licht-innen
+text:
+  de: ""
+  fr: ""
+  lb: ""
+  en: ""
+fotos:
+  - bild: ""
+    quelle: https://electricite-biesen.lu/galerie/ (2025/07/Beleuchtung-bild-*.jpg)
+    alt:
+      de: Treppe mit Licht an den Stufen
+      fr: Escalier avec éclairage des marches
+      lb: Trap mat Liicht un de Trapen
+      en: Staircase with lit steps
+owend:
+  motiv:
+    de: Treppenhaus
+    fr: cage d’escalier
+    lb: Trapenhaus
+    en: stairwell
+  tag: { bild: "", uhrzeit: "" }
+  abend: { bild: "", uhrzeit: "" }
+  fokus: 50% 50%
+  alt:
+    tag:
+      de: Treppenhaus am Nachmittag
+      fr: La cage d’escalier l’après-midi
+      lb: D’Trapenhaus mëttes
+      en: The stairwell in the afternoon
+    abend:
+      de: Dasselbe Treppenhaus am Abend, Licht eingeschaltet
+      fr: La même cage d’escalier le soir, lumière allumée
+      lb: Datselwecht Trapenhaus owes, mam Liicht un
+      en: The same stairwell in the evening, with the lights on
+startseite: false
+reihenfolge: 5
+freigabe: false

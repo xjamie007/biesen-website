@@ -1,0 +1,97 @@
+# Stellenanzeige aus der heutigen Website (E8).
+# [FEHLT] veroeffentlicht, gueltig_bis   [UNBESTÄTIGT] vollzeit, Stelle noch offen
+offen: true
+veroeffentlicht: null
+gueltig_bis: null
+vollzeit: null
+unbefristet: true
+reihenfolge: 2
+pfad:
+  de: hilfsmonteur
+  fr: aide-electricien
+  lb: hellefsmonteur
+  en: electricians-assistant
+titel:
+  de: Hilfsmonteurin oder Hilfsmonteur
+  fr: Aide-électricienne ou aide-électricien
+  lb: Hëllefsmonteurin oder Hëllefsmonteur
+  en: Electrician’s assistant
+kurz:
+  de: Schlitze fräsen, Dosen setzen, Kabel verlegen und Schalter montieren, mit Führerschein B.
+  fr: Rainurer les murs, poser les boîtiers, tirer les câbles et monter les interrupteurs, avec permis B.
+  lb: Schlitzer fräsen, Dousen setzen, Kabele leeën a Schalter montéieren, mat Führerschäin B.
+  en: Cutting wall chases, setting boxes, laying cables and fitting switches, with driving licence B.
+aufgaben:
+  de:
+    - Wandschlitze fräsen, Gerätedosen setzen, Kabel verlegen
+    - technische Pläne lesen
+    - Elektroinstallationen in verschiedenen Gebäuden
+    - Schalter und Steckdosen montieren
+    - Vorschriften und Sicherheitsregeln einhalten
+  fr:
+    - rainurer les murs, poser les boîtiers d’encastrement, tirer les câbles
+    - lire des plans techniques
+    - installations électriques dans différents bâtiments
+    - monter les interrupteurs et les prises
+    - respecter les règles et les consignes de sécurité
+  lb:
+    - Schlitzer an d’Mauer fräsen, Apparatsdousen setzen, Kabele leeën
+    - technesch Pläng liesen
+    - Elektroinstallatiounen a verschiddene Gebaier
+    - Schalter a Steckdouse montéieren
+    - Virschrëften a Sécherheetsreegelen anhalen
+  en:
+    - cutting wall chases, setting flush boxes, laying cables
+    - reading technical drawings
+    - electrical installations in different buildings
+    - fitting switches and sockets
+    - following regulations and safety rules
+profil:
+  de:
+    - technischer Hintergrund erwünscht
+    - Führerschein B Pflicht
+    - Kenntnisse in Hausautomation und Photovoltaik von Vorteil
+    - sehr gutes Französisch und/oder Deutsch, Luxemburgisch oder Portugiesisch von Vorteil
+    - zuverlässig, gewissenhaft, im Team
+  fr:
+    - formation technique souhaitée
+    - permis B obligatoire
+    - connaissances en domotique et en photovoltaïque, un atout
+    - très bon français et/ou allemand, luxembourgeois ou portugais, un atout
+    - fiable, consciencieux, à l’aise en équipe
+  lb:
+    - technesche Fong erwënscht
+    - Führerschäin B obligatoresch
+    - Kenntnisser an Hausautomatioun a Photovoltaik vu Virdeel
+    - ganz gutt Franséisch an/oder Däitsch, Lëtzebuergesch oder Portugisesch vu Virdeel
+    - zouverlässeg, gewëssenhaft, an der Equipe
+  en:
+    - technical background welcome
+    - driving licence B required
+    - knowledge of home automation and solar power an advantage
+    - very good French and/or German, Luxembourgish or Portuguese an advantage
+    - reliable, conscientious, a team player
+angebot:
+  de:
+    - echte Entwicklungsmöglichkeiten
+    - einen sicheren Arbeitsplatz in einem wachsenden Betrieb
+  fr:
+    - de vraies possibilités d’évolution
+    - un emploi stable dans une entreprise qui grandit
+  lb:
+    - richteg Méiglechkeeten, sech weiderzentwéckelen
+    - eng sécher Aarbechtsplaz an engem wuessende Betrib
+  en:
+    - real opportunities to develop
+    - a secure job in a growing business
+seo:
+  title:
+    de: Hilfsmonteurin/-monteur in Nothum | Electricité Biesen
+    fr: Aide-électricien (H/F) à Nothum | Electricité Biesen
+    lb: Hëllefsmonteurin/-monteur zu Noutem | Electricité Biesen
+    en: Electrician’s assistant job, Nothum | Electricité Biesen
+  description:
+    de: Electricité Biesen in Nothum sucht eine Hilfsmonteurin oder einen Hilfsmonteur für Elektroinstallationen in Wohnhäusern und Betrieben. Führerschein B Pflicht.
+    fr: Electricité Biesen à Nothum recrute une aide-électricienne ou un aide-électricien pour des installations dans des maisons et des entreprises. Permis B requis.
+    lb: Electricité Biesen zu Noutem sicht eng Hëllefsmonteurin oder en Hëllefsmonteur fir Elektroinstallatiounen a Wunnhaiser a Betriber. Führerschäin B néideg.
+    en: Electricité Biesen in Nothum is hiring an electrician’s assistant for electrical installations in houses and businesses. Driving licence B is required.

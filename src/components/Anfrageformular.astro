@@ -1,0 +1,243 @@
+---
+/**
+ * Anfrageformular (F): normales POST (multipart/form-data) an die Supabase Edge Function,
+ * funktioniert ohne JavaScript. Ohne JavaScript sind alle bedingten Feldgruppen sichtbar
+ * („Nur bei Neubau“ …); mit JavaScript nur die passenden (src/scripts/formular.ts).
+ * Jedes Feld mit sichtbarem Label, Fehlermeldungen am Feld und für Screenreader angekündigt.
+ */
+import { escapeHtml, fmt, rich, type Dict } from '@/i18n';
+import { path, type Lang } from '@/i18n/config';
+import { FORM_URL, site } from '@/lib/site';
+
+interface Props {
+  lang: Lang;
+  t: Dict;
+}
+const { lang, t } = Astro.props;
+const f = t.formular;
+const fe = f.fehler;
+const ANLIEGEN = ['neubau', 'renovierung', 'licht', 'photovoltaik', 'ladestation', 'sicherheit', 'hausgeraet', 'anderes'] as const;
+const GEBAEUDE = ['haus', 'wohnung', 'betrieb', 'landwirtschaft', 'oeffentlich'] as const;
+const einwilligung = rich(f.einwilligung.text, {
+  link: `<a href="${path(lang, 'datenschutz')}">${escapeHtml(f.einwilligung.link)}</a>`,
+});
+const freiwillig = `<span class="feld__zusatz">(${escapeHtml(f.freiwillig)})</span>`;
+---
+<form
+  class="formular"
+  method="post"
+  action={FORM_URL || undefined}
+  enctype="multipart/form-data"
+  accept-charset="utf-8"
+  data-formular
+  data-zusammenfassung-one={fe.zusammenfassung.one}
+  data-zusammenfassung-other={fe.zusammenfassung.other}
+  data-sendet={f.sendet}
+>
+  <div class="zusammenfassung" role="alert" tabindex="-1" data-zusammenfassung></div>
+  <p class="klein neben">{f.hinweisPflicht}</p>
+
+  <fieldset class="feldgruppe" id="feld-anliegen" aria-describedby="fehler-anliegen">
+    <legend>{f.anliegen.legende}</legend>
+    <div class="optionen optionen--zwei">
+      {
+        ANLIEGEN.map((a, i) => (
+          <label class="option">
+            <input type="radio" name="anliegen" value={a} required={i === 0} data-hinweis={f.beschreibung.hinweise[a]} />
+            <span>{f.anliegen.optionen[a]}</span>
+          </label>
+        ))
+      }
+    </div>
+    <p class="fehler" id="fehler-anliegen" hidden data-text={fe.anliegen}></p>
+  </fieldset>
+
+  <fieldset class="feldgruppe" id="feld-gebaeude" data-ausser="hausgeraet" aria-describedby="hinweis-gebaeude fehler-gebaeude">
+    <legend>{f.gebaeude.legende}</legend>
+    <p class="feld__hinweis klein" id="hinweis-gebaeude">{f.gebaeude.hinweis}</p>
+    <div class="optionen optionen--zwei">
+      {
+        GEBAEUDE.map((g) => (
+          <label class="option">
+            <input type="radio" name="gebaeude" value={g} />
+            <span>{f.gebaeude.optionen[g]}</span>
+          </label>
+        ))
+      }
+    </div>
+    <p class="fehler" id="fehler-gebaeude" hidden data-text={fe.gebaeude}></p>
+  </fieldset>
+
+  <fieldset class="bedingt feldgruppe" data-nur="neubau">
+    <legend class="bedingt__titel">{f.nurNeubau}</legend>
+    <fieldset class="feldgruppe">
+      <legend><Fragment set:html={`${escapeHtml(f.fertighaus.legende)} ${freiwillig}`} /></legend>
+      <div class="optionen">
+        {
+          (['ja', 'nein', 'offen'] as const).map((o) => (
+            <label class="option">
+              <input type="radio" name="fertighaus" value={o} />
+              <span>{f.fertighaus.optionen[o]}</span>
+            </label>
+          ))
+        }
+      </div>
+    </fieldset>
+  </fieldset>
+
+  <fieldset class="bedingt feldgruppe" data-nur="ladestation">
+    <legend class="bedingt__titel">{f.nurLadestation}</legend>
+    <fieldset class="feldgruppe">
+      <legend><Fragment set:html={`${escapeHtml(f.abstand.legende)} ${freiwillig}`} /></legend>
+      <div class="optionen optionen--zwei">
+        {
+          (['unter10', 'bis25', 'ueber25', 'unbekannt'] as const).map((o) => (
+            <label class="option">
+              <input type="radio" name="abstand" value={o} />
+              <span>{f.abstand.optionen[o]}</span>
+            </label>
+          ))
+        }
+      </div>
+    </fieldset>
+    <fieldset class="feldgruppe">
+      <legend><Fragment set:html={`${escapeHtml(f.pv.legende)} ${freiwillig}`} /></legend>
+      <div class="optionen">
+        {
+          (['ja', 'nein', 'geplant'] as const).map((o) => (
+            <label class="option">
+              <input type="radio" name="pv" value={o} />
+              <span>{f.pv.optionen[o]}</span>
+            </label>
+          ))
+        }
+      </div>
+    </fieldset>
+  </fieldset>
+
+  <fieldset class="bedingt feldgruppe" data-nur="hausgeraet">
+    <legend class="bedingt__titel">{f.nurHausgeraet}</legend>
+    <div class="feld">
+      <label for="geraet">{f.geraet.label}</label>
+      <input class="eingabe" id="geraet" name="geraet" type="text" autocomplete="off" maxlength="200" aria-describedby="fehler-geraet" />
+      <p class="fehler" id="fehler-geraet" hidden data-text={fe.geraet}></p>
+    </div>
+  </fieldset>
+
+  <div class="feld">
+    <label for="ortschaft">{f.ortschaft.label}</label>
+    <p class="feld__hinweis klein" id="hinweis-ortschaft">{f.ortschaft.hinweis}</p>
+    <input
+      class="eingabe"
+      id="ortschaft"
+      name="ortschaft"
+      type="text"
+      autocomplete="address-level2"
+      required
+      maxlength="120"
+      aria-describedby="hinweis-ortschaft fehler-ortschaft"
+    />
+    <p class="fehler" id="fehler-ortschaft" hidden data-text={fe.ortschaft}></p>
+  </div>
+
+  <div class="feld">
+    <label for="start"><Fragment set:html={`${escapeHtml(f.start.label)} ${freiwillig}`} /></label>
+    <select class="eingabe" id="start" name="start">
+      <option value="">{f.start.leer}</option>
+      {(['bald', 'dreiMonate', 'spaeter'] as const).map((o) => <option value={o}>{f.start.optionen[o]}</option>)}
+    </select>
+  </div>
+
+  <div class="feld">
+    <label for="beschreibung">{f.beschreibung.label}</label>
+    <p class="feld__hinweis klein" id="hinweis-beschreibung" data-hinweis-standard={f.beschreibung.hinweise.standard}>
+      {f.beschreibung.hinweise.standard}
+    </p>
+    <textarea
+      class="eingabe"
+      id="beschreibung"
+      name="beschreibung"
+      rows="6"
+      required
+      maxlength="5000"
+      aria-describedby="hinweis-beschreibung fehler-beschreibung"></textarea>
+    <p class="fehler" id="fehler-beschreibung" hidden data-text={fe.beschreibung}></p>
+  </div>
+
+  <div class="feld">
+    <label for="dateien"><Fragment set:html={`${escapeHtml(f.dateien.label)} ${freiwillig}`} /></label>
+    <p class="feld__hinweis klein" id="hinweis-dateien">{f.dateien.hinweis}</p>
+    <input
+      class="eingabe"
+      id="dateien"
+      name="dateien"
+      type="file"
+      multiple
+      accept="image/*,application/pdf"
+      aria-describedby="hinweis-dateien fehler-dateien"
+    />
+    <ul class="dateiliste klein" data-dateiliste hidden></ul>
+    <p
+      class="fehler"
+      id="fehler-dateien"
+      hidden
+      data-zu-viele={fe.zuVieleDateien}
+      data-zu-gross={fmt(fe.dateiZuGross, { email: site.email })}
+      data-typ={fe.dateiTyp}
+      data-text={fe.dateien}
+    ></p>
+  </div>
+
+  <div class="feld">
+    <label for="name">{f.name.label}</label>
+    <input class="eingabe" id="name" name="name" type="text" autocomplete="name" required maxlength="120" aria-describedby="fehler-name" />
+    <p class="fehler" id="fehler-name" hidden data-text={fe.name}></p>
+  </div>
+
+  <div class="feld">
+    <label for="email">{f.email.label}</label>
+    <p class="feld__hinweis klein" id="hinweis-email">{f.email.hinweis}</p>
+    <input
+      class="eingabe"
+      id="email"
+      name="email"
+      type="email"
+      autocomplete="email"
+      inputmode="email"
+      required
+      maxlength="200"
+      aria-describedby="hinweis-email fehler-email"
+    />
+    <p class="fehler" id="fehler-email" hidden data-text={fe.email} data-format={fe.emailFormat}></p>
+  </div>
+
+  <div class="feld">
+    <label for="telefon"><Fragment set:html={`${escapeHtml(f.telefon.label)} ${freiwillig}`} /></label>
+    <p class="feld__hinweis klein" id="hinweis-telefon">{f.telefon.hinweis}</p>
+    <input class="eingabe" id="telefon" name="telefon" type="tel" autocomplete="tel" maxlength="40" aria-describedby="hinweis-telefon" />
+  </div>
+
+  <div class="feld">
+    <label class="einwilligung" id="feld-einwilligung">
+      <input type="checkbox" name="einwilligung" value="ja" required aria-describedby="fehler-einwilligung" />
+      <span set:html={einwilligung} />
+    </label>
+    <p class="fehler" id="fehler-einwilligung" hidden data-text={fe.einwilligung}></p>
+  </div>
+
+  <div class="honig" aria-hidden="true">
+    <label for="website">{f.honeypot}</label>
+    <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
+  </div>
+  <input type="hidden" name="sprache" value={lang} />
+
+  <div>
+    <button class="knopf" type="submit" data-senden>{f.senden}</button>
+    {!FORM_URL && <p class="klein sektion__text" set:html={rich(f.nichtKonfiguriert)} />}
+  </div>
+</form>
+
+<script>
+  import { initFormular } from '@/scripts/formular';
+  initFormular();
+</script>

@@ -1,0 +1,112 @@
+---
+/**
+ * Eine Stelle (D4, E8): Aufgaben, Profil, Angebot, Vertrag, „So bewerben Sie sich“.
+ * Bewerbung per E-Mail (Betreff mit dem Stellentitel) oder Telefon, kein Upload-Formular.
+ * JobPosting im JSON-LD nur, wenn das Datum der Veröffentlichung eingetragen ist
+ * (datePosted ist Pflicht; ohne Datum wären die Daten ungültig).
+ */
+import Base from '@/layouts/Base.astro';
+import Seitenkopf from '@/components/Seitenkopf.astro';
+import { escapeHtml, fmt, rich, typo, useT } from '@/i18n';
+import { path, pathFor, type Lang } from '@/i18n/config';
+import { breadcrumbs, jobPosting } from '@/lib/jsonld';
+import { jobRoute, type Job } from '@/lib/jobs';
+import { bewerbungTelHref, site } from '@/lib/site';
+import { datumText } from '@/lib/zeiten';
+
+interface Props {
+  lang: Lang;
+  job: Job;
+}
+const { lang, job } = Astro.props;
+const t = useT(lang);
+const s = t.seiten.job;
+const d = job.data;
+const titel = d.titel[lang];
+const route = jobRoute(job);
+const pfad = [
+  { name: t.nav.home, href: path(lang, 'home') },
+  { name: t.nav.jobs, href: path(lang, 'jobs') },
+  { name: titel, href: pathFor(lang, route) },
+];
+const betreff = fmt(s.mailBetreff, { titel: titel.replace(/\u00AD/g, '') });
+const mailto = `mailto:${site.bewerbung.email}?subject=${encodeURIComponent(betreff)}`;
+const html = {
+  email: `<a href="${escapeHtml(mailto)}">${escapeHtml(site.bewerbung.email)}</a>`,
+  tel: `<a href="${bewerbungTelHref}" class="zahl">${escapeHtml(site.bewerbung.telefon.anzeige)}</a>`,
+};
+const liste = (xs: string[]) => xs.map((x) => typo(lang, x));
+const arbeitszeit = d.vollzeit === true ? s.vollzeit : d.vollzeit === false ? s.teilzeit : s.arbeitszeitFehlt;
+
+/** Beschreibung fürs JSON-LD: derselbe Inhalt wie sichtbar, als HTML (E8) */
+const ul = (xs: string[]) => `<ul>${xs.map((x) => `<li>${escapeHtml(x)}</li>`).join('')}</ul>`;
+const beschreibung = [
+  `<p>${escapeHtml(d.kurz[lang])}</p>`,
+  `<h3>${escapeHtml(s.aufgabenH2)}</h3>${ul(d.aufgaben[lang])}`,
+  `<h3>${escapeHtml(s.profilH2)}</h3>${ul(d.profil[lang])}`,
+  d.angebot[lang].length ? `<h3>${escapeHtml(s.angebotH2)}</h3>${ul(d.angebot[lang])}` : '',
+  `<p>${escapeHtml(fmt(s.bewerben, { email: site.bewerbung.email, tel: site.bewerbung.telefon.anzeige }))}</p>`,
+].join('');
+const jsonld: Record<string, unknown>[] = [breadcrumbs(pfad.map((p) => ({ name: p.name, url: p.href })))];
+if (d.veroeffentlicht) {
+  jsonld.push(
+    jobPosting({
+      title: titel,
+      descriptionHtml: beschreibung,
+      datePosted: d.veroeffentlicht,
+      validThrough: d.gueltig_bis,
+      vollzeit: d.vollzeit,
+      url: pathFor(lang, route),
+    }),
+  );
+}
+---
+<Base lang={lang} route={route} title={d.seo.title[lang]} description={d.seo.description[lang]} jsonld={jsonld} aktuell="job">
+  <Seitenkopf pfadLabel={t.a11y.pfad} pfad={pfad} h1={titel} intro={typo(lang, d.kurz[lang])} />
+
+  <section class="sektion" aria-labelledby="aufgaben-h">
+    <div class="raster">
+      <div class="sp-text">
+        <dl class="angaben">
+          <div><dt>{s.arbeitsort}</dt><dd>{lang === 'lb' ? site.adresse.ortLb : site.adresse.ort}</dd></div>
+          <div><dt>{s.vertragsart}</dt><dd>{d.unbefristet ? s.unbefristet : ''}</dd></div>
+          <div><dt>{s.arbeitszeit}</dt><dd set:html={rich(arbeitszeit)} /></div>
+          <div><dt>{s.beginn}</dt><dd>{s.beginnText}</dd></div>
+        </dl>
+        <p class="klein sektion__text">
+          {d.veroeffentlicht ? <time datetime={d.veroeffentlicht}>{fmt(s.veroeffentlicht, { datum: datumText(lang, d.veroeffentlicht, false) })}</time> : <Fragment set:html={rich(s.veroeffentlichtFehlt)} />}
+          <br />
+          {d.gueltig_bis ? <time datetime={d.gueltig_bis}>{fmt(s.gueltig, { datum: datumText(lang, d.gueltig_bis, false) })}</time> : <Fragment set:html={rich(s.gueltigFehlt)} />}
+        </p>
+
+        <div class="block sektion__text">
+          <h2 id="aufgaben-h">{s.aufgabenH2}</h2>
+          <ul class="liste">{liste(d.aufgaben[lang]).map((x) => <li>{x}</li>)}</ul>
+        </div>
+        <div class="block">
+          <h2>{s.profilH2}</h2>
+          <ul class="liste">{liste(d.profil[lang]).map((x) => <li>{x}</li>)}</ul>
+        </div>
+        {
+          d.angebot[lang].length > 0 && (
+            <div class="block">
+              <h2>{s.angebotH2}</h2>
+              <ul class="liste">{liste(d.angebot[lang]).map((x) => <li>{x}</li>)}</ul>
+            </div>
+          )
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="sektion flaeche" aria-labelledby="bewerben-h">
+    <div class="raster">
+      <div class="sp-text">
+        <h2 id="bewerben-h">{s.bewerbenH2}</h2>
+        <p class="prosa sektion__text" set:html={rich(s.bewerben, html)} />
+        <p class="hero__aktion"><a class="knopf" href={mailto}>{s.mailLink}</a></p>
+        <p class="sektion__text"><a href={path(lang, 'jobs')}>{s.alleJobs}</a></p>
+      </div>
+    </div>
+  </section>
+</Base>

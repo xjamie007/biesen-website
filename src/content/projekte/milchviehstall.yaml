@@ -1,0 +1,47 @@
+# Milchviehstall mit LED-Beleuchtung (Editus-Artikel „Stall Beleuchtung“).
+# Fotopaar für die Lichtseite: vom Futtergang aus, tags mit Tageslicht, abends mit LED.
+# [UNBESTÄTIGT] Ortschaft, Jahr, Erlaubnis des Landwirts.
+titel:
+  de: Milchviehstall mit LED-Beleuchtung
+  fr: Étable laitière avec éclairage LED
+  lb: Mëllechkéistall mat LED-Beliichtung
+  en: Dairy cowshed with LED lighting
+ortschaft: ""
+jahr: null
+art: landwirtschaft
+text:
+  de: ""
+  fr: ""
+  lb: ""
+  en: ""
+fotos:
+  - bild: ""
+    quelle: https://www.editus.lu/fr/entreprise-d-electricite-biesen-nothum-1949232
+    alt:
+      de: Milchviehstall mit LED-Leuchten über dem Futtergang
+      fr: Étable laitière avec luminaires LED au-dessus du couloir d’alimentation
+      lb: Mëllechkéistall mat LED-Luuchten iwwer dem Fuddergank
+      en: Dairy cowshed with LED lights above the feed alley
+owend:
+  motiv:
+    de: Milchviehstall, vom Futtergang aus
+    fr: étable laitière, vue du couloir d’alimentation
+    lb: Mëllechkéistall, vum Fuddergank aus
+    en: dairy cowshed, seen from the feed alley
+  tag: { bild: "", uhrzeit: "" }
+  abend: { bild: "", uhrzeit: "" }
+  fokus: 50% 50%
+  alt:
+    tag:
+      de: Milchviehstall am Nachmittag, vom Futtergang aus, mit Tageslicht
+      fr: L’étable l’après-midi, vue du couloir d’alimentation, à la lumière du jour
+      lb: De Stall mëttes, vum Fuddergank aus, mam Daglicht
+      en: The cowshed in the afternoon, seen from the feed alley, in daylight
+    abend:
+      de: Derselbe Stall am Abend, mit eingeschalteter LED-Beleuchtung
+      fr: La même étable le soir, éclairage LED allumé
+      lb: Deeselwechte Stall owes, mat der LED-Beliichtung un
+      en: The same cowshed in the evening, with the LED lighting on
+startseite: true
+reihenfolge: 2
+freigabe: false

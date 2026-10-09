@@ -1,0 +1,69 @@
+---
+/** Jobs (D4, E8): Einleitung, offene Stellen, Hinweis zu Lehrstellen [UNBESTÄTIGT], Bewerbung per E-Mail oder Telefon. */
+import Base from '@/layouts/Base.astro';
+import Seitenkopf from '@/components/Seitenkopf.astro';
+import { escapeHtml, rich, typo, useT } from '@/i18n';
+import { path, pathFor, type Lang } from '@/i18n/config';
+import { breadcrumbs } from '@/lib/jsonld';
+import { jobRoute, offeneJobs } from '@/lib/jobs';
+import { bewerbungTelHref, site } from '@/lib/site';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useT(lang);
+const s = t.seiten.jobs;
+const pfad = [
+  { name: t.nav.home, href: path(lang, 'home') },
+  { name: t.nav.jobs, href: path(lang, 'jobs') },
+];
+const jobs = await offeneJobs();
+const html = {
+  email: `<a href="mailto:${site.bewerbung.email}">${escapeHtml(site.bewerbung.email)}</a>`,
+  tel: `<a href="${bewerbungTelHref}" class="zahl">${escapeHtml(site.bewerbung.telefon.anzeige)}</a>`,
+};
+---
+<Base
+  lang={lang}
+  route={{ page: 'jobs' }}
+  title={t.seo.jobs.title}
+  description={t.seo.jobs.description}
+  jsonld={[breadcrumbs(pfad.map((p) => ({ name: p.name, url: p.href })))]}
+>
+  <Seitenkopf pfadLabel={t.a11y.pfad} pfad={pfad} h1={s.h1} intro={s.intro} />
+
+  <section class="sektion" aria-labelledby="offen-h">
+    <div class="raster">
+      <div class="sp-text">
+        <h2 id="offen-h">{s.offenH2}</h2>
+        {
+          jobs.length > 0 ? (
+            <ul class="stellen">
+              {jobs.map((j) => (
+                <li class="stelle">
+                  <h3>
+                    <a href={pathFor(lang, jobRoute(j))}>{j.data.titel[lang]}</a>
+                  </h3>
+                  <p class="prosa">{typo(lang, j.data.kurz[lang])}</p>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p class="prosa sektion__text" set:html={rich(s.keine, html)} />
+          )
+        }
+        <p class="klein sektion__text" set:html={rich(s.lehre)} />
+      </div>
+    </div>
+  </section>
+
+  <section class="sektion flaeche" aria-labelledby="bewerben-h">
+    <div class="raster">
+      <div class="sp-text">
+        <h2 id="bewerben-h">{s.bewerbenH2}</h2>
+        <p class="prosa sektion__text" set:html={rich(s.bewerben, html)} />
+      </div>
+    </div>
+  </section>
+</Base>

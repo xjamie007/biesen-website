@@ -1,0 +1,76 @@
+---
+/**
+ * Ein Projekt (D2.3, D3): Foto, darunter Ortschaft und Art (klein, Leiendaach), Titel als h3, Text.
+ * Keine Karten. variante „startseite“: abwechselnd links und rechts angeschnitten.
+ * Projekte mit Fotopaar zeigen auf der Projektseite das Paar mit Regler.
+ */
+import Foto from './Foto.astro';
+import OwendRegler from './OwendRegler.astro';
+import { rich, typo, type Dict } from '@/i18n';
+import type { Lang } from '@/i18n/config';
+import { projektBild } from '@/lib/bilder';
+import type { Paar, Projekt } from '@/lib/projekte';
+
+interface Props {
+  lang: Lang;
+  t: Dict;
+  projekt: Projekt;
+  variante: 'startseite' | 'liste';
+  seite?: 'links' | 'rechts';
+  paar?: Paar | null;
+  ueberschrift?: 'h3' | 'h4';
+}
+const { lang, t, projekt, variante, seite = 'rechts', paar = null } = Astro.props;
+const d = projekt.data;
+const s = t.seiten.projekte;
+const ort = d.ortschaft || s.ortFehlt;
+const meta = [ort, t.arten[d.art], variante === 'liste' ? (d.jahr ? String(d.jahr) : s.jahrFehlt) : null].filter(Boolean).join(', ');
+const text = d.text[lang] ? typo(lang, d.text[lang]) : s.textFehlt;
+const fotos = d.fotos.length ? d.fotos : [{ bild: '', alt: d.titel }];
+const erstes = fotos[0];
+const sizesStart = '(min-width: 1024px) 66vw, 100vw';
+---
+{
+  variante === 'startseite' ? (
+    <article class:list={['raster projekt', `projekt--${seite}`]}>
+      <Foto
+        class="projekt__bild voll"
+        bild={projektBild(erstes.bild)}
+        alt={erstes.alt[lang]}
+        folgt={t.allgemein.fotoFolgt}
+        motiv={erstes.alt[lang]}
+        sizes={sizesStart}
+      />
+      <div class="projekt__text">
+        <p class="klein neben" set:html={rich(meta)} />
+        <h3>{d.titel[lang]}</h3>
+        <p set:html={rich(text)} />
+        {!d.freigabe && <p><span class="marke-dev">{t.allgemein.nichtFreigegeben}</span></p>}
+      </div>
+    </article>
+  ) : (
+    <article class="raster eintrag" id={`projekt-${projekt.id}`}>
+      <div class:list={['eintrag__fotos voll', !paar && fotos.length > 1 && 'eintrag__fotos--mehr']}>
+        {paar ? (
+          <OwendRegler t={t} paar={paar} />
+        ) : (
+          fotos.map((f) => (
+            <Foto
+              bild={projektBild(f.bild)}
+              alt={f.alt[lang]}
+              folgt={t.allgemein.fotoFolgt}
+              motiv={f.alt[lang]}
+              sizes={fotos.length > 1 ? '(min-width: 1024px) 28vw, (min-width: 768px) 50vw, 100vw' : '(min-width: 1024px) 57vw, 100vw'}
+            />
+          ))
+        )}
+      </div>
+      <div class="eintrag__inhalt">
+        <p class="eintrag__meta klein neben" set:html={rich(meta)} />
+        <h3>{d.titel[lang]}</h3>
+        <p class="eintrag__text prosa" set:html={rich(text)} />
+        {!d.freigabe && <p class="eintrag__text"><span class="marke-dev">{t.allgemein.nichtFreigegeben}</span></p>}
+      </div>
+    </article>
+  )
+}

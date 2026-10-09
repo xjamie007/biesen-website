@@ -1,0 +1,47 @@
+# Große Halle mit Beleuchtung (alte Galerie, 2024/06/galerie-electricite-biesen_*.jpeg).
+# Fotopaar für die Lichtseite möglich.
+# [UNBESTÄTIGT] welcher Betrieb, Ortschaft, Jahr, Erlaubnis.
+titel:
+  de: Beleuchtung einer Halle
+  fr: Éclairage d’un hall
+  lb: Beliichtung vun enger Hal
+  en: Lighting for a hall
+ortschaft: ""
+jahr: null
+art: halle
+text:
+  de: ""
+  fr: ""
+  lb: ""
+  en: ""
+fotos:
+  - bild: ""
+    quelle: https://electricite-biesen.lu/galerie/ (2024/06/galerie-electricite-biesen_*.jpeg)
+    alt:
+      de: Große Halle mit Hallenleuchten unter dem Dach
+      fr: Grand hall avec luminaires sous la toiture
+      lb: Grouss Hal mat Luuchten ënnert dem Daach
+      en: Large hall with lights under the roof
+owend:
+  motiv:
+    de: Halle
+    fr: hall
+    lb: Hal
+    en: hall
+  tag: { bild: "", uhrzeit: "" }
+  abend: { bild: "", uhrzeit: "" }
+  fokus: 50% 50%
+  alt:
+    tag:
+      de: Halle am Nachmittag
+      fr: Le hall l’après-midi
+      lb: D’Hal mëttes
+      en: The hall in the afternoon
+    abend:
+      de: Dieselbe Halle am Abend, Beleuchtung eingeschaltet
+      fr: Le même hall le soir, éclairage allumé
+      lb: Déiselwecht Hal owes, mat der Beliichtung un
+      en: The same hall in the evening, with the lights on
+startseite: false
+reihenfolge: 4
+freigabe: false

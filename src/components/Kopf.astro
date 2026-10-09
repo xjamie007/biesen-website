@@ -1,0 +1,89 @@
+---
+/**
+ * Kopf (C4): nicht sticky. Logo links, Navigation, Telefon als Textlink, Sprachumschalter.
+ * Mobil: „Anrufen“ und „Menü“; das Menü öffnet sich als weiße Fläche mit Fokusfalle (src/scripts/menue.ts).
+ * „Leistungen“ ist mit JavaScript ein Aufklapp-Menü, ohne JavaScript ein Link auf #leistungen der Startseite.
+ * Ohne JavaScript steht die Navigation mobil offen unter der Kopfzeile.
+ */
+import Logo from './Logo.astro';
+import Sprachen from './Sprachen.astro';
+import type { Dict } from '@/i18n';
+import { path, SERVICE_PAGES, type Lang } from '@/i18n/config';
+import { site, telHref } from '@/lib/site';
+
+interface Props {
+  lang: Lang;
+  t: Dict;
+  alternates: { lang: Lang; href: string }[];
+  aktuell: string;
+}
+const { lang, t, alternates, aktuell } = Astro.props;
+const cur = (p: string) => (aktuell === p ? 'page' : undefined);
+const home = path(lang, 'home');
+const istLeistung = (SERVICE_PAGES as readonly string[]).includes(aktuell);
+---
+<header class="kopf">
+  <div class="raster">
+    <div>
+      <div class="kopf__zeile">
+        <a class="kopf__logo" href={home}><Logo alt={t.a11y.logo} /></a>
+        <div class="kopf__mobil">
+          <a class="knopf kopf__anrufen" href={telHref}>{t.a11y.anrufen}</a>
+          <button class="menueknopf" type="button" aria-expanded="false" aria-controls="navigation" data-menue-auf>
+            {t.a11y.menue}
+          </button>
+        </div>
+        <nav class="nav" id="navigation" aria-label={t.a11y.hauptnavigation}>
+          <div class="nav__kopf">
+            <a class="kopf__logo" href={home} tabindex="-1" aria-hidden="true"><Logo alt="" loading="lazy" /></a>
+            <button class="menueknopf" type="button" data-menue-zu>{t.a11y.schliessen}</button>
+          </div>
+          <ul class="nav__liste nav__liste--haupt">
+            <li class="nav__haupt-li">
+              <a class="nav__link nav__leistungen-link" href={`${home}#leistungen`}>{t.nav.leistungen}</a>
+              <button
+                class="nav__knopf"
+                type="button"
+                aria-expanded="false"
+                aria-controls="nav-leistungen"
+                data-untermenue
+                data-aktiv={istLeistung ? '' : undefined}
+              >
+                {t.nav.leistungen}
+              </button>
+              <span class="nav__gruppe" aria-hidden="true">{t.nav.leistungen}</span>
+              <ul class="nav__liste nav__unter" id="nav-leistungen" hidden>
+                {
+                  SERVICE_PAGES.map((p) => (
+                    <li>
+                      <a class="nav__link" href={path(lang, p)} aria-current={cur(p)}>
+                        {t.leistungen[p].name}
+                      </a>
+                    </li>
+                  ))
+                }
+              </ul>
+            </li>
+            <li><a class="nav__link" href={path(lang, 'projekte')} aria-current={cur('projekte')}>{t.nav.projekte}</a></li>
+            <li><a class="nav__link" href={path(lang, 'ueberUns')} aria-current={cur('ueberUns')}>{t.nav.ueberUns}</a></li>
+            <li>
+              <a class="nav__link" href={path(lang, 'jobs')} aria-current={cur('jobs') ?? (aktuell === 'job' ? 'true' : undefined)}>
+                {t.nav.jobs}
+              </a>
+            </li>
+            <li><a class="nav__link" href={path(lang, 'kontakt')} aria-current={cur('kontakt')}>{t.nav.kontakt}</a></li>
+          </ul>
+          <div class="nav__extra">
+            <a class="nav__telefon" href={telHref}><span class="sr-only">{t.allgemein.telefon} </span>{site.telefon.anzeige}</a>
+            <Sprachen lang={lang} t={t} alternates={alternates} id="sprache-kopf" />
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  import { initMenue } from '@/scripts/menue';
+  initMenue();
+</script>

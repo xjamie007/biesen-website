@@ -1,0 +1,83 @@
+---
+/**
+ * Licht (D3, C6, E3): zuerst die Fotopaare mit Regler, dann die Bereiche (mit Projekten,
+ * sobald freigegeben), dann der Knopf.
+ */
+import LeistungsSeite from '@/components/LeistungsSeite.astro';
+import OwendRegler from '@/components/OwendRegler.astro';
+import ProjektEintrag from '@/components/ProjektEintrag.astro';
+import { rich, useT } from '@/i18n';
+import type { Lang } from '@/i18n/config';
+import { heroPaar, lichtPaare, projekteNachArt, type Art } from '@/lib/projekte';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useT(lang);
+const s = t.seiten.licht;
+const testTexte = { tag: t.owend.testTag, abend: t.owend.testAbend };
+const hero = await heroPaar(lang, testTexte, t.owend.motivStartseite);
+const paare = await lichtPaare(lang, testTexte, hero.id);
+const BEREICHE: { key: keyof typeof s.bereiche; arten: Art[] }[] = [
+  { key: 'innen', arten: ['licht-innen'] },
+  { key: 'aussen', arten: ['licht-aussen'] },
+  { key: 'landwirtschaft', arten: ['landwirtschaft'] },
+  { key: 'hallen', arten: ['halle'] },
+  { key: 'oeffentlich', arten: ['oeffentlich'] },
+  { key: 'besonders', arten: ['besonders'] },
+];
+const bereiche = await Promise.all(
+  BEREICHE.map(async (b) => {
+    // Projekte mit Fotopaar stehen schon oben; hier nur die übrigen
+    const projekte = (await projekteNachArt(b.arten)).filter((p) => !p.data.owend);
+    return { ...b, projekte };
+  }),
+);
+
+---
+<LeistungsSeite
+  lang={lang}
+  page="licht"
+  h1={s.h1}
+  intro={s.intro}
+  anliegen="licht"
+  arten={[]}
+  faq={['gebiet', 'angebot']}
+  serviceType="Lighting design and installation"
+  ohneProjekte
+>
+  <section class="sektion" aria-labelledby="paare-h">
+    <div class="raster">
+      <h2 id="paare-h" class="sr-only">{s.paareH2}</h2>
+      <div class="paare">
+        {paare.map((p) => <OwendRegler t={t} paar={p} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="sektion" aria-labelledby="bereiche-h">
+    <div class="raster">
+      <h2 id="bereiche-h" class="sektion__kopf">{s.bereicheH2}</h2>
+    </div>
+    {
+      bereiche.map((b) => (
+        <div class="bereich">
+          <div class="raster">
+            <div class="sp-text">
+              <h3>{s.bereiche[b.key].h}</h3>
+              <p class="prosa bereich__text" set:html={rich(s.bereiche[b.key].text)} />
+            </div>
+          </div>
+          {b.projekte.length > 0 && (
+            <div class="gruppe__liste">
+              {b.projekte.map((p) => (
+                <ProjektEintrag lang={lang} t={t} projekt={p} variante="liste" />
+              ))}
+            </div>
+          )}
+        </div>
+      ))
+    }
+  </section>
+</LeistungsSeite>

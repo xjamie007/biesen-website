@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+!.env.example
+.DS_Store
+.claude/
+deno.lock
+fonts-src/*.ttf
+scripts/dev/out/
+scripts/dev/tmp/

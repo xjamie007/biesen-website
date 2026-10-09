@@ -1,0 +1,38 @@
+---
+/** Alarm, Kameras, Brandmelder (D3, E3). */
+import LeistungsSeite from '@/components/LeistungsSeite.astro';
+import { rich, useT } from '@/i18n';
+import type { Lang } from '@/i18n/config';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useT(lang);
+const s = t.seiten.sicherheit;
+---
+<LeistungsSeite
+  lang={lang}
+  page="sicherheit"
+  h1={s.h1}
+  intro={s.intro}
+  anliegen="sicherheit"
+  arten={['sicherheit']}
+  faq={['angebot', 'kostenlos']}
+  serviceType="Security and fire alarm installation"
+>
+  <section class="sektion" aria-labelledby="was-h">
+    <div class="raster">
+      <div class="sp-text">
+        <div class="block">
+          <h2 id="was-h">{s.wasH2}</h2>
+          <ul class="liste">{s.was.map((x) => <li>{x}</li>)}</ul>
+        </div>
+        <div class="block">
+          <h2>{s.kameraH2}</h2>
+          <p class="prosa" set:html={rich(s.kamera)} />
+        </div>
+      </div>
+    </div>
+  </section>
+</LeistungsSeite>

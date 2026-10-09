@@ -1,0 +1,49 @@
+---
+/** Zeiten als Tabelle aus src/content/oeffnungszeiten.json (E7, G3), dazu die nächsten Schließtage. */
+import { rich, type Dict } from '@/i18n';
+import type { Lang } from '@/i18n/config';
+import { datumText, intervallText, naechsteSchliessungen, tageText, wochenGruppen, zeiten } from '@/lib/zeiten';
+
+interface Props {
+  lang: Lang;
+  t: Dict;
+}
+const { lang, t } = Astro.props;
+const gross = (s: string) => s.charAt(0).toLocaleUpperCase(lang) + s.slice(1);
+const schliessungen = naechsteSchliessungen(lang);
+---
+<table class="zeiten">
+  <caption>{t.zeiten.titel}</caption>
+  <tbody>
+    {
+      wochenGruppen().map((g) => (
+        <tr>
+          <th scope="row">{gross(tageText(t, g.von, g.bis))}</th>
+          <td>{intervallText(t, g.zeiten)}</td>
+        </tr>
+      ))
+    }
+  </tbody>
+</table>
+{!zeiten.bestaetigt && <p class="zeiten__hinweis klein" set:html={rich(t.zeiten.unbestaetigt)} />}
+{
+  schliessungen.length > 0 && (
+    <div class="zeiten__hinweis klein">
+      <p>{t.zeiten.naechste}</p>
+      <ul class="liste">
+        {schliessungen.map((s) => (
+          <li>
+            <time datetime={s.von}>{gross(datumText(lang, s.von))}</time>
+            {s.bis !== s.von && (
+              <>
+                {' – '}
+                <time datetime={s.bis}>{datumText(lang, s.bis)}</time>
+              </>
+            )}
+            {` (${s.text})`}
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}

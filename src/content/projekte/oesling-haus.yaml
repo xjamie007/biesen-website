@@ -1,0 +1,47 @@
+# Ösling-Haus mit grünen Fensterläden, Pollerleuchte im Vordergrund.
+# Kandidat für das Fotopaar der Startseite (Wohnhaus mit Außen- und Gartenbeleuchtung).
+# [UNBESTÄTIGT] Ortschaft, Jahr, Erlaubnis der Eigentümer, ob das Haus fürs Shooting zur Verfügung steht.
+titel:
+  de: Wohnhaus mit Gartenbeleuchtung
+  fr: Maison avec éclairage du jardin
+  lb: Wunnhaus mat Gaardebeliichtung
+  en: House with garden lighting
+ortschaft: ""
+jahr: null
+art: licht-aussen
+text:
+  de: ""
+  fr: ""
+  lb: ""
+  en: ""
+fotos:
+  - bild: ""
+    quelle: https://electricite-biesen.lu/wp-content/uploads/2025/07/Beleuchtung-bild-0032.jpg
+    alt:
+      de: Ösling-Haus mit grünen Fensterläden, im Vordergrund eine Pollerleuchte
+      fr: Maison de l’Oesling aux volets verts, une borne lumineuse au premier plan
+      lb: Éislécker Haus mat gréngen Fënsterluede, vir eng Pollerluucht
+      en: Oesling house with green shutters, a bollard light in the foreground
+owend:
+  motiv:
+    de: Wohnhaus mit Außen- und Gartenbeleuchtung
+    fr: maison avec éclairage extérieur et jardin
+    lb: Wunnhaus mat Liicht dobaussen an am Gaart
+    en: house with outdoor and garden lighting
+  tag: { bild: "", uhrzeit: "" }
+  abend: { bild: "", uhrzeit: "" }
+  fokus: 50% 60%
+  alt:
+    tag:
+      de: Wohnhaus am Nachmittag, Garten mit Pollerleuchten
+      fr: La maison l’après-midi, jardin avec bornes lumineuses
+      lb: D’Wunnhaus mëttes, Gaart mat Pollerluuchten
+      en: The house in the afternoon, garden with bollard lights
+    abend:
+      de: Dasselbe Haus am Abend, Fassade, Weg und Garten beleuchtet
+      fr: La même maison le soir, façade, allée et jardin éclairés
+      lb: Datselwecht Haus owes, Fassad, Wee a Gaart beliicht
+      en: The same house in the evening, façade, path and garden lit
+startseite: true
+reihenfolge: 1
+freigabe: false

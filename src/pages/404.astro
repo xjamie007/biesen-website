@@ -1,0 +1,75 @@
+---
+/**
+ * 404 (D1): eine Seite für alle Sprachen, gestaltet, die einzige zentrierte Stelle der Website.
+ * Die Sprache kommt aus dem Pfadpräfix; ohne JavaScript stehen alle vier Fassungen untereinander.
+ */
+import '@/styles/global.css';
+import schriftUrl from '@/assets/fonts/schibsted-grotesk-var.woff2?url';
+import Logo from '@/components/Logo.astro';
+import { fmt, useT } from '@/i18n';
+import { BASE, LANGS, path, withBase } from '@/i18n/config';
+import { site, telHref } from '@/lib/site';
+const fr = useT('fr');
+---
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fr.seo.notFound.title}</title>
+    <meta name="robots" content="noindex" />
+    <link rel="preload" href={schriftUrl} as="font" type="font/woff2" crossorigin />
+    <link rel="icon" href={withBase('/favicon.svg')} type="image/svg+xml" />
+    <link rel="icon" href={withBase('/favicon-32.png')} type="image/png" sizes="32x32" />
+    <script is:inline define:vars={{ base: BASE }}>
+      (function () {
+        var m = location.pathname.slice(base.length).match(/^\/(fr|de|lb|en)(\/|$)/);
+        var l = m ? m[1] : 'fr';
+        var d = document.documentElement;
+        d.classList.add('js');
+        d.setAttribute('data-sprache', l);
+        d.lang = l;
+      })();
+    </script>
+    <style is:inline>
+      html[data-sprache] .nf-sprache { display: none; }
+      html[data-sprache='fr'] .nf-sprache[data-l='fr'],
+      html[data-sprache='de'] .nf-sprache[data-l='de'],
+      html[data-sprache='lb'] .nf-sprache[data-l='lb'],
+      html[data-sprache='en'] .nf-sprache[data-l='en'] { display: block; }
+    </style>
+  </head>
+  <body>
+    <header class="kopf">
+      <div class="raster">
+        <div>
+          <a class="kopf__logo" href={path('fr', 'home')}><Logo alt={fr.a11y.logo} /></a>
+        </div>
+      </div>
+    </header>
+    <main class="raster">
+      <div>
+        {
+          LANGS.map((l) => {
+            const t = useT(l);
+            return (
+              <section class="nf-sprache nichtgefunden" data-l={l} lang={l}>
+                <h1>{t.seiten.nichtGefunden.h1}</h1>
+                <p>{t.seiten.nichtGefunden.text}</p>
+                <ul class="nichtgefunden__links">
+                  <li><a href={path(l, 'home')}>{t.nav.home}</a></li>
+                  <li><a href={path(l, 'licht')}>{t.leistungen.licht.name}</a></li>
+                  <li><a href={path(l, 'kontakt')}>{t.nav.kontakt}</a></li>
+                </ul>
+                <p>
+                  {fmt(t.seiten.nichtGefunden.telefon, { tel: '' })}
+                  <a href={telHref} class="zahl">{site.telefon.anzeige}</a>
+                </p>
+              </section>
+            );
+          })
+        }
+      </div>
+    </main>
+  </body>
+</html>

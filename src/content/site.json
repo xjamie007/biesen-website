@@ -1,0 +1,40 @@
+{
+  "_hinweis": "Stammdaten (B1). Einzige Quelle für Footer, Impressum, Kontakt und JSON-LD. NAP überall gleich: Electricité Biesen, 14, Duerfstrooss, L-9678 Nothum, +352 95 80 99.",
+  "name": "Electricité Biesen",
+  "legalName": "Entreprise d'électricité BIESEN S.A.",
+  "rechtsform": "Société anonyme (S.A.)",
+  "rcs": { "gericht": "RCS Luxembourg", "nummer": "B243775", "euid": "LURCSL.B243775" },
+  "mwst": { "nummer": "LU32155700", "bestaetigt": false },
+  "eintragung": "2020-04-27",
+  "genehmigung": {
+    "nummer": "10116411",
+    "datum": "2020-06-12",
+    "taetigkeiten": ["10116411/0", "10116411/1"]
+  },
+  "adresse": {
+    "strasse": "14, Duerfstrooss",
+    "plz": "9678",
+    "plzAnzeige": "L-9678",
+    "ort": "Nothum",
+    "ortLb": "Noutem",
+    "gemeinde": "Lac de la Haute-Sûre",
+    "land": "LU"
+  },
+  "geo": { "lat": 49.9408997, "lng": 5.8822808 },
+  "telefon": { "anzeige": "95 80 99", "international": "+352 95 80 99", "tel": "+352958099" },
+  "fax": { "international": "+352 95 80 99-99" },
+  "email": "info@biesen.lu",
+  "bewerbung": {
+    "email": "laurent.maillen@biesen.lu",
+    "telefon": { "anzeige": "95 80 99 13", "tel": "+35295809913" }
+  },
+  "mitarbeitende": 26,
+  "sprachenKunden": ["lb", "fr", "de"],
+  "googleProfil": "https://www.google.com/maps?cid=10939038107944972410",
+  "editus": "https://www.editus.lu/fr/entreprise-d-electricite-biesen-nothum-1949232",
+  "facebook": null,
+  "osm": "https://www.openstreetmap.org/?mlat=49.9408997&mlon=5.8822808#map=17/49.9408997/5.8822808",
+  "klimabonus": "https://www.klimabonus.lu/",
+  "cnpd": "https://cnpd.public.lu/",
+  "datenschutzStand": "2026-10-06"
+}

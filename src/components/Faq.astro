@@ -1,0 +1,29 @@
+---
+/** FAQ (C7) als <details>; Inhalt öffnet über grid-template-rows 0fr → 1fr in 180 ms, das Plus wird zum Minus. */
+import { rich, type Dict } from '@/i18n';
+import type { Lang } from '@/i18n/config';
+import { faqHtml, type FaqKey } from '@/lib/faq';
+
+interface Props {
+  lang: Lang;
+  t: Dict;
+  keys: readonly FaqKey[];
+}
+const { lang, t, keys } = Astro.props;
+const html = faqHtml(lang, t);
+---
+<div class="faq">
+  {
+    keys.map((k) => (
+      <details class="faq__eintrag">
+        <summary class="faq__frage">
+          <span class="faq__text">{t.faq[k].q}</span>
+          <span class="faq__zeichen" aria-hidden="true" />
+        </summary>
+        <div class="faq__antwort">
+          <p set:html={rich(t.faq[k].a, html)} />
+        </div>
+      </details>
+    ))
+  }
+</div>

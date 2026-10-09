@@ -1,0 +1,2081 @@
+/*
+ * Electricité Biesen – Gestaltung (C1–C7)
+ *
+ * Reihenfolge der Ebenen: theme, base, components, utilities (Tailwind).
+ * Komponentenklassen stehen alle hier in @layer components, Selektoren mit einer Klasse.
+ * Raster-Kinder über :where(), damit Platzierungsklassen ohne Spezifitätskampf greifen.
+ * Tailwind-Utilities im Markup schlagen die Komponenten immer (eigene Ebene).
+ */
+@import 'tailwindcss';
+
+@theme {
+  --color-*: initial;
+  --color-lei: #33373c;
+  --color-leiendaach: #546376;
+  --color-noutem-blau: #0070c0;
+  --color-noutem-blau-tief: #005a9c;
+  --color-bletz-giel: #ffca24;
+  --color-kalkputz: #f2f3f1;
+  --color-weiss: #ffffff;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  --shadow-*: initial;
+  --inset-shadow-*: initial;
+  --drop-shadow-*: initial;
+
+  --font-*: initial;
+  --font-sans: 'Schibsted Grotesk', 'Schibsted Fallback', Arial, sans-serif;
+  --font-display: 'Schibsted Grotesk', 'Schibsted Fallback Bold', Arial, sans-serif;
+
+  --radius-ui: 6px;
+}
+
+/* Schrift: selbst gehostet, nie über eine CDN (C2, H) */
+@font-face {
+  font-family: 'Schibsted Grotesk';
+  src: url('../assets/fonts/schibsted-grotesk-var.woff2') format('woff2');
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Ausweichschrift auf Schibsted Grotesk vermessen (scripts/fonts/fallback.json) */
+@font-face {
+  font-family: 'Schibsted Fallback';
+  src: local('Arial'), local('ArialMT');
+  size-adjust: 104.57%;
+  ascent-override: 93.39%;
+  descent-override: 24.66%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Schibsted Fallback Bold';
+  src: local('Arial Bold'), local('Arial-BoldMT');
+  font-weight: 700;
+  size-adjust: 103.78%;
+  ascent-override: 94.1%;
+  descent-override: 24.84%;
+  line-gap-override: 0%;
+}
+
+:root {
+  --rand: 20px;
+  --spalte: 81.333px; /* (1240 − 11 × 24) / 12 */
+  --lead: clamp(1.1875rem, 1.1rem + 0.35vw, 1.375rem);
+  --klein: 0.9375rem;
+  --sektion: 64px;
+  color-scheme: light;
+}
+
+@media (min-width: 64rem) {
+  :root {
+    --sektion: 128px;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Grundlagen
+------------------------------------------------------------------- */
+@layer base {
+  html {
+    background: var(--color-weiss);
+    color: var(--color-lei);
+    font-family: var(--font-sans);
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    font-size: 1.125rem;
+    line-height: 1.6;
+    font-weight: 400;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: var(--color-bletz-giel);
+    color: var(--color-lei);
+  }
+
+  h1,
+  h2,
+  h3 {
+    margin: 0;
+    font-family: var(--font-display);
+    color: var(--color-lei);
+    text-wrap: balance;
+    hyphens: manual;
+    overflow-wrap: break-word;
+  }
+
+  h1 {
+    font-weight: 800;
+    font-size: clamp(2.5rem, 1.7rem + 3.6vw, 4.5rem);
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+  }
+
+  h2 {
+    font-weight: 750;
+    font-size: clamp(1.75rem, 1.35rem + 1.9vw, 2.875rem);
+    line-height: 1.08;
+    letter-spacing: -0.018em;
+  }
+
+  h3 {
+    font-weight: 650;
+    font-size: clamp(1.25rem, 1.15rem + 0.4vw, 1.5rem);
+    line-height: 1.25;
+    letter-spacing: -0.008em;
+  }
+
+  p,
+  li,
+  dd,
+  figcaption {
+    text-wrap: pretty;
+    hyphens: auto;
+    overflow-wrap: break-word;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  a {
+    color: var(--color-noutem-blau);
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+  }
+
+  a:hover {
+    color: var(--color-noutem-blau-tief);
+    text-decoration-thickness: 2px;
+  }
+
+  a:active {
+    color: var(--color-noutem-blau-tief);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-noutem-blau);
+    outline-offset: 2px;
+    border-radius: var(--radius-ui);
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  time,
+  .zahl {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Interne Hinweise [FEHLT …] / [UNBESTÄTIGT …]: sichtbar, aber nicht gelb */
+  mark.offen {
+    background: var(--color-kalkputz);
+    color: var(--color-leiendaach);
+    outline: 1px dashed var(--color-leiendaach);
+    outline-offset: -1px;
+    padding: 0 4px;
+    font-size: 0.875em;
+    font-weight: 450;
+    letter-spacing: 0;
+    hyphens: manual;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0s !important;
+      animation-duration: 0s !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* ------------------------------------------------------------------
+   Komponenten
+------------------------------------------------------------------- */
+@layer components {
+  /* Raster (C3): mobil eine Spalte mit 20 px Rand, ab 1024 px 12 Spalten à 24 px Abstand,
+     Inhalt höchstens 1240 px. Fotos laufen bis an den Bildschirmrand. */
+  .raster {
+    display: grid;
+    grid-template-columns: [voll-start] var(--rand) [inhalt-start] minmax(0, 1fr) [inhalt-end] var(--rand) [voll-end];
+  }
+
+  :where(.raster) > * {
+    grid-column: inhalt;
+    min-width: 0;
+  }
+
+  .voll {
+    grid-column: voll;
+  }
+
+  @media (min-width: 64rem) {
+    .raster {
+      grid-template-columns:
+        [voll-start] minmax(8px, 1fr)
+        [inhalt-start] repeat(12, minmax(0, var(--spalte)))
+        [inhalt-end] minmax(8px, 1fr) [voll-end];
+      column-gap: 24px;
+    }
+
+    :where(.raster) > * {
+      grid-column: 2 / 14;
+    }
+
+    .sp-text {
+      grid-column: 2 / 8;
+    }
+
+    .sp-text-schmal {
+      grid-column: 2 / 7;
+    }
+
+    .sp-rechts {
+      grid-column: 9 / 14;
+    }
+
+    .sp-bild-rechts {
+      grid-column: 8 / -1;
+    }
+
+    .sp-bild-links {
+      grid-column: 1 / 8;
+    }
+
+    .sp-halb-links {
+      grid-column: 2 / 8;
+    }
+
+    .sp-halb-rechts {
+      grid-column: 8 / 14;
+    }
+  }
+
+  .sektion {
+    padding-block: var(--sektion);
+  }
+
+  /* Weiße Sektionen hintereinander: der Abstand zählt nur einmal */
+  .sektion:not(.flaeche) + .sektion:not(.flaeche) {
+    padding-top: 0;
+  }
+
+  /* Sektion direkt unter dem Seitenkopf: dessen Abstand reicht */
+  .sektion--anschluss {
+    padding-top: 0;
+  }
+
+  .h3 {
+    font-weight: 650;
+    font-size: clamp(1.25rem, 1.15rem + 0.4vw, 1.5rem);
+    line-height: 1.25;
+    letter-spacing: -0.008em;
+  }
+
+  .direkt__adresse {
+    margin-top: 24px;
+    font-style: normal;
+  }
+
+  .flaeche {
+    background: var(--color-kalkputz);
+  }
+
+  .sektion__kopf {
+    margin-bottom: 32px;
+  }
+
+  @media (min-width: 64rem) {
+    .sektion__kopf {
+      margin-bottom: 48px;
+    }
+  }
+
+  .lead {
+    font-size: var(--lead);
+    line-height: 1.45;
+    font-weight: 450;
+  }
+
+  .klein {
+    font-size: var(--klein);
+    line-height: 1.45;
+    font-weight: 450;
+    letter-spacing: 0.005em;
+  }
+
+  .neben {
+    color: var(--color-leiendaach);
+  }
+
+  .prosa {
+    max-width: 62ch;
+  }
+
+  .prosa > * + * {
+    margin-top: 16px;
+  }
+
+  .prosa ul,
+  .prosa ol {
+    margin: 16px 0 0;
+    padding-left: 1.25em;
+  }
+
+  .prosa li + li {
+    margin-top: 8px;
+  }
+
+  /* Knopf (C3): eine Art, primär. Der zweite Weg ist immer ein Textlink. */
+  .knopf {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 14px 24px;
+    border: 0;
+    border-radius: var(--radius-ui);
+    background: var(--color-noutem-blau);
+    color: var(--color-weiss);
+    font: inherit;
+    font-size: 1.0625rem;
+    font-weight: 650;
+    line-height: 1;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .knopf:hover,
+  .knopf:active {
+    background: var(--color-noutem-blau-tief);
+    color: var(--color-weiss);
+  }
+
+  .knopf:focus-visible {
+    outline-color: var(--color-lei);
+  }
+
+  .knopf[aria-disabled='true'] {
+    cursor: progress;
+  }
+
+  .skip {
+    position: absolute;
+    left: 8px;
+    top: 8px;
+    z-index: 100;
+    transform: translateY(-200%);
+  }
+
+  .skip:focus {
+    transform: none;
+  }
+
+  /* ---------------- Kopf (C4) ---------------- */
+  .kopf {
+    position: relative;
+    padding-block: 16px;
+    background: var(--color-weiss);
+  }
+
+  .kopf__zeile {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+    min-height: 48px;
+  }
+
+  .kopf__logo {
+    display: inline-flex;
+    flex: none;
+    margin-right: auto;
+  }
+
+  .kopf__logo img {
+    display: block;
+    height: 40px;
+    width: auto;
+  }
+
+  .kopf__mobil {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .kopf__anrufen {
+    min-height: 44px;
+    padding: 12px 16px;
+  }
+
+  .menueknopf {
+    min-height: 48px;
+    min-width: 48px;
+    padding: 0 8px;
+    border: 0;
+    background: none;
+    color: var(--color-lei);
+    font: inherit;
+    font-size: 1.0625rem;
+    font-weight: 650;
+    cursor: pointer;
+    border-radius: var(--radius-ui);
+  }
+
+  .menueknopf:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.2em;
+  }
+
+  .nav__kopf {
+    display: none;
+  }
+
+  .nav__liste {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav__link,
+  .nav__knopf {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--color-lei);
+    font: inherit;
+    font-weight: 650;
+    text-decoration: none;
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  .nav__link:hover,
+  .nav__knopf:hover,
+  .nav__link[aria-current='page'],
+  .nav__knopf[aria-expanded='true'] {
+    color: var(--color-lei);
+    text-decoration-line: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.3em;
+  }
+
+  .nav__link[aria-current='page'] {
+    text-decoration-color: var(--color-noutem-blau);
+  }
+
+  .nav__gruppe {
+    display: none;
+  }
+
+  .nav__telefon {
+    font-weight: 650;
+    text-decoration: none;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .sprachen__liste {
+    display: flex;
+    gap: 4px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .sprachen__link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    min-height: 44px;
+    color: var(--color-leiendaach);
+    font-size: var(--klein);
+    font-weight: 650;
+    text-decoration: none;
+  }
+
+  .sprachen__link:hover {
+    color: var(--color-lei);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+  }
+
+  .sprachen__link[aria-current='page'] {
+    color: var(--color-lei);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-decoration-color: var(--color-noutem-blau);
+  }
+
+  /* Mobil ohne JavaScript: Navigation offen unter der Kopfzeile */
+  .nav {
+    flex-basis: 100%;
+    margin-top: 8px;
+  }
+
+  .nav__liste--haupt {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 24px;
+  }
+
+  .nav__unter {
+    display: none;
+  }
+
+  .nav__extra {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 24px;
+  }
+
+  .menueknopf {
+    display: none;
+  }
+
+  /* Mobil mit JavaScript: Menü als Fläche */
+  @media (max-width: 63.999rem) {
+    .js .menueknopf {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .js .nav {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      margin: 0;
+      padding: 16px var(--rand) 48px;
+      background: var(--color-weiss);
+      overflow-y: auto;
+      opacity: 0;
+      transition:
+        opacity 160ms ease,
+        display 160ms allow-discrete;
+    }
+
+    .js .nav.ist-offen {
+      display: block;
+      opacity: 1;
+    }
+
+    @starting-style {
+      .js .nav.ist-offen {
+        opacity: 0;
+      }
+    }
+
+    .js .nav__kopf {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 48px;
+      margin-bottom: 32px;
+    }
+
+    .js .nav__kopf img {
+      display: block;
+      height: 40px;
+      width: auto;
+    }
+
+    .js .nav__liste--haupt {
+      display: block;
+    }
+
+    .js .nav__liste--haupt > li + li {
+      margin-top: 4px;
+    }
+
+    .js .nav__link,
+    .js .nav__gruppe {
+      font-size: 1.5rem;
+      line-height: 1.25;
+      font-weight: 650;
+      min-height: 48px;
+      padding-block: 6px;
+    }
+
+    .js .nav__knopf {
+      display: none;
+    }
+
+    .js .nav__gruppe {
+      display: flex;
+      align-items: center;
+      color: var(--color-leiendaach);
+      font-size: var(--klein);
+      min-height: 32px;
+    }
+
+    .js .nav__unter {
+      display: block;
+      margin: 0 0 16px;
+    }
+
+    .js .nav__unter .nav__link {
+      font-size: 1.25rem;
+    }
+
+    .js .nav__extra {
+      margin-top: 32px;
+      display: grid;
+      gap: 24px;
+    }
+
+    .js .nav__telefon {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--color-lei);
+    }
+  }
+
+  /* Ab 1024 px: Navigation in der Kopfzeile */
+  @media (min-width: 64rem) {
+    .kopf {
+      padding-block: 20px;
+    }
+
+    .kopf__zeile {
+      flex-wrap: nowrap;
+      gap: 48px;
+    }
+
+    .kopf__logo {
+      margin-right: 0;
+    }
+
+    .kopf__logo img {
+      height: 52px;
+    }
+
+    .kopf__mobil {
+      display: none;
+    }
+
+    .nav {
+      display: flex;
+      flex: 1;
+      flex-basis: auto;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      margin: 0;
+    }
+
+    .nav__liste--haupt {
+      flex-wrap: nowrap;
+      gap: 28px;
+    }
+
+    .nav__haupt-li {
+      position: relative;
+    }
+
+    .nav__extra {
+      flex-wrap: nowrap;
+      gap: 24px;
+    }
+
+    .nav__gruppe {
+      display: none;
+    }
+
+    /* Untermenü „Leistungen“: Fläche in Kalkputz, kein Schatten, kein Radius */
+    .js .nav__unter:not([hidden]) {
+      display: block;
+      position: absolute;
+      top: calc(100% + 12px);
+      left: -24px;
+      z-index: 40;
+      padding: 12px 24px;
+      background: var(--color-kalkputz);
+    }
+
+    .js .nav__unter .nav__link {
+      font-weight: 450;
+      min-height: 44px;
+      white-space: nowrap;
+    }
+  }
+
+  @media (min-width: 64rem) and (max-width: 79.999rem) {
+    .nav__liste--haupt {
+      gap: 20px;
+    }
+
+    .kopf__zeile {
+      gap: 32px;
+    }
+  }
+
+  html:not(.js) .nav__knopf {
+    display: none;
+  }
+
+  .js .nav__leistungen-link {
+    display: none;
+  }
+
+  /* ---------------- Pfad (Breadcrumb) ---------------- */
+  .pfad__liste {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 8px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    color: var(--color-leiendaach);
+  }
+
+  .pfad__liste li + li::before {
+    content: '/';
+    margin-right: 8px;
+    color: var(--color-leiendaach);
+  }
+
+  .pfad__liste a {
+    color: var(--color-leiendaach);
+  }
+
+  /* ---------------- Seitenkopf der Unterseiten ---------------- */
+  .seitenkopf {
+    padding-block: 24px 48px;
+  }
+
+  @media (min-width: 64rem) {
+    .seitenkopf {
+      padding-bottom: 64px;
+    }
+  }
+
+  /* Der Seitenkopf bringt den Abstand zur ersten weißen Sektion schon mit */
+  .seitenkopf + .sektion:not(.flaeche) {
+    padding-top: 0;
+  }
+
+  .seitenkopf h1 {
+    margin-top: 24px;
+    max-width: 18ch;
+  }
+
+  .seitenkopf .lead {
+    margin-top: 24px;
+    max-width: 52ch;
+  }
+
+  /* ---------------- Hero (C4, C5) ---------------- */
+  .hero {
+    position: relative;
+  }
+
+  .hero__text {
+    padding-block: 24px 40px;
+  }
+
+  .hero__text .lead {
+    margin-top: 24px;
+    max-width: 34ch;
+  }
+
+  .hero__aktion {
+    margin-top: 32px;
+  }
+
+  .hero__telefon {
+    margin-top: 16px;
+  }
+
+  .hero__telefon a {
+    font-weight: 650;
+    white-space: nowrap;
+  }
+
+  @media (min-width: 64rem) {
+    .hero {
+      align-items: center;
+    }
+
+    .hero__text {
+      grid-column: 2 / 7;
+      grid-row: 1;
+      padding-block: 48px;
+    }
+
+    .hero .owend {
+      grid-column: 7 / -1;
+      grid-row: 1;
+    }
+  }
+
+  .owend__marke {
+    position: absolute;
+    top: 30vh;
+    left: 0;
+    width: 1px;
+    height: 1px;
+    pointer-events: none;
+  }
+
+  /* ---------------- Owend: Tag und Abend übereinander ---------------- */
+  .owend {
+    margin: 0;
+    grid-column: voll;
+  }
+
+  .owend__stapel {
+    display: grid;
+    aspect-ratio: 4 / 5;
+    /* clip statt hidden: kein eigener Scroll-Container, sonst misst die View-Timeline hier */
+    overflow: clip;
+    background: var(--color-kalkputz);
+  }
+
+  .owend__bild {
+    grid-area: 1 / 1;
+    min-height: 0;
+  }
+
+  .owend__bild picture,
+  .owend__bild img {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .owend__bild img {
+    object-fit: cover;
+    object-position: var(--fokus, 50% 50%);
+  }
+
+  .owend__zeit {
+    display: none;
+  }
+
+  .owend figcaption {
+    padding: 12px var(--rand) 0;
+  }
+
+  @media (min-width: 64rem) {
+    .owend__stapel {
+      aspect-ratio: auto;
+      height: min(86svh, 880px);
+    }
+
+    .owend figcaption {
+      padding: 12px 32px 0 0;
+    }
+  }
+
+  /* Grundzustand ohne Unterstützung und ohne JavaScript: Abendfoto statisch */
+  .owend__abend {
+    opacity: 1;
+  }
+
+  /* Fallback 1: Browser ohne Scroll-Driven Animations, mit JavaScript */
+  .owend--js .owend__abend {
+    opacity: 0;
+    transition: opacity 900ms ease-in-out;
+  }
+
+  .owend--js.ist-abend .owend__abend {
+    opacity: 1;
+  }
+
+  /* Fallback 3: reduzierte Bewegung – beide Fotos als Paar, jedes mit seiner Uhrzeit */
+  @media (prefers-reduced-motion: reduce) {
+    .owend--animiert .owend__stapel {
+      aspect-ratio: auto;
+      height: auto;
+      gap: 24px 12px;
+      overflow: visible;
+      background: none;
+    }
+
+    .owend--animiert .owend__bild {
+      grid-area: auto;
+    }
+
+    .owend--animiert .owend__bild picture {
+      height: auto;
+    }
+
+    .owend--animiert .owend__bild img {
+      aspect-ratio: 4 / 5;
+      height: auto;
+    }
+
+    .owend--animiert .owend__abend {
+      opacity: 1;
+    }
+
+    .owend--animiert .owend__zeit {
+      display: block;
+      padding: 8px var(--rand) 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) and (min-width: 48rem) {
+    .owend--animiert .owend__stapel {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .owend--animiert .owend__zeit {
+      padding-inline: 0;
+    }
+  }
+
+  /* Platzhalter, solange es kein freigegebenes Fotopaar gibt (Fallback 4) */
+  .platzhalter {
+    display: flex;
+    align-items: flex-end;
+    padding: 16px;
+    background: var(--color-kalkputz);
+    color: var(--color-leiendaach);
+    font-size: var(--klein);
+    line-height: 1.45;
+    font-weight: 450;
+  }
+
+  .owend__stapel > .platzhalter {
+    grid-area: 1 / 1;
+    padding: 24px var(--rand);
+  }
+
+  @media (min-width: 64rem) {
+    .owend__stapel > .platzhalter {
+      padding: 32px;
+    }
+  }
+
+  .testmarke {
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    z-index: 2;
+    padding: 4px 8px;
+    background: var(--color-weiss);
+    color: var(--color-lei);
+    font-size: var(--klein);
+    font-weight: 650;
+  }
+
+  /* ---------------- Owend mit Regler (C6) ---------------- */
+  .regler {
+    margin: 0;
+  }
+
+  .regler__stapel {
+    display: grid;
+    gap: 12px;
+  }
+
+  @media (min-width: 48rem) {
+    .regler__stapel {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .regler__bild picture,
+  .regler__bild img {
+    display: block;
+    width: 100%;
+  }
+
+  .regler__bild img {
+    aspect-ratio: 3 / 2;
+    height: auto;
+    object-fit: cover;
+    object-position: var(--fokus, 50% 50%);
+  }
+
+  .regler__zeit {
+    margin-top: 8px;
+  }
+
+  .regler--aktiv .regler__stapel {
+    grid-template-columns: 1fr;
+    gap: 0;
+    position: relative;
+  }
+
+  .regler--aktiv .regler__bild {
+    grid-area: 1 / 1;
+  }
+
+  .regler--aktiv .regler__abend {
+    opacity: var(--abend, 0);
+  }
+
+  .regler--aktiv .regler__zeit {
+    display: none;
+  }
+
+  .regler__steuerung {
+    display: grid;
+    gap: 4px;
+    max-width: 30rem;
+    margin-top: 16px;
+  }
+
+  .regler__steuerung[hidden] {
+    display: none;
+  }
+
+  .regler__steuerung label {
+    font-weight: 650;
+    font-size: var(--klein);
+  }
+
+  .regler figcaption {
+    margin-top: 8px;
+  }
+
+  .regler__eingabe {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 44px;
+    margin: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .regler__eingabe::-webkit-slider-runnable-track {
+    height: 4px;
+    border-radius: 2px;
+    background: var(--color-leiendaach);
+  }
+
+  .regler__eingabe::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    box-sizing: border-box;
+    width: 28px;
+    height: 28px;
+    margin-top: -12px;
+    border-radius: 50%;
+    border: 2px solid var(--color-lei);
+    background: var(--color-bletz-giel);
+  }
+
+  .regler__eingabe::-moz-range-track {
+    height: 4px;
+    border-radius: 2px;
+    background: var(--color-leiendaach);
+  }
+
+  .regler__eingabe::-moz-range-thumb {
+    box-sizing: border-box;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid var(--color-lei);
+    background: var(--color-bletz-giel);
+  }
+
+  /* ---------------- Fotos ---------------- */
+  .foto {
+    margin: 0;
+  }
+
+  .foto picture,
+  .foto img {
+    display: block;
+    width: 100%;
+  }
+
+  .foto img {
+    height: auto;
+    object-fit: cover;
+  }
+
+  .foto--3-2 img,
+  .foto--3-2 .platzhalter {
+    aspect-ratio: 3 / 2;
+  }
+
+  .foto--4-5 img,
+  .foto--4-5 .platzhalter {
+    aspect-ratio: 4 / 5;
+  }
+
+  .foto--1-1 img,
+  .foto--1-1 .platzhalter {
+    aspect-ratio: 1 / 1;
+  }
+
+  .foto figcaption {
+    margin-top: 8px;
+  }
+
+  .marke-dev {
+    display: inline-block;
+    padding: 2px 8px;
+    background: var(--color-lei);
+    color: var(--color-weiss);
+    font-size: var(--klein);
+    font-weight: 650;
+  }
+
+  /* ---------------- Was wir machen ---------------- */
+  .leistungen {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .leistung {
+    padding-bottom: 64px;
+  }
+
+  .leistung__text p {
+    margin-top: 12px;
+  }
+
+  .leistung__text .leistung__link {
+    margin-top: 16px;
+  }
+
+  .leistung__link a {
+    font-weight: 650;
+  }
+
+  .leistung__foto {
+    margin-top: 24px;
+  }
+
+  @media (min-width: 64rem) {
+    .leistung {
+      align-items: center;
+      padding-bottom: 96px;
+    }
+
+    .leistung__text {
+      grid-column: 2 / 7;
+      grid-row: 1;
+    }
+
+    .leistung__foto {
+      grid-column: 8 / -1;
+      grid-row: 1;
+      margin-top: 0;
+    }
+
+    /* Licht bekommt das größte Foto: breiter und am Desktop quadratisch statt 4:5 */
+    .leistung--gross .leistung__foto {
+      grid-column: 7 / -1;
+    }
+
+    .leistung--gross .foto--4-5 img,
+    .leistung--gross .foto--4-5 .platzhalter {
+      aspect-ratio: 1 / 1;
+    }
+
+    .leistungen__ohne {
+      align-items: start;
+    }
+  }
+
+  .leistung--ohne-foto {
+    padding-bottom: 48px;
+  }
+
+  @media (min-width: 64rem) {
+    .leistungen__ohne > .leistung--ohne-foto:first-child {
+      grid-column: 2 / 7;
+    }
+
+    .leistungen__ohne > .leistung--ohne-foto:last-child {
+      grid-column: 8 / 13;
+    }
+  }
+
+  .sektion__fuss {
+    margin-top: 48px;
+    font-weight: 650;
+  }
+
+  .sektion__text {
+    margin-top: 24px;
+  }
+
+  /* ---------------- Projekte ---------------- */
+  .projekte {
+    display: grid;
+    gap: 64px;
+  }
+
+  .projekt__text {
+    margin-top: 16px;
+  }
+
+  .projekt__text h3 {
+    margin-top: 4px;
+  }
+
+  .projekt__text p + p {
+    margin-top: 12px;
+  }
+
+  @media (min-width: 64rem) {
+    .projekte {
+      gap: 96px;
+    }
+
+    .projekt {
+      align-items: end;
+    }
+
+    .projekt__bild {
+      grid-row: 1;
+    }
+
+    .projekt--rechts .projekt__bild {
+      grid-column: 6 / -1;
+    }
+
+    .projekt--rechts .projekt__text {
+      grid-column: 2 / 6;
+      grid-row: 1;
+    }
+
+    .projekt--links .projekt__bild {
+      grid-column: 1 / 10;
+    }
+
+    .projekt--links .projekt__text {
+      grid-column: 10 / 14;
+      grid-row: 1;
+    }
+
+    .projekt__text {
+      margin-top: 0;
+    }
+  }
+
+  /* Projektseite: Gruppen, Sprungnavigation */
+  .sprung {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 24px;
+    list-style: none;
+    margin: 12px 0 0;
+    padding: 0;
+  }
+
+  .sprung a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-weight: 650;
+  }
+
+  .gruppe + .gruppe {
+    margin-top: var(--sektion);
+  }
+
+  .gruppe__liste {
+    display: grid;
+    gap: 64px;
+    margin-top: 32px;
+  }
+
+  .eintrag__meta {
+    margin-top: 16px;
+  }
+
+  .eintrag__meta + h3 {
+    margin-top: 4px;
+  }
+
+  .eintrag__text {
+    margin-top: 12px;
+  }
+
+  .eintrag__fotos {
+    display: grid;
+    gap: 12px;
+  }
+
+  @media (min-width: 48rem) {
+    .eintrag__fotos--mehr {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .eintrag {
+      align-items: start;
+    }
+
+    .eintrag__fotos {
+      grid-column: 8 / -1;
+      grid-row: 1;
+    }
+
+    .eintrag__inhalt {
+      grid-column: 2 / 7;
+      grid-row: 1;
+    }
+
+    .eintrag__meta {
+      margin-top: 0;
+    }
+  }
+
+  /* Lichtseite: Paare und Bereiche */
+  .paare {
+    display: grid;
+    gap: 64px;
+  }
+
+  @media (min-width: 64rem) {
+    .paare {
+      gap: 96px;
+    }
+  }
+
+  .bereich + .bereich {
+    margin-top: 48px;
+  }
+
+  .bereich__text {
+    margin-top: 12px;
+  }
+
+  .bereich .gruppe__liste {
+    margin-top: 32px;
+  }
+
+  .stellen {
+    list-style: none;
+    margin: 24px 0 0;
+    padding: 0;
+  }
+
+  .stelle + .stelle {
+    margin-top: 32px;
+  }
+
+  .stelle p {
+    margin-top: 8px;
+  }
+
+  .sprung__nav {
+    margin-top: 32px;
+  }
+
+  /* ---------------- Team ---------------- */
+  @media (min-width: 64rem) {
+    .team {
+      align-items: center;
+    }
+
+    .team__text {
+      grid-column: 2 / 7;
+      grid-row: 1;
+    }
+
+    .team__foto {
+      grid-column: 8 / -1;
+      grid-row: 1;
+    }
+  }
+
+  .team__foto {
+    margin-top: 32px;
+  }
+
+  @media (min-width: 64rem) {
+    .team__foto {
+      margin-top: 0;
+    }
+  }
+
+  /* ---------------- FAQ (C7) ---------------- */
+  .faq {
+    max-width: 52rem;
+    border-bottom: 1px solid var(--color-leiendaach);
+  }
+
+  .faq__eintrag {
+    border-top: 1px solid var(--color-leiendaach);
+  }
+
+  .faq__frage {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    min-height: 48px;
+    padding: 16px 0;
+    list-style: none;
+    cursor: pointer;
+    font-family: var(--font-display);
+    font-weight: 650;
+    font-size: clamp(1.125rem, 1.05rem + 0.3vw, 1.3125rem);
+    line-height: 1.3;
+    border-radius: 0;
+  }
+
+  .faq__frage::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq__frage:hover .faq__text {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.2em;
+  }
+
+  .faq__zeichen {
+    position: relative;
+    flex: none;
+    width: 16px;
+    height: 16px;
+  }
+
+  .faq__zeichen::before,
+  .faq__zeichen::after {
+    content: '';
+    position: absolute;
+    background: var(--color-lei);
+  }
+
+  .faq__zeichen::before {
+    left: 0;
+    right: 0;
+    top: 7px;
+    height: 2px;
+  }
+
+  .faq__zeichen::after {
+    top: 0;
+    bottom: 0;
+    left: 7px;
+    width: 2px;
+    transition: transform 180ms ease;
+  }
+
+  .faq__eintrag[open] .faq__zeichen::after {
+    transform: scaleY(0);
+  }
+
+  .faq__antwort {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .faq__antwort > p {
+    padding-bottom: 24px;
+    max-width: 62ch;
+  }
+
+  .faq__eintrag::details-content {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition:
+      grid-template-rows 180ms ease,
+      content-visibility 180ms allow-discrete;
+  }
+
+  .faq__eintrag[open]::details-content {
+    grid-template-rows: 1fr;
+  }
+
+  /* ---------------- Anrufen oder schreiben (E7) ---------------- */
+  .grosse-nummer {
+    display: inline-block;
+    color: var(--color-lei);
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(2.5rem, 1.8rem + 3vw, 4rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    text-decoration-line: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.14em;
+    text-decoration-color: var(--color-leiendaach);
+  }
+
+  .grosse-nummer:hover {
+    color: var(--color-lei);
+    text-decoration-thickness: 4px;
+    text-decoration-color: var(--color-lei);
+  }
+
+  .kontakt__nummer {
+    margin-top: 24px;
+  }
+
+  .zeiten {
+    margin-top: 32px;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .zeiten caption {
+    text-align: left;
+    font-weight: 650;
+    padding-bottom: 8px;
+  }
+
+  .zeiten th,
+  .zeiten td {
+    padding: 4px 0;
+    text-align: left;
+    vertical-align: top;
+    font-weight: 400;
+  }
+
+  .zeiten th {
+    padding-right: 24px;
+    white-space: nowrap;
+  }
+
+  .zeiten__hinweis {
+    margin-top: 12px;
+  }
+
+  .kontakt__schreiben {
+    margin-top: 32px;
+  }
+
+  .kontakt__aktion {
+    margin-top: 24px;
+  }
+
+  @media (min-width: 64rem) {
+    .kontakt__links {
+      grid-column: 2 / 8;
+    }
+
+    .kontakt__rechts {
+      grid-column: 9 / 14;
+      align-self: end;
+    }
+
+    .kontakt__schreiben {
+      margin-top: 0;
+    }
+  }
+
+  /* ---------------- Fuß ---------------- */
+  .fuss {
+    padding-block: 48px;
+    background: var(--color-kalkputz);
+    font-size: var(--klein);
+    line-height: 1.6;
+  }
+
+  .fuss__spalten {
+    display: grid;
+    gap: 32px;
+  }
+
+  .fuss__name {
+    font-weight: 650;
+  }
+
+  .fuss address {
+    font-style: normal;
+  }
+
+  .fuss__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 24px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .fuss__links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  .fuss .sprachen__liste {
+    margin-top: 8px;
+  }
+
+  @media (min-width: 64rem) {
+    .fuss {
+      padding-block: 64px;
+    }
+
+    .fuss__spalten {
+      grid-template-columns: 4fr 3fr 5fr;
+      gap: 24px;
+    }
+  }
+
+  /* Endet die Seite mit einer Fläche in Kalkputz, geht sie ohne zweiten Abstand in den Fuß über */
+  main:has(> .flaeche:last-child) + .fuss {
+    padding-top: 0;
+  }
+
+  /* ---------------- Listen und Abläufe ---------------- */
+  .ablauf {
+    list-style: none;
+    counter-reset: schritt;
+    margin: 24px 0 0;
+    padding: 0;
+    max-width: 52rem;
+  }
+
+  .ablauf > li {
+    counter-increment: schritt;
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: 16px;
+    padding: 12px 0;
+  }
+
+  .ablauf > li::before {
+    content: counter(schritt);
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    font-size: 1.25rem;
+    line-height: 1.4;
+  }
+
+  .liste {
+    margin: 16px 0 0;
+    padding-left: 1.25em;
+  }
+
+  .liste > li + li {
+    margin-top: 8px;
+  }
+
+  .liste > li::marker {
+    color: var(--color-leiendaach);
+  }
+
+  .block + .block {
+    margin-top: 48px;
+  }
+
+  @media (min-width: 64rem) {
+    .block + .block {
+      margin-top: 64px;
+    }
+  }
+
+  .block h2 + *,
+  .block h3 + * {
+    margin-top: 16px;
+  }
+
+  .angaben {
+    display: grid;
+    gap: 12px;
+    margin: 16px 0 0;
+  }
+
+  .angaben > div {
+    display: grid;
+    gap: 2px;
+  }
+
+  .angaben dt {
+    font-weight: 650;
+  }
+
+  .angaben dd {
+    margin: 0;
+  }
+
+  @media (min-width: 48rem) {
+    .angaben > div {
+      grid-template-columns: 16rem 1fr;
+      gap: 16px;
+    }
+  }
+
+  /* ---------------- Formular (F) ---------------- */
+  .formular {
+    display: grid;
+    gap: 40px;
+    max-width: 44rem;
+  }
+
+  .feldgruppe {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    min-width: 0;
+  }
+
+  .feldgruppe > legend,
+  .feld > label,
+  .feld__label {
+    display: block;
+    padding: 0;
+    margin-bottom: 8px;
+    font-family: var(--font-display);
+    font-weight: 650;
+    font-size: 1.125rem;
+    line-height: 1.35;
+  }
+
+  .feld__zusatz {
+    font-family: var(--font-sans);
+    font-weight: 450;
+    font-size: var(--klein);
+    color: var(--color-leiendaach);
+  }
+
+  .feld__hinweis {
+    margin: -4px 0 8px;
+    color: var(--color-leiendaach);
+  }
+
+  .optionen {
+    display: grid;
+    gap: 8px;
+  }
+
+  @media (min-width: 40rem) {
+    .optionen--zwei {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 48px;
+    padding: 8px 12px;
+    border: 1px solid var(--color-leiendaach);
+    border-radius: var(--radius-ui);
+    background: var(--color-weiss);
+    cursor: pointer;
+    line-height: 1.3;
+  }
+
+  .option:has(input:checked) {
+    padding: 7px 11px;
+    border: 2px solid var(--color-noutem-blau);
+  }
+
+  .option input {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    accent-color: var(--color-noutem-blau);
+  }
+
+  .option:has(input:focus-visible) {
+    outline: 3px solid var(--color-noutem-blau);
+    outline-offset: 2px;
+  }
+
+  .option input:focus-visible {
+    outline: none;
+  }
+
+  .eingabe {
+    display: block;
+    width: 100%;
+    min-height: 48px;
+    padding: 10px 12px;
+    border: 1px solid var(--color-leiendaach);
+    border-radius: var(--radius-ui);
+    background: var(--color-weiss);
+    color: var(--color-lei);
+    font: inherit;
+    font-size: 1.125rem;
+    line-height: 1.4;
+  }
+
+  textarea.eingabe {
+    min-height: 9rem;
+    resize: vertical;
+  }
+
+  select.eingabe {
+    appearance: auto;
+  }
+
+  .eingabe:focus-visible {
+    outline: 3px solid var(--color-noutem-blau);
+    outline-offset: 2px;
+  }
+
+  .eingabe[aria-invalid='true'],
+  .feldgruppe[aria-invalid='true'] .option,
+  .einwilligung[aria-invalid='true'] {
+    border-color: var(--color-lei);
+    border-width: 2px;
+  }
+
+  .eingabe[type='file'] {
+    padding: 8px;
+    font-size: var(--klein);
+  }
+
+  .eingabe[type='file']::file-selector-button {
+    margin-right: 12px;
+    min-height: 40px;
+    padding: 8px 14px;
+    border: 1px solid var(--color-leiendaach);
+    border-radius: var(--radius-ui);
+    background: var(--color-kalkputz);
+    color: var(--color-lei);
+    font: inherit;
+    font-weight: 650;
+    cursor: pointer;
+  }
+
+  .dateiliste {
+    margin: 8px 0 0;
+    padding-left: 1.25em;
+    color: var(--color-leiendaach);
+  }
+
+  .bedingt {
+    padding: 24px;
+    background: var(--color-kalkputz);
+  }
+
+  /* Legende als normaler Block in der Fläche (nicht auf der Rahmenlinie) */
+  .bedingt > .bedingt__titel {
+    float: left;
+    width: 100%;
+    margin: 0 0 16px;
+    font-family: var(--font-sans);
+    font-weight: 650;
+    font-size: var(--klein);
+    color: var(--color-leiendaach);
+  }
+
+  .bedingt > .bedingt__titel + * {
+    clear: both;
+  }
+
+  .bedingt > :not(legend) + :not(legend) {
+    margin-top: 24px;
+  }
+
+  .bedingt .option {
+    background: var(--color-weiss);
+  }
+
+  .js .bedingt[data-nur]:not(.ist-aktiv) {
+    display: none;
+  }
+
+  .einwilligung {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px;
+    border: 1px solid var(--color-leiendaach);
+    border-radius: var(--radius-ui);
+    cursor: pointer;
+  }
+
+  .einwilligung input {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    margin: 3px 0 0;
+    accent-color: var(--color-noutem-blau);
+  }
+
+  .fehler {
+    display: block;
+    margin-top: 8px;
+    font-weight: 650;
+    font-size: var(--klein);
+    line-height: 1.45;
+    color: var(--color-lei);
+  }
+
+  .fehler[hidden] {
+    display: none;
+  }
+
+  .fehler::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 1em;
+    margin-right: 8px;
+    vertical-align: -0.12em;
+    background: var(--color-lei);
+  }
+
+  .zusammenfassung {
+    padding: 16px;
+    border: 2px solid var(--color-lei);
+    border-radius: var(--radius-ui);
+    font-weight: 650;
+  }
+
+  .zusammenfassung:empty {
+    display: none;
+  }
+
+  /* Rückleitung der Edge Function bei Fehlern: nur sichtbar, wenn die Adresse auf sie zeigt */
+  .ruecksprung {
+    display: none;
+  }
+
+  .ruecksprung:target {
+    display: block;
+    margin-bottom: 40px;
+    padding: 16px;
+    border: 2px solid var(--color-lei);
+    border-radius: var(--radius-ui);
+  }
+
+  .ruecksprung > * + * {
+    margin-top: 8px;
+  }
+
+  .honig {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  @media (min-width: 64rem) {
+    .kontaktseite__formular {
+      grid-column: 2 / 9;
+      grid-row: 1;
+    }
+
+    .kontaktseite__direkt {
+      grid-column: 10 / 14;
+      grid-row: 1;
+    }
+  }
+
+  .kontaktseite__direkt {
+    margin-bottom: 48px;
+  }
+
+  @media (min-width: 64rem) {
+    .kontaktseite__direkt {
+      margin-bottom: 0;
+    }
+  }
+
+  .direkt__nummer {
+    margin-top: 16px;
+  }
+
+  .direkt__nummer .grosse-nummer {
+    font-size: clamp(2.25rem, 1.8rem + 1.5vw, 3rem);
+  }
+
+  /* Impressum, Datenschutz: viele kurze Abschnitte, Zwischenüberschriften in h3-Größe */
+  .recht h2 {
+    font-weight: 650;
+    font-size: clamp(1.25rem, 1.15rem + 0.4vw, 1.5rem);
+    line-height: 1.25;
+    letter-spacing: -0.008em;
+  }
+
+  /* ---------------- 404 ---------------- */
+  .nichtgefunden {
+    text-align: center;
+    padding-block: 96px 128px;
+  }
+
+  .nichtgefunden h1 {
+    margin-inline: auto;
+    max-width: 16ch;
+  }
+
+  .nichtgefunden p {
+    margin: 24px auto 0;
+    max-width: 40ch;
+  }
+
+  .nichtgefunden__links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 24px;
+    list-style: none;
+    margin: 24px 0 0;
+    padding: 0;
+  }
+
+  .nichtgefunden__links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-weight: 650;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Owend: Tag wird Abend beim ersten Scrollen (C5). Nur Deckkraft.
+   Mobil (unter 1024 px) misst eine View-Timeline am Foto selbst: der Übergang beginnt, wenn
+   das Foto ganz zu sehen ist (cover 36 %), und ist fertig, wenn seine Unterkante die
+   Bildschirmmitte erreicht (cover 68 %) – unabhängig davon, wie lang h1 und Lead in der
+   jeweiligen Sprache sind. Am Desktop steht das Foto beim Laden ganz im Bild: Übergang
+   nach 4 bis 60 vh Scrollweg (scroll(root)). Rückwärts scrollen macht wieder Tag.
+------------------------------------------------------------------- */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .owend--animiert .owend__abend {
+      animation: owend-abend linear both;
+      animation-timeline: view(block);
+      animation-range: cover 36% cover 68%;
+    }
+
+    @media (min-width: 64rem) {
+      .owend--animiert .owend__abend {
+        animation-timeline: scroll(root block);
+        animation-range: 4vh 60vh;
+      }
+    }
+  }
+}
+
+@keyframes owend-abend {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

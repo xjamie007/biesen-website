@@ -1,0 +1,36 @@
+---
+/**
+ * „Anrufen oder schreiben“ (D2.6, E7) in Kalkputz: die große Telefonnummer als typografisches
+ * Bild der Seite (ein tel:-Link, der als Zahl wirkt, nicht als Knopf), Zeiten, E-Mail, Adresse,
+ * Knopf „Angebot anfragen“.
+ */
+import Zeiten from './Zeiten.astro';
+import { escapeHtml, rich, type Dict } from '@/i18n';
+import { path, type Lang } from '@/i18n/config';
+import { adresseZeile, mailHref, site, telHref } from '@/lib/site';
+
+interface Props {
+  lang: Lang;
+  t: Dict;
+}
+const { lang, t } = Astro.props;
+const schreiben = rich(t.home.schreiben, {
+  email: `<a href="${mailHref}">${escapeHtml(site.email)}</a>`,
+  adresse: escapeHtml(`${site.name}, ${adresseZeile}`),
+});
+---
+<section class="sektion flaeche" aria-labelledby="anrufen-h">
+  <div class="raster">
+    <div class="kontakt__links">
+      <h2 id="anrufen-h">{t.home.kontaktH2}</h2>
+      <p class="kontakt__nummer">
+        <a class="grosse-nummer" href={telHref}>{site.telefon.anzeige}</a>
+      </p>
+      <Zeiten lang={lang} t={t} />
+    </div>
+    <div class="kontakt__rechts">
+      <p class="kontakt__schreiben prosa" set:html={schreiben} />
+      <p class="kontakt__aktion"><a class="knopf" href={path(lang, 'kontakt')}>{t.allgemein.angebotAnfragen}</a></p>
+    </div>
+  </div>
+</section>

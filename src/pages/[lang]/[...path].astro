@@ -1,0 +1,56 @@
+---
+/**
+ * Ein Einstieg für alle Seiten in allen vier Sprachen mit übersetzten Slugs (D1).
+ * Job-Seiten nur für Stellen mit `offen: true`.
+ */
+import { LANGS, PAGE_SLUGS, routePath, type Lang, type PageKey, type Route } from '@/i18n/config';
+import { jobRoute, offeneJobs, type Job } from '@/lib/jobs';
+import Home from '@/views/Home.astro';
+import Installation from '@/views/Installation.astro';
+import Licht from '@/views/Licht.astro';
+import Photovoltaik from '@/views/Photovoltaik.astro';
+import Sicherheit from '@/views/Sicherheit.astro';
+import Hausgeraete from '@/views/Hausgeraete.astro';
+import Projekte from '@/views/Projekte.astro';
+import UeberUns from '@/views/UeberUns.astro';
+import Jobs from '@/views/Jobs.astro';
+import JobSeite from '@/views/Job.astro';
+import Kontakt from '@/views/Kontakt.astro';
+import Danke from '@/views/Danke.astro';
+import Impressum from '@/views/Impressum.astro';
+import Datenschutz from '@/views/Datenschutz.astro';
+
+export async function getStaticPaths() {
+  const jobs = await offeneJobs();
+  const out: { params: { lang: Lang; path: string | undefined }; props: { route: Route; job?: Job } }[] = [];
+  for (const lang of LANGS) {
+    for (const page of Object.keys(PAGE_SLUGS) as PageKey[]) {
+      const rest = routePath(lang, { page }).split('/').slice(2).filter(Boolean).join('/');
+      out.push({ params: { lang, path: rest || undefined }, props: { route: { page } } });
+    }
+    for (const job of jobs) {
+      const route = jobRoute(job);
+      const rest = routePath(lang, route).split('/').slice(2).filter(Boolean).join('/');
+      out.push({ params: { lang, path: rest }, props: { route, job } });
+    }
+  }
+  return out;
+}
+
+const lang = Astro.params.lang as Lang;
+const { route, job } = Astro.props as { route: Route; job?: Job };
+---
+{route.page === 'home' && <Home lang={lang} />}
+{route.page === 'installation' && <Installation lang={lang} />}
+{route.page === 'licht' && <Licht lang={lang} />}
+{route.page === 'photovoltaik' && <Photovoltaik lang={lang} />}
+{route.page === 'sicherheit' && <Sicherheit lang={lang} />}
+{route.page === 'hausgeraete' && <Hausgeraete lang={lang} />}
+{route.page === 'projekte' && <Projekte lang={lang} />}
+{route.page === 'ueberUns' && <UeberUns lang={lang} />}
+{route.page === 'jobs' && <Jobs lang={lang} />}
+{route.page === 'job' && job && <JobSeite lang={lang} job={job} />}
+{route.page === 'kontakt' && <Kontakt lang={lang} />}
+{route.page === 'danke' && <Danke lang={lang} />}
+{route.page === 'impressum' && <Impressum lang={lang} />}
+{route.page === 'datenschutz' && <Datenschutz lang={lang} />}

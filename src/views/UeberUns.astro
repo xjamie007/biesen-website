@@ -1,0 +1,72 @@
+---
+/** Über uns (E5): Familienbetrieb, Leitung [UNBESTÄTIGT], Geschichte [FEHLT], Sprachen, Mitgliedschaften als Text, Ort. */
+import Base from '@/layouts/Base.astro';
+import Seitenkopf from '@/components/Seitenkopf.astro';
+import Foto from '@/components/Foto.astro';
+import { escapeHtml, rich, useT } from '@/i18n';
+import { path, type Lang } from '@/i18n/config';
+import { breadcrumbs } from '@/lib/jsonld';
+import { adresseZeile, site } from '@/lib/site';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useT(lang);
+const s = t.seiten.ueberUns;
+const pfad = [
+  { name: t.nav.home, href: path(lang, 'home') },
+  { name: t.nav.ueberUns, href: path(lang, 'ueberUns') },
+];
+---
+<Base
+  lang={lang}
+  route={{ page: 'ueberUns' }}
+  title={t.seo.ueberUns.title}
+  description={t.seo.ueberUns.description}
+  jsonld={[breadcrumbs(pfad.map((p) => ({ name: p.name, url: p.href })))]}
+>
+  <Seitenkopf pfadLabel={t.a11y.pfad} pfad={pfad} h1={s.h1} intro={s.intro} />
+
+  <section class="sektion" aria-label={t.home.teamFoto}>
+    <div class="raster">
+      <Foto class="voll sp-bild-links" bild={null} alt="" folgt={t.allgemein.fotoFolgt} motiv={t.home.teamFoto} sizes="(min-width: 1024px) 66vw, 100vw" />
+    </div>
+  </section>
+
+  <section class="sektion" aria-labelledby="leitung-h">
+    <div class="raster">
+      <div class="sp-text">
+        <div class="block">
+          <h2 id="leitung-h">{s.leitungH2}</h2>
+          <p class="prosa" set:html={rich(s.leitung)} />
+        </div>
+        <div class="block">
+          <h2>{s.geschichteH2}</h2>
+          <p class="prosa" set:html={rich(s.geschichte)} />
+        </div>
+        <div class="block">
+          <h2>{s.spracheH2}</h2>
+          <p class="prosa" set:html={rich(s.sprache)} />
+        </div>
+        <div class="block">
+          <h2>{s.mitgliedH2}</h2>
+          <ul class="liste">{s.mitglied.map((m) => <li>{m}</li>)}</ul>
+          <p class="klein" set:html={rich(s.mitgliedHinweis)} />
+        </div>
+        <div class="block">
+          <h2>{s.ortH2}</h2>
+          <p class="prosa">{s.ort}</p>
+          <p class="prosa" set:html={escapeHtml(`${site.name}, ${adresseZeile}`)} />
+          <p><a href={site.osm}>{s.karte}</a></p>
+        </div>
+        <div class="block">
+          <h2>{s.jobsH2}</h2>
+          <p class="prosa">
+            {t.home.jobs} <a href={path(lang, 'jobs')}>{t.home.jobsLink}</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

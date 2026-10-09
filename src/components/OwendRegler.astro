@@ -1,0 +1,75 @@
+---
+/**
+ * Owend auf der Lichtseite (C6): Überblendung mit einem Regler, den die Besucher selbst bewegen.
+ * Ohne JavaScript ist der Regler ausgeblendet und beide Fotos stehen nebeneinander (ab 768 px)
+ * oder untereinander, jedes mit seiner Uhrzeit. Kein Vorher-Nachher-Schieber mit Trennlinie.
+ */
+import { Picture } from 'astro:assets';
+import { fmt, rich, type Dict } from '@/i18n';
+import type { Paar } from '@/lib/projekte';
+
+interface Props {
+  t: Dict;
+  paar: Paar;
+  headingLevel?: 'h2' | 'h3' | null;
+}
+const { t, paar } = Astro.props;
+const b = paar.bilder;
+const id = `regler-${paar.id}`;
+const sizes = '(min-width: 1024px) 1240px, 100vw';
+const breiten = [480, 768, 1080, 1600, 2000];
+const caption =
+  b && paar.ort && paar.projekt && b.tag.uhrzeit && b.abend.uhrzeit
+    ? fmt(t.owend.bildunterschrift, {
+        ort: paar.ort,
+        projekt: paar.projekt,
+        tag: `<time>${b.tag.uhrzeit}</time>`,
+        abend: `<time>${b.abend.uhrzeit}</time>`,
+      })
+    : rich(t.owend.bildunterschriftFehlt);
+---
+{
+  b ? (
+    <figure class="regler" data-regler style={`--fokus:${paar.fokus}`}>
+      <div class="regler__stapel" style={paar.test ? 'position:relative' : undefined}>
+        <div class="regler__bild regler__tag">
+          <Picture src={b.tag.bild} alt={b.tag.alt} formats={['avif', 'webp']} widths={breiten.filter((w) => w <= b.tag.bild.width)} sizes={sizes} loading="lazy" decoding="async" />
+          <p class="regler__zeit klein neben">{fmt(t.owend.tagZeit, { zeit: b.tag.uhrzeit })}</p>
+        </div>
+        <div class="regler__bild regler__abend">
+          <Picture src={b.abend.bild} alt={b.abend.alt} formats={['avif', 'webp']} widths={breiten.filter((w) => w <= b.abend.bild.width)} sizes={sizes} loading="lazy" decoding="async" />
+          <p class="regler__zeit klein neben">{fmt(t.owend.abendZeit, { zeit: b.abend.uhrzeit })}</p>
+        </div>
+        {paar.test && <span class="testmarke">Dev: {paar.motiv}</span>}
+      </div>
+      <div class="regler__steuerung" hidden>
+        <label for={id}>{t.owend.regler}</label>
+        <input
+          class="regler__eingabe"
+          id={id}
+          type="range"
+          min="0"
+          max="100"
+          step="1"
+          value="0"
+          aria-valuetext={t.owend.reglerTag}
+          data-tag={t.owend.reglerTag}
+          data-abend={t.owend.reglerAbend}
+          data-uebergang={t.owend.reglerUebergang}
+        />
+      </div>
+      <figcaption class="klein neben" set:html={caption} />
+    </figure>
+  ) : (
+    <figure class="foto foto--3-2">
+      <div class="platzhalter" role="img" aria-label={fmt(t.allgemein.fotopaarFolgt, { motiv: paar.motiv })}>
+        <span aria-hidden="true">{fmt(t.allgemein.fotopaarFolgt, { motiv: paar.motiv })}</span>
+      </div>
+    </figure>
+  )
+}
+
+<script>
+  import { initRegler } from '@/scripts/regler';
+  initRegler();
+</script>

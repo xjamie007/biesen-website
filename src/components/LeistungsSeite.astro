@@ -1,0 +1,96 @@
+---
+/**
+ * Gemeinsamer Rahmen der Leistungsseiten (D3): h1, Einleitung, Inhalt (Slot), passende Projekte,
+ * passende Fragen, Knopf „Angebot anfragen“ mit vorgewähltem Anliegen.
+ * JSON-LD: Service (provider = Firma), BreadcrumbList, FAQPage (nur Fragen ohne offene Punkte).
+ */
+import Base from '@/layouts/Base.astro';
+import Seitenkopf from './Seitenkopf.astro';
+import ProjektEintrag from './ProjektEintrag.astro';
+import Faq from './Faq.astro';
+import { escapeHtml, rich, stripOpenPoints, useT } from '@/i18n';
+import { path, type Lang, type ServicePage } from '@/i18n/config';
+import { breadcrumbs, faqPage, service } from '@/lib/jsonld';
+import { faqJsonItems, type FaqKey } from '@/lib/faq';
+import { paarFuer, projekteNachArt, type Art } from '@/lib/projekte';
+import { site, telHref } from '@/lib/site';
+
+interface Props {
+  lang: Lang;
+  page: ServicePage;
+  h1: string;
+  intro: string;
+  anliegen: string;
+  arten: readonly Art[];
+  faq: readonly FaqKey[];
+  serviceType: string;
+  /** Projekte zeigt die Seite selbst (Lichtseite: in den Bereichen) */
+  ohneProjekte?: boolean;
+}
+const { lang, page, h1, intro, anliegen, arten, faq, serviceType, ohneProjekte = false } = Astro.props;
+const t = useT(lang);
+const pfad = [
+  { name: t.nav.home, href: path(lang, 'home') },
+  { name: t.leistungen[page].name, href: path(lang, page) },
+];
+const projekte = ohneProjekte ? [] : await projekteNachArt(arten);
+const testTexte = { tag: t.owend.testTag, abend: t.owend.testAbend };
+const paare = await Promise.all(projekte.map((p) => (p.data.owend ? paarFuer(p, lang, testTexte) : Promise.resolve(null))));
+const faqItems = faqJsonItems(t, faq);
+const jsonld = [
+  service({ name: t.leistungen[page].name, description: stripOpenPoints(intro), url: path(lang, page), serviceType }),
+  breadcrumbs(pfad.map((p) => ({ name: p.name, url: p.href }))),
+  ...(faqItems.length ? [faqPage(faqItems)] : []),
+];
+const tel = `<a href="${telHref}" class="zahl">${escapeHtml(site.telefon.anzeige)}</a>`;
+const seo = t.seo[page];
+---
+<Base lang={lang} route={{ page }} title={seo.title} description={seo.description} jsonld={jsonld}>
+  <Seitenkopf pfadLabel={t.a11y.pfad} pfad={pfad} h1={h1} intro={intro} />
+
+  <slot />
+
+  {
+    !ohneProjekte && (
+      <section class="sektion" aria-labelledby="projekte-h">
+        <div class="raster">
+          <h2 id="projekte-h" class="sektion__kopf">{t.allgemein.passendeProjekte}</h2>
+        </div>
+        {projekte.length > 0 ? (
+          <div class="gruppe__liste">
+            {projekte.map((p, i) => (
+              <ProjektEintrag lang={lang} t={t} projekt={p} variante="liste" paar={paare[i]} />
+            ))}
+          </div>
+        ) : (
+          <div class="raster">
+            <p set:html={rich(t.allgemein.projekteFehlen)} />
+          </div>
+        )}
+      </section>
+    )
+  }
+
+  {
+    faq.length > 0 && (
+      <section class="sektion" aria-labelledby="fragen-h">
+        <div class="raster">
+          <div>
+            <h2 id="fragen-h" class="sektion__kopf">{t.allgemein.passendeFragen}</h2>
+            <Faq lang={lang} t={t} keys={faq} />
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="sektion flaeche" aria-label={t.allgemein.angebotAnfragen}>
+    <div class="raster">
+      <div>
+        <p><a class="knopf" href={`${path(lang, 'kontakt')}?anliegen=${anliegen}`}>{t.allgemein.angebotAnfragen}</a></p>
+        <slot name="aktion" />
+        <p class="hero__telefon" set:html={rich(t.allgemein.oderAnrufen, { tel })} />
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,10 @@
+# Supabase-Projekt der Website. Region beim Anlegen: EU (z. B. Frankfurt, eu-central-1).
+project_id = "electricite-biesen"
+
+[functions.anfrage]
+# Das Formular sendet ohne Schlüssel (keine Schlüssel im Frontend).
+verify_jwt = false
+
+[functions.aufraeumen]
+# Wird nur von pg_cron mit dem Geheimnis im Header x-cron-secret aufgerufen.
+verify_jwt = false

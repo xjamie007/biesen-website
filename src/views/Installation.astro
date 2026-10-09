@@ -1,0 +1,48 @@
+---
+/** Neubau und Renovierung (D3, E3): Leistungen, Fertighaus, Renovierung, Ablauf im Neubau als <ol>. */
+import LeistungsSeite from '@/components/LeistungsSeite.astro';
+import { rich, useT } from '@/i18n';
+import { path, type Lang } from '@/i18n/config';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useT(lang);
+const s = t.seiten.installation;
+---
+<LeistungsSeite
+  lang={lang}
+  page="installation"
+  h1={s.h1}
+  intro={s.intro}
+  anliegen="neubau"
+  arten={['neubau', 'renovierung']}
+  faq={['angebot', 'fertighaus', 'kostenlos']}
+  serviceType="Electrical installation"
+>
+  <section class="sektion" aria-labelledby="was-h">
+    <div class="raster">
+      <div class="sp-text">
+        <div class="block">
+          <h2 id="was-h">{s.wasH2}</h2>
+          <ul class="liste">{s.was.map((x) => <li>{x}</li>)}</ul>
+        </div>
+        <div class="block">
+          <h2>{s.fertighausH2}</h2>
+          <p class="prosa" set:html={rich(s.fertighaus)} />
+        </div>
+        <div class="block">
+          <h2>{s.renovierungH2}</h2>
+          <p class="prosa">{s.renovierung}</p>
+          <p class="leistung__link"><a href={`${path(lang, 'kontakt')}?anliegen=renovierung`}>{s.anliegenRenovierung}</a></p>
+        </div>
+        <div class="block">
+          <h2>{s.ablaufH2}</h2>
+          <ol class="ablauf">{s.ablauf.map((x) => <li>{x}</li>)}</ol>
+          <p class="klein" set:html={rich(s.ablaufHinweis)} />
+        </div>
+      </div>
+    </div>
+  </section>
+</LeistungsSeite>

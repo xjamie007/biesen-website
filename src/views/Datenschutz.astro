@@ -1,0 +1,76 @@
+---
+/**
+ * Datenschutzerklärung (D3, H) nach DSGVO/RGPD: welche Daten, wozu, Rechtsgrundlage, wie lange,
+ * wer verarbeitet mit (GitHub, Supabase EU, Mailversand [mit Nave klären]), Rechte, CNPD.
+ */
+import Base from '@/layouts/Base.astro';
+import Seitenkopf from '@/components/Seitenkopf.astro';
+import { escapeHtml, fmt, rich, useT } from '@/i18n';
+import { path, type Lang } from '@/i18n/config';
+import { breadcrumbs } from '@/lib/jsonld';
+import { mailHref, site } from '@/lib/site';
+import { datumText } from '@/lib/zeiten';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useT(lang);
+const s = t.seiten.datenschutz;
+const pfad = [
+  { name: t.nav.home, href: path(lang, 'home') },
+  { name: t.nav.datenschutz, href: path(lang, 'datenschutz') },
+];
+const html = {
+  email: `<a href="${mailHref}">${escapeHtml(site.email)}</a>`,
+  cnpd: `<a href="${site.cnpd}">cnpd.public.lu</a>`,
+};
+---
+<Base
+  lang={lang}
+  route={{ page: 'datenschutz' }}
+  title={t.seo.datenschutz.title}
+  description={t.seo.datenschutz.description}
+  jsonld={[breadcrumbs(pfad.map((p) => ({ name: p.name, url: p.href })))]}
+>
+  <Seitenkopf pfadLabel={t.a11y.pfad} pfad={pfad} h1={s.h1} intro={s.intro} />
+  <section class="sektion recht" aria-label={s.h1}>
+    <div class="raster">
+      <div>
+        <div class="block prosa">
+          <h2>{s.verantwortlichH2}</h2>
+          <p set:html={rich(s.verantwortlich, html)} />
+        </div>
+        <div class="block prosa">
+          <h2>{s.formularH2}</h2>
+          <p>{s.formular}</p>
+          <p>{s.rechtsgrundlage}</p>
+          <p set:html={rich(s.speicherung)} />
+          <p set:html={rich(s.loeschung)} />
+          <p>{s.missbrauch}</p>
+        </div>
+        <div class="block prosa">
+          <h2>{s.kontaktH2}</h2>
+          <p set:html={rich(s.kontakt)} />
+        </div>
+        <div class="block prosa">
+          <h2>{s.hostingH2}</h2>
+          <p>{s.hosting}</p>
+        </div>
+        <div class="block prosa">
+          <h2>{s.dienstleisterH2}</h2>
+          <ul class="liste">{s.dienstleister.map((x) => <li set:html={rich(x)} />)}</ul>
+        </div>
+        <div class="block prosa">
+          <h2>{s.linksH2}</h2>
+          <p>{s.links}</p>
+        </div>
+        <div class="block prosa">
+          <h2>{s.rechteH2}</h2>
+          <p set:html={rich(s.rechte, html)} />
+          <p class="klein neben">{fmt(s.stand, { datum: datumText(lang, site.datenschutzStand, false) })}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

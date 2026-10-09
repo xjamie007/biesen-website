@@ -1,0 +1,63 @@
+---
+/**
+ * Kontakt und Anfrage (D3, F): das Formular, daneben (ab 1024 px) bzw. darüber Telefon, Zeiten,
+ * Adresse, E-Mail, Anfahrt als Link auf OpenStreetMap (keine eingebettete Karte).
+ */
+import Base from '@/layouts/Base.astro';
+import Seitenkopf from '@/components/Seitenkopf.astro';
+import Anfrageformular from '@/components/Anfrageformular.astro';
+import Zeiten from '@/components/Zeiten.astro';
+import { rich, useT } from '@/i18n';
+import { path, type Lang } from '@/i18n/config';
+import { breadcrumbs } from '@/lib/jsonld';
+import { mailHref, site, telHref } from '@/lib/site';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useT(lang);
+const s = t.seiten.kontakt;
+const pfad = [
+  { name: t.nav.home, href: path(lang, 'home') },
+  { name: t.nav.kontakt, href: path(lang, 'kontakt') },
+];
+---
+<Base
+  lang={lang}
+  route={{ page: 'kontakt' }}
+  title={t.seo.kontakt.title}
+  description={t.seo.kontakt.description}
+  jsonld={[breadcrumbs(pfad.map((p) => ({ name: p.name, url: p.href })))]}
+>
+  <Seitenkopf pfadLabel={t.a11y.pfad} pfad={pfad} h1={s.h1} intro={s.intro} />
+
+  <div class="raster kontaktseite sektion sektion--anschluss">
+    <aside class="kontaktseite__direkt" aria-labelledby="direkt-h">
+      <h2 id="direkt-h" class="h3">{s.direktH2}</h2>
+      <p class="direkt__nummer"><a class="grosse-nummer" href={telHref}>{site.telefon.anzeige}</a></p>
+      <Zeiten lang={lang} t={t} />
+      <address class="direkt__adresse">
+        {site.name}<br />
+        {site.adresse.strasse}<br />
+        {site.adresse.plzAnzeige} {site.adresse.ort}<br />
+        <a href={mailHref}>{site.email}</a>
+      </address>
+      <p><a href={site.osm}>{s.anfahrt}</a></p>
+    </aside>
+    <div class="kontaktseite__formular">
+      {/* Ziele der Rückleitung durch die Edge Function (#fehlt, #technisch, #zu-viele); sichtbar über :target, auch ohne JavaScript */}
+      <div class="ruecksprung" id="fehlt" tabindex="-1" role="alert">
+        <p class="h3">{t.serverFehler.titel}</p>
+        <p>{t.serverFehler.text}</p>
+      </div>
+      <div class="ruecksprung" id="technisch" tabindex="-1" role="alert">
+        <p set:html={rich(t.serverFehler.technisch, {}) + ' ' + `<a href="${telHref}" class="zahl">${site.telefon.anzeige}</a>`} />
+      </div>
+      <div class="ruecksprung" id="zu-viele" tabindex="-1" role="alert">
+        <p set:html={rich(t.serverFehler.zuViele, {}) + ' ' + `<a href="${telHref}" class="zahl">${site.telefon.anzeige}</a>`} />
+      </div>
+      <Anfrageformular lang={lang} t={t} />
+    </div>
+  </div>
+</Base>

@@ -1,0 +1,83 @@
+---
+/**
+ * Projekte (D3): alle freigegebenen Projekte, gruppiert nach Art, oben eine Sprungnavigation
+ * (Ankerlinks, kein JS-Filter). Projekte mit Fotopaar zeigen das Paar mit Regler.
+ */
+import Base from '@/layouts/Base.astro';
+import Seitenkopf from '@/components/Seitenkopf.astro';
+import ProjektEintrag from '@/components/ProjektEintrag.astro';
+import { rich, useT } from '@/i18n';
+import { path, type Lang } from '@/i18n/config';
+import { breadcrumbs } from '@/lib/jsonld';
+import { alleProjekte, paarFuer, type Art } from '@/lib/projekte';
+import { ARTEN } from '@/content.config';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useT(lang);
+const s = t.seiten.projekte;
+const pfad = [
+  { name: t.nav.home, href: path(lang, 'home') },
+  { name: t.nav.projekte, href: path(lang, 'projekte') },
+];
+const testTexte = { tag: t.owend.testTag, abend: t.owend.testAbend };
+const projekte = await alleProjekte();
+const gruppen = await Promise.all(
+  (ARTEN as readonly Art[])
+    .map((art) => ({ art, liste: projekte.filter((p) => p.data.art === art) }))
+    .filter((g) => g.liste.length > 0)
+    .map(async (g) => ({
+      ...g,
+      paare: await Promise.all(g.liste.map((p) => (p.data.owend ? paarFuer(p, lang, testTexte) : Promise.resolve(null)))),
+    })),
+);
+---
+<Base
+  lang={lang}
+  route={{ page: 'projekte' }}
+  title={t.seo.projekte.title}
+  description={t.seo.projekte.description}
+  jsonld={[breadcrumbs(pfad.map((p) => ({ name: p.name, url: p.href })))]}
+>
+  <Seitenkopf pfadLabel={t.a11y.pfad} pfad={pfad} h1={s.h1} intro={s.intro}>
+    {
+      gruppen.length > 1 && (
+        <nav class="sprung__nav" aria-labelledby="sprung-h">
+          <p id="sprung-h" class="klein neben">{s.sprung}</p>
+          <ul class="sprung">
+            {gruppen.map((g) => (
+              <li>
+                <a href={`#${g.art}`}>{t.arten[g.art]}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )
+    }
+  </Seitenkopf>
+
+  {
+    gruppen.length > 0 ? (
+      <div class="sektion projektgruppen">
+        {gruppen.map((g) => (
+          <section class="gruppe" id={g.art} aria-labelledby={`${g.art}-h`}>
+            <div class="raster">
+              <h2 id={`${g.art}-h`}>{t.arten[g.art]}</h2>
+            </div>
+            <div class="gruppe__liste">
+              {g.liste.map((p, i) => (
+                <ProjektEintrag lang={lang} t={t} projekt={p} variante="liste" paar={g.paare[i]} />
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
+    ) : (
+      <div class="raster sektion">
+        <p set:html={rich(t.allgemein.projekteFehlen)} />
+      </div>
+    )
+  }
+</Base>

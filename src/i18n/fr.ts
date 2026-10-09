@@ -1,0 +1,600 @@
+/**
+ * Français (langue par défaut, x-default). Mêmes clés que de.ts.
+ * Les espaces avant ? ! ; : et dans « » sont ajoutés automatiquement (frenchTypo dans index.ts).
+ */
+import type { Dict } from './de.ts';
+
+const fr: Dict = {
+  meta: {
+    siteName: 'Electricité Biesen',
+    ogAlt: 'Electricité Biesen, entreprise d’électricité à Nothum',
+  },
+
+  a11y: {
+    skip: 'Aller au contenu',
+    sprache: 'Langue',
+    hauptnavigation: 'Navigation principale',
+    pfad: 'Vous êtes ici',
+    logo: 'Electricité Biesen, retour à l’accueil',
+    menue: 'Menu',
+    schliessen: 'Fermer',
+    anrufen: 'Appeler',
+    leistungenUntermenue: 'Services',
+    neuesFenster: '(ouvre un autre site)',
+  },
+
+  nav: {
+    home: 'Accueil',
+    leistungen: 'Services',
+    projekte: 'Réalisations',
+    ueberUns: 'Entreprise',
+    jobs: 'Emplois',
+    kontakt: 'Contact',
+    impressum: 'Mentions légales',
+    datenschutz: 'Protection des données',
+  },
+
+  allgemein: {
+    angebotAnfragen: 'Demander un devis',
+    oderAnrufen: 'Ou appelez-nous : {tel}',
+    telefon: 'Téléphone',
+    fax: 'Fax',
+    email: 'E-mail',
+    adresse: 'Adresse',
+    fotoFolgt: 'Photo à venir : {motiv}',
+    fotopaarFolgt: 'Paire de photos à venir : {motiv}',
+    nichtFreigegeben: 'non validé',
+    projekteFehlen: '[FEHLT — freigegebene Projekte mit Ortschaft, Jahr und Text]',
+    passendeProjekte: 'Réalisations',
+    passendeFragen: 'Questions fréquentes',
+  },
+
+  leistungen: {
+    installation: {
+      name: 'Neuf et rénovation',
+      text: 'Nous concevons et posons l’électricité des maisons neuves, y compris préfabriquées, et remettons à niveau les installations anciennes : tableau électrique, câblage, prises, antennes collectives et domotique KNX.',
+      link: 'En savoir plus sur le neuf et la rénovation',
+    },
+    licht: {
+      name: 'Éclairage',
+      text: 'De la lumière pour les pièces de vie, les escaliers et les jardins, pour les étables et les halls, pour les rues et les places. Nous réfléchissons avec vous à la lumière qui convient à chaque endroit, puis nous l’installons.',
+      link: 'Voir nos projets de jour et le soir',
+    },
+    photovoltaik: {
+      name: 'Photovoltaïque et bornes de recharge',
+      text: 'Des installations photovoltaïques pour le toit de la maison, de la ferme ou du hall, extensibles par la suite. Des bornes de recharge pour voitures électriques, à la maison ou dans l’entreprise.',
+      link: 'En savoir plus sur le photovoltaïque et les bornes',
+    },
+    sicherheit: {
+      name: 'Alarme, caméras, détection incendie',
+      text: 'Alarmes, vidéosurveillance et détection incendie, adaptées à votre bâtiment et installées par nos soins.',
+      link: 'En savoir plus sur la sécurité',
+    },
+    hausgeraete: {
+      name: 'Électroménager',
+      text: 'Lave-linge, réfrigérateurs, fours et appareils de cuisine AEG, Miele, Liebherr, Bosch et Siemens. [UNBESTÄTIGT — Ausstellung, Lieferung und Anschluss ergänzen]',
+      link: 'Voir l’électroménager',
+    },
+  },
+
+  owend: {
+    bildunterschrift: '{ort}, {projekt}. Photographié à {tag} et à {abend}.',
+    bildunterschriftFehlt: '[FEHLT — Ortschaft, Projekt in drei bis fünf Wörtern, Uhrzeiten aus den EXIF-Daten]',
+    tagZeit: 'L’après-midi, à {zeit}',
+    abendZeit: 'Le soir, à {zeit}',
+    regler: 'Du jour au soir',
+    reglerTag: 'Jour',
+    reglerAbend: 'Soir',
+    reglerUebergang: 'Transition, {wert} pour cent',
+    testTag: 'Test jour',
+    testAbend: 'Test soir',
+    motivStartseite: 'maison avec éclairage extérieur et jardin',
+  },
+
+  home: {
+    h1: 'Électricité et lumière pour maison, ferme et entreprise',
+    lead: 'Nous sommes une entreprise d’électricité de 26 personnes à Nothum, dans la commune du Lac de la Haute-Sûre. Nous réalisons l’électricité des maisons neuves et anciennes, des étables et des halls, et installons éclairage, photovoltaïque et bornes de recharge.',
+    leistungenH2: 'Ce que nous faisons',
+    projekteH2: 'Là où nous avons travaillé',
+    alleProjekte: 'Toutes nos réalisations',
+    teamH2: '26 personnes à Nothum',
+    team: 'Electricité Biesen est une entreprise familiale. 26 personnes y travaillent, sur les chantiers et au bureau. Quand vous appelez, vous parlez à quelqu’un qui peut vous aider.',
+    teamLeitung: '[UNBESTÄTIGT — Leitung und Ansprechpartner mit Rollen, siehe B3]',
+    teamFoto: 'photo de l’équipe',
+    jobs: 'Nous recrutons des monteuses et des monteurs.',
+    jobsLink: 'Offres d’emploi',
+    faqH2: 'Questions fréquentes',
+    kontaktH2: 'Appeler ou écrire',
+    schreiben: 'Ou écrivez-nous à {email}. {adresse}.',
+  },
+
+  zeiten: {
+    titel: 'Heures d’ouverture du bureau et du téléphone',
+    tage: {
+      mo: 'lundi',
+      di: 'mardi',
+      mi: 'mercredi',
+      do: 'jeudi',
+      fr: 'vendredi',
+      sa: 'samedi',
+      so: 'dimanche',
+    },
+    tageKurz: { mo: 'lun.', di: 'mar.', mi: 'mer.', do: 'jeu.', fr: 'ven.', sa: 'sam.', so: 'dim.' },
+    spanne: 'du {von} au {bis}',
+    paar: '{a} et {b}',
+    geschlossen: 'fermé',
+    unbestaetigt: '[UNBESTÄTIGT — 08:00–12:00 und 13:30–16:30 laut heutiger Website, 07:30–16:30 durchgehend laut Google und Editus]',
+    unbestaetigtKurz: '[UNBESTÄTIGT — Zeiten]',
+    naechste: 'Fermé ces jours-là :',
+    tagSpalte: 'Jour',
+    zeitSpalte: 'Heures',
+  },
+
+  faq: {
+    gebiet: {
+      q: 'Dans quelles localités travaillez-vous ?',
+      a: 'Notre entreprise se trouve à Nothum, dans la commune du Lac de la Haute-Sûre. Nous travaillons surtout dans le nord du pays. [UNBESTÄTIGT — Einsatzgebiet und zwei bis drei Ortsbeispiele] Vous habitez plus loin ? Appelez-nous : {tel}.',
+    },
+    angebot: {
+      q: 'De quoi avez-vous besoin pour un devis ?',
+      a: 'Le lieu, ce qu’il faut faire et pour quand. Des plans ou des photos aident beaucoup : un plan de la maison, un schéma électrique ou une photo du tableau électrique. Vous pouvez tout envoyer avec le {formular}.',
+      formular: 'formulaire de demande',
+    },
+    kostenlos: {
+      q: 'Le devis est-il gratuit ?',
+      a: 'Oui. [UNBESTÄTIGT — so steht es auf der heutigen Website; auch für einen Termin vor Ort?]',
+    },
+    fertighaus: {
+      q: 'Faites-vous aussi l’électricité des maisons préfabriquées ?',
+      a: 'Oui. Nous travaillons aussi pour des maîtres d’ouvrage qui construisent une maison préfabriquée, et nous nous coordonnons avec le fabricant.',
+    },
+    ladestation: {
+      q: 'Puis-je avoir une borne de recharge pour ma voiture électrique à la maison ?',
+      a: 'Nous le vérifions pour votre maison : si le raccordement et le tableau électrique supportent la puissance, comment le câble arrive jusqu’à la place de stationnement et si la borne peut être reliée à une installation photovoltaïque. Ensuite, vous recevez un devis. [UNBESTÄTIGT — Meldung beim Netzbetreiber durch Biesen?]',
+    },
+    zuschuesse: {
+      q: 'Y a-t-il des aides pour le photovoltaïque ou les bornes de recharge ?',
+      a: 'L’État soutient les deux avec le programme Klimabonus. Les conditions et les montants changent ; vous trouverez la situation actuelle sur {klimabonus}. [UNBESTÄTIGT — Stand vor Livegang prüfen; hilft Biesen beim Antrag?]',
+    },
+    hausgeraete: {
+      q: 'Vendez-vous de l’électroménager ? Puis-je voir les appareils ?',
+      a: 'Nous vendons des appareils AEG, Miele, Liebherr, Bosch et Siemens. [FEHLT — Ausstellung, Lieferung, Anschluss]',
+    },
+    sprachen: {
+      q: 'Dans quelles langues puis-je vous parler ?',
+      a: 'Luxembourgeois, français et allemand. [UNBESTÄTIGT — auch Portugiesisch und Englisch?]',
+    },
+  },
+
+  seiten: {
+    installation: {
+      h1: 'L’électricité pour le neuf et la rénovation',
+      intro: 'Que vous construisiez, fassiez monter une maison préfabriquée ou transformiez une maison ancienne : nous concevons l’électricité avec vous, nous la posons et nous la mettons en service.',
+      wasH2: 'Ce que nous faisons',
+      was: [
+        'Plan électrique et plan des prises',
+        'Tableau électrique et câblage',
+        'Interrupteurs, prises, raccordements',
+        'Antennes collectives dans les immeubles',
+        'Domotique KNX',
+        'Contrôle et remise à niveau des installations anciennes',
+      ],
+      fertighausH2: 'Pour les maisons préfabriquées',
+      fertighaus: 'Nous posons aussi l’électricité des maisons préfabriquées et nous nous coordonnons avec le fabricant. [UNBESTÄTIGT — Ablauf, Herstellernamen]',
+      renovierungH2: 'Rénovation et transformation',
+      renovierung: 'Nous contrôlons les installations existantes, les renouvelons et les remettons aux normes actuelles. Pour un premier échange, une photo du tableau électrique aide beaucoup.',
+      anliegenRenovierung: 'Demander un devis pour une rénovation',
+      ablaufH2: 'Comment se déroule une construction neuve',
+      ablauf: [
+        'Vous nous envoyez vos plans.',
+        'Nous voyons avec vous où placer les prises, les interrupteurs et la lumière.',
+        'Installation des gaines et câbles pendant le gros œuvre.',
+        'Pose des appareillages après le plâtrage.',
+        'Mise en service et contrôle.',
+      ],
+      ablaufHinweis: '[UNBESTÄTIGT — Ablauf vom Kunden bestätigen lassen, ebenso wer den Netzanschluss beim Netzbetreiber beantragt]',
+      fotoMotiv: 'modules de maison préfabriquée dans l’atelier',
+    },
+    licht: {
+      h1: 'Éclairage pour maison, ferme, hall et rue',
+      intro: 'Déplacez le curseur sous les photos : vous voyez le même projet l’après-midi et le soir.',
+      paareH2: 'De jour et le soir',
+      bereicheH2: 'Où nous installons la lumière',
+      bereiche: {
+        innen: {
+          h: 'Pièces de vie et escaliers',
+          text: 'Des profilés LED dans les pièces de vie et de la lumière pour les escaliers. Nous voyons avec vous où la lumière doit tomber et comment vous l’allumez.',
+        },
+        aussen: {
+          h: 'Extérieur et jardin',
+          text: 'De la lumière pour la façade, les allées et le jardin, par exemple des bornes lumineuses le long du chemin. Vous et vos invités trouvez ainsi la porte en toute sécurité le soir.',
+        },
+        landwirtschaft: {
+          h: 'Agriculture',
+          text: 'De la lumière pour les étables, par exemple un éclairage LED dans une étable laitière. Nous voyons avec vous où placer les luminaires, puis nous les installons.',
+        },
+        hallen: {
+          h: 'Halls et entreprises',
+          text: 'De la lumière pour les grands halls, les ateliers et les accueils. Nous concevons l’éclairage pour qu’on y travaille bien.',
+        },
+        oeffentlich: {
+          h: 'Rues et places',
+          text: 'L’éclairage des rues, des places et des lieux publics. [UNBESTÄTIGT — Referenzen, Auftraggeber]',
+        },
+        besonders: {
+          h: 'Lieux particuliers',
+          text: 'Certains lieux demandent leur propre lumière, par exemple une galerie avec un portail en ardoise. [UNBESTÄTIGT — welcher Stollen, darf er gezeigt werden]',
+        },
+      },
+    },
+    photovoltaik: {
+      h1: 'Photovoltaïque et bornes de recharge',
+      intro: 'Nous construisons des installations photovoltaïques pour les maisons, les fermes et les entreprises, et nous installons des bornes de recharge pour voitures électriques. Les deux peuvent être reliés, pour que votre voiture se recharge avec l’électricité de votre toit. [UNBESTÄTIGT — bietet Biesen diese Kopplung an?]',
+      wasH2: 'Ce que nous faisons',
+      was: [
+        'Installations photovoltaïques pour le toit de la maison, de la ferme ou du hall',
+        'Installations extensibles par la suite',
+        'Bornes de recharge pour voitures électriques, à la maison ou dans l’entreprise',
+      ],
+      pruefenH2: 'Ce que nous vérifions avant de vous envoyer un devis',
+      pruefen: ['La surface et l’orientation du toit', 'Le raccordement et le tableau électrique', 'Le chemin du tableau à la place de stationnement'],
+      foerderungH2: 'Aides',
+      foerderung: 'L’État soutient le photovoltaïque et les bornes de recharge avec le programme Klimabonus. Plus d’informations plus bas, dans les questions fréquentes.',
+      fotoMotiv: 'installation photovoltaïque ou borne de recharge',
+      anliegenLadestation: 'Demander un devis pour une borne de recharge',
+    },
+    sicherheit: {
+      h1: 'Alarme, caméras et détection incendie',
+      intro: 'Nous concevons des alarmes, de la vidéosurveillance et des systèmes de détection incendie pour votre bâtiment, et nous les installons. Pour les maisons comme pour les entreprises.',
+      wasH2: 'Ce que nous faisons',
+      was: ['Alarmes', 'Vidéosurveillance', 'Détection incendie'],
+      kameraH2: 'À savoir sur la vidéosurveillance',
+      kamera: 'Les caméras ne doivent filmer que votre propre terrain. [UNBESTÄTIGT — Formulierung mit Kunde abstimmen; Verweis auf die CNPD]',
+    },
+    hausgeraete: {
+      h1: 'Électroménager AEG, Miele, Liebherr, Bosch et Siemens',
+      intro: '[FEHLT — Ausstellung, Beratung, Lieferung, Anschluss, Reparatur]',
+      wasH2: 'Ce que nous vendons',
+      was: ['Lave-linge', 'Réfrigérateurs', 'Fours', 'Appareils de cuisine'],
+      marken: 'Marques : AEG, Miele, Liebherr, Bosch et Siemens.',
+      online: 'Nous ne vendons pas en ligne. Pour les prix et la disponibilité, appelez-nous : {tel}.',
+    },
+    projekte: {
+      h1: 'Réalisations : éclairage, neuf, étables et halls',
+      intro: 'Ce que nous avons construit et éclairé, avec la localité et l’année. Pour certains projets, vous voyez le même endroit l’après-midi et le soir.',
+      sprung: 'Aller à',
+      jahr: 'Année',
+      jahrFehlt: '[FEHLT — Jahr]',
+      ortFehlt: '[FEHLT — Ortschaft]',
+      textFehlt: '[FEHLT — zwei bis vier Sätze zum Projekt]',
+    },
+    ueberUns: {
+      h1: 'Une entreprise familiale à Nothum',
+      intro: 'Electricité Biesen est une entreprise familiale. 26 personnes y travaillent, sur les chantiers et au bureau. Quand vous appelez, vous parlez à quelqu’un qui peut vous aider.',
+      leitungH2: 'Direction et interlocuteurs',
+      leitung: '[UNBESTÄTIGT — Leitung und Ansprechpartner mit Rollen, siehe B3]',
+      geschichteH2: 'Histoire',
+      geschichte: '[FEHLT — freigegebener Absatz zur Geschichte, siehe B4]',
+      spracheH2: 'Langues',
+      sprache: 'Dans l’équipe, nous parlons français et allemand, beaucoup aussi luxembourgeois ou portugais. [UNBESTÄTIGT — welche Sprachen Kunden angeboten werden]',
+      mitgliedH2: 'Adhésions et labels',
+      mitglied: ['Fédération des Artisans', 'FGT', 'KNX', 'SuperDrecksKëscht', 'Made in Luxembourg', 'Mir bilden aus'],
+      mitgliedHinweis: '[UNBESTÄTIGT — Mitgliedschaften und Labels aktuell?]',
+      ortH2: 'Où nous trouver',
+      ort: 'Notre entreprise se trouve à Nothum, dans la commune du Lac de la Haute-Sûre, à environ 8 km de Wiltz.',
+      karte: 'Voir sur OpenStreetMap',
+      jobsH2: 'Travailler chez nous',
+    },
+    jobs: {
+      h1: 'Emplois chez Electricité Biesen à Nothum',
+      intro: 'Nous travaillons dans des maisons, des entreprises, des halls et des étables du nord du pays. Nous cherchons des personnes qui mettent la main à la pâte. Le lieu de travail est Nothum.',
+      offenH2: 'Postes ouverts',
+      keine: 'Nous n’avons pas de poste ouvert pour le moment. Vous pouvez quand même nous envoyer votre candidature : {email}.',
+      lehre: '[UNBESTÄTIGT — Lehrstellen]',
+      bewerbenH2: 'Comment postuler',
+      bewerben: 'Envoyez votre CV et quelques lignes sur vous à {email}. Ou appelez-nous : {tel}.',
+    },
+    job: {
+      aufgabenH2: 'Vos tâches',
+      profilH2: 'Votre profil',
+      angebotH2: 'Ce que nous offrons',
+      vertragH2: 'Contrat',
+      bewerbenH2: 'Comment postuler',
+      bewerben: 'Envoyez votre CV et quelques lignes sur vous à {email}. Ou appelez-nous : {tel}.',
+      mailBetreff: 'Candidature : {titel}',
+      mailLink: 'Écrire un e-mail',
+      arbeitsort: 'Lieu de travail',
+      beginn: 'Début',
+      beginnText: 'à convenir',
+      vertragsart: 'Contrat',
+      unbefristet: 'CDI',
+      arbeitszeit: 'Temps de travail',
+      vollzeit: 'temps plein',
+      teilzeit: 'temps partiel',
+      arbeitszeitFehlt: '[UNBESTÄTIGT — Vollzeit?]',
+      veroeffentlicht: 'Publié le {datum}',
+      veroeffentlichtFehlt: '[FEHLT — Datum der Veröffentlichung]',
+      gueltig: 'Candidatures jusqu’au {datum}',
+      gueltigFehlt: '[FEHLT — Bewerbungsfrist]',
+      alleJobs: 'Toutes les offres d’emploi',
+    },
+    kontakt: {
+      h1: 'Demander un devis',
+      intro: 'Plus vous décrivez précisément votre projet, plus vite vous recevez un devis. Des plans ou des photos aident le plus.',
+      direktH2: 'Appeler ou écrire',
+      anfahrt: 'Itinéraire sur OpenStreetMap',
+      ablaufH2: 'Ce qui se passe après l’envoi',
+    },
+    danke: {
+      h1: 'Votre demande nous est bien parvenue',
+      text: 'Nous vous recontactons [FEHLT — Antwortzeit beim Kunden erfragen]. Si c’est urgent, appelez-nous : {tel}.',
+      ablaufH2: 'La suite',
+      ablauf: [
+        'Nous lisons votre demande et regardons vos plans et vos photos.',
+        'S’il manque quelque chose, nous vous appelons ou vous écrivons.',
+        'Vous recevez un devis, pour les grands projets après un rendez-vous sur place.',
+      ],
+      ablaufHinweis: '[UNBESTÄTIGT — Ablauf]',
+      zurueck: 'Retour à l’accueil',
+    },
+    nichtGefunden: {
+      h1: 'Cette page n’existe pas (ou plus)',
+      text: 'L’une de ces pages vous aidera peut-être :',
+      telefon: 'Ou appelez-nous : {tel}',
+    },
+    impressum: {
+      h1: 'Mentions légales',
+      herausgeberH2: 'Éditeur du site',
+      firma: 'Dénomination',
+      rechtsform: 'Forme juridique',
+      rechtsformWert: 'Société anonyme (S.A.)',
+      sitz: 'Siège',
+      land: 'Luxembourg',
+      rcs: 'Registre de commerce',
+      mwst: 'Numéro de TVA',
+      mwstHinweis: '[UNBESTÄTIGT — vor Livegang in VIES prüfen]',
+      vertretung: 'Représentation de la société',
+      vertretungFehlt: '[FEHLT — Verwaltungsrat bzw. administrateur-délégué]',
+      verantwortlich: 'Responsable du contenu',
+      verantwortlichFehlt: '[FEHLT — Name]',
+      genehmigungH2: 'Autorisation d’établissement',
+      genehmigung: 'Autorisation d’établissement n° {nr}, délivrée le {datum}, pour ces activités :',
+      taetigkeiten: ['10116411/0 : électricien', '10116411/1 : activités et services commerciaux'],
+      leitung: 'Dirigeant technique : [UNBESTÄTIGT — Nennung des Namens laut Gewerbegenehmigung freigeben]',
+      hostingH2: 'Hébergement',
+      hosting: 'Le site est hébergé par GitHub Pages, un service de GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis.',
+      inhaltH2: 'Contenu',
+      inhalt: 'Les informations de ce site sont données à titre indicatif. Seul notre devis écrit nous engage.',
+      fotosH2: 'Photos',
+      fotos: 'Toutes les photos montrent des projets d’Electricité Biesen. [FEHLT — Name des Fotografen nach dem Shooting]',
+      schriftH2: 'Police de caractères',
+      schrift: 'Schibsted Grotesk, de Bakken & Bæck et Henrik Kongsvoll, SIL Open Font License 1.1.',
+    },
+    datenschutz: {
+      h1: 'Protection des données',
+      intro: 'Nous traitons vos données uniquement pour répondre à votre demande ou à votre candidature. Ce site ne dépose pas de cookies, n’utilise aucun service d’analyse ou de publicité et ne charge aucun contenu depuis d’autres serveurs.',
+      verantwortlichH2: 'Responsable du traitement',
+      verantwortlich: 'Entreprise d’électricité BIESEN S.A., 14, Duerfstrooss, L-9678 Nothum, Luxembourg. Téléphone +352 95 80 99, {email}.',
+      formularH2: 'Formulaire de demande',
+      formular: 'Lorsque vous envoyez le formulaire de demande, nous recevons les informations que vous saisissez : l’objet de la demande, le type de bâtiment, la localité, votre description, votre nom, votre adresse e-mail, si vous le souhaitez votre numéro de téléphone, ainsi que les plans ou photos que vous joignez. Nous les utilisons pour traiter votre demande et vous établir un devis.',
+      rechtsgrundlage: 'La base légale est votre consentement (art. 6, par. 1, point a du RGPD) et l’exécution de mesures précontractuelles prises à votre demande (art. 6, par. 1, point b du RGPD). Vous pouvez retirer votre consentement à tout moment par e-mail ou par téléphone.',
+      speicherung: 'Votre demande et vos fichiers sont enregistrés chez Supabase, dans un centre de données situé dans l’Union européenne. Les fichiers sont conservés dans un espace privé ; l’e-mail envoyé à notre bureau ne contient que des liens à durée limitée. L’e-mail est envoyé par [UNBESTÄTIGT — EU-Mailanbieter, mit Nave klären].',
+      loeschung: 'Si votre demande ne débouche pas sur une commande, nous supprimons la demande et les fichiers après [FEHLT — Löschfrist mit dem Kunden festlegen, Vorschlag: 6 Monaten]. Les documents liés à une commande sont conservés aussi longtemps que la loi l’exige.',
+      missbrauch: 'Pour limiter les abus, nous conservons pendant 24 heures une empreinte chiffrée (hash) de votre adresse IP. Elle ne permet pas de retrouver votre adresse.',
+      kontaktH2: 'E-mail, téléphone et candidatures',
+      kontakt: 'Lorsque vous nous appelez, nous écrivez ou postulez par e-mail, nous traitons vos informations pour vous répondre ou examiner votre candidature. Nous supprimons les dossiers de candidature une fois le poste pourvu, sauf si vous acceptez une conservation plus longue. [UNBESTÄTIGT — Frist für Bewerbungen]',
+      hostingH2: 'Hébergement et journaux du serveur',
+      hosting: 'Le site est diffusé par GitHub Pages (GitHub, Inc., États-Unis). À chaque visite, GitHub traite votre adresse IP et des données techniques comme le navigateur et l’heure, pour afficher les pages et assurer la sécurité. GitHub est certifié selon le cadre de protection des données UE-États-Unis (Data Privacy Framework). La base légale est notre intérêt légitime à disposer d’un site sûr et accessible (art. 6, par. 1, point f du RGPD).',
+      dienstleisterH2: 'Qui traite des données pour notre compte',
+      dienstleister: [
+        'GitHub, Inc. (États-Unis) : hébergement du site',
+        'Supabase, Inc. : enregistrement des demandes et des fichiers, centre de données dans l’Union européenne',
+        'Envoi des e-mails : [UNBESTÄTIGT — EU-Mailanbieter, mit Nave klären]',
+      ],
+      linksH2: 'Liens vers d’autres services',
+      links: 'Les polices et les images sont hébergées sur notre propre serveur. Les liens vers OpenStreetMap, Facebook, Editus ou klimabonus.lu n’ouvrent d’autres sites que si vous cliquez dessus. Les règles de protection des données de ces services s’y appliquent.',
+      rechteH2: 'Vos droits',
+      rechte: 'Vous pouvez demander l’accès à vos données, leur rectification, leur effacement ou la limitation du traitement, vous opposer au traitement et demander la portabilité de vos données. Écrivez-nous à {email}. Vous pouvez aussi introduire une réclamation auprès de la Commission nationale pour la protection des données (CNPD) : 15, boulevard du Jazz, L-4370 Belvaux, {cnpd}.',
+      stand: 'Mise à jour : {datum}',
+    },
+  },
+
+  arten: {
+    neubau: 'Construction neuve',
+    renovierung: 'Rénovation',
+    'licht-innen': 'Éclairage intérieur',
+    'licht-aussen': 'Éclairage extérieur',
+    landwirtschaft: 'Agriculture',
+    halle: 'Halls et entreprises',
+    oeffentlich: 'Rues et places',
+    photovoltaik: 'Photovoltaïque',
+    ladestation: 'Bornes de recharge',
+    sicherheit: 'Sécurité',
+    besonders: 'Lieux particuliers',
+  },
+
+  formular: {
+    pflicht: 'obligatoire',
+    freiwillig: 'facultatif',
+    hinweisPflicht: 'Les champs marqués « facultatif » peuvent rester vides. Nous avons besoin de tous les autres pour le devis.',
+    anliegen: {
+      legende: 'De quoi s’agit-il ?',
+      optionen: {
+        neubau: 'Construction neuve',
+        renovierung: 'Rénovation ou transformation',
+        licht: 'Éclairage',
+        photovoltaik: 'Photovoltaïque',
+        ladestation: 'Borne de recharge',
+        sicherheit: 'Alarme, caméra ou détection incendie',
+        hausgeraet: 'Électroménager',
+        anderes: 'Autre chose',
+      },
+    },
+    gebaeude: {
+      legende: 'Quel type de bâtiment ?',
+      hinweis: 'Pas nécessaire pour l’électroménager.',
+      optionen: {
+        haus: 'Maison',
+        wohnung: 'Appartement',
+        betrieb: 'Entreprise ou hall',
+        landwirtschaft: 'Agriculture',
+        oeffentlich: 'Commune ou bâtiment public',
+      },
+    },
+    nurNeubau: 'Seulement pour une construction neuve',
+    fertighaus: {
+      legende: 'Construisez-vous une maison préfabriquée ?',
+      optionen: { ja: 'Oui', nein: 'Non', offen: 'Je ne sais pas encore' },
+    },
+    nurLadestation: 'Seulement pour une borne de recharge',
+    abstand: {
+      legende: 'À quelle distance du tableau électrique se trouve la place de stationnement ?',
+      optionen: { unter10: 'moins de 10 m', bis25: '10 à 25 m', ueber25: 'plus de 25 m', unbekannt: 'je ne sais pas' },
+    },
+    pv: {
+      legende: 'Avez-vous une installation photovoltaïque ?',
+      optionen: { ja: 'Oui', nein: 'Non', geplant: 'Prévue' },
+    },
+    nurHausgeraet: 'Seulement pour l’électroménager',
+    geraet: { label: 'Quel appareil cherchez-vous ?' },
+    ortschaft: { label: 'Localité', hinweis: 'Pour savoir qui, chez nous, travaille près de chez vous.' },
+    start: {
+      label: 'Quand les travaux doivent-ils commencer ?',
+      leer: 'Choisir',
+      optionen: { bald: 'Dès que possible', dreiMonate: 'Dans les trois prochains mois', spaeter: 'Plus tard, nous planifions encore' },
+    },
+    beschreibung: {
+      label: 'Description',
+      hinweise: {
+        standard: 'Par exemple : maison ancienne de 1975, cuisine et salle de bains à refaire, tableau électrique à remplacer.',
+        neubau: 'Par exemple : maison individuelle avec cave, début des travaux au printemps, plans de l’architecte.',
+        renovierung: 'Par exemple : maison ancienne de 1975, cuisine et salle de bains à refaire, tableau électrique à remplacer.',
+        licht: 'Par exemple : jardin avec allée jusqu’à la porte, bornes lumineuses et éclairage de façade.',
+        photovoltaik: 'Par exemple : toit à deux pans orienté au sud, environ 60 m², installation à agrandir plus tard.',
+        ladestation: 'Par exemple : carport à côté de la maison, une voiture électrique, tableau électrique à la cave.',
+        sicherheit: 'Par exemple : alarme pour une maison individuelle, deux caméras à l’entrée.',
+        hausgeraet: 'Par exemple : four encastrable de 60 cm de large.',
+        anderes: 'Décrivez ce qu’il faut faire et où.',
+      },
+    },
+    dateien: {
+      label: 'Plans ou photos',
+      hinweis: 'Un plan de la maison, un schéma électrique ou une photo du tableau électrique. Jusqu’à 5 fichiers de 10 Mo maximum chacun, images ou PDF.',
+      gewaehlt: 'Sélection :',
+    },
+    name: { label: 'Nom' },
+    email: { label: 'E-mail', hinweis: 'Nous vous enverrons le devis à cette adresse.' },
+    telefon: { label: 'Téléphone', hinweis: 'Pour les questions, un appel est souvent plus rapide.' },
+    einwilligung: {
+      text: 'J’accepte qu’Electricité Biesen utilise mes informations et mes fichiers pour traiter ma demande. Plus d’informations dans la {link}.',
+      link: 'déclaration de protection des données',
+    },
+    honeypot: 'Laissez ce champ vide',
+    senden: 'Envoyer la demande',
+    sendet: 'Envoi en cours…',
+    nichtKonfiguriert: '[FEHLT — PUBLIC_FORM_URL: Adresse der Supabase Edge Function]',
+    fehler: {
+      zusammenfassung: { one: 'Une information manque encore. Elle est signalée plus bas.', other: '{n} informations manquent encore. Elles sont signalées plus bas.' },
+      anliegen: 'Choisissez l’objet de votre demande.',
+      gebaeude: 'Choisissez le type de bâtiment.',
+      geraet: 'Indiquez l’appareil que vous cherchez.',
+      ortschaft: 'Indiquez la localité, par exemple Wiltz.',
+      beschreibung: 'Décrivez en quelques phrases ce qu’il faut faire.',
+      name: 'Indiquez votre nom.',
+      email: 'Indiquez votre adresse e-mail pour que nous puissions vous envoyer le devis.',
+      emailFormat: 'L’adresse e-mail est incomplète. Elle ressemble à ceci : nom@exemple.lu',
+      einwilligung: 'Cochez la case pour que nous puissions traiter votre demande.',
+      dateien: 'Choisissez au maximum 5 images ou PDF de 10 Mo maximum chacun.',
+      zuVieleDateien: 'Choisissez 5 fichiers au maximum.',
+      dateiZuGross: '« {datei} » dépasse 10 Mo. Réduisez le fichier ou envoyez-le à {email}.',
+      dateiTyp: '« {datei} » n’est ni une image ni un PDF.',
+    },
+  },
+
+  serverFehler: {
+    titel: 'Il manque encore des informations',
+    text: 'Vérifiez vos informations et envoyez à nouveau la demande. Nous avons besoin du type de bâtiment (pour l’électroménager, de l’appareil), de la localité, d’une courte description, de votre nom, de votre adresse e-mail et de votre accord. Fichiers : 5 images ou PDF au maximum, de 10 Mo maximum chacun.',
+    zuViele: 'Nous avons reçu beaucoup de demandes de votre connexion en peu de temps. Appelez-nous, s’il vous plaît.',
+    technisch: 'La demande n’a pas pu être enregistrée. Appelez-nous ou écrivez à info@biesen.lu.',
+  },
+
+  footer: {
+    zeitenKurz: 'Téléphone et bureau',
+    genehmigung: 'Autorisation d’établissement n° {nr}',
+    facebook: 'Facebook',
+    facebookFehlt: '[FEHLT — Facebook-URL]',
+  },
+
+  seo: {
+    home: {
+      title: 'Électricien à Nothum, près de Wiltz | Electricité Biesen',
+      description:
+        'Electricité Biesen à Nothum : installation électrique neuf et rénovation, éclairage, photovoltaïque, bornes de recharge et alarmes. Entreprise familiale.',
+    },
+    installation: {
+      title: 'Électricité neuf et rénovation, Nothum | Electricité Biesen',
+      description:
+        'Électricité pour maison neuve, maison préfabriquée ou rénovation au nord du Luxembourg : tableau, câblage, prises, antennes, KNX. Electricité Biesen, Nothum.',
+    },
+    licht: {
+      title: 'Éclairage maison, étable et hall | Electricité Biesen',
+      description:
+        'Nous concevons et posons l’éclairage : pièces de vie, escaliers, jardins, étables, halls, rues et places. Voyez nos projets de jour et le soir. Biesen, Nothum.',
+    },
+    photovoltaik: {
+      title: 'Photovoltaïque et bornes de recharge | Electricité Biesen',
+      description:
+        'Panneaux photovoltaïques pour maison, ferme et hall, bornes de recharge pour voiture électrique : étude et pose par Electricité Biesen à Nothum, près de Wiltz.',
+    },
+    sicherheit: {
+      title: 'Alarme, vidéo et détection incendie | Electricité Biesen',
+      description:
+        'Alarmes, caméras de surveillance et détection incendie pour maison et entreprise, conçues pour votre bâtiment et posées par Electricité Biesen à Nothum.',
+    },
+    hausgeraete: {
+      title: 'Électroménager AEG, Miele, Liebherr | Electricité Biesen',
+      description:
+        'Lave-linge, réfrigérateurs, fours et appareils de cuisine AEG, Miele, Liebherr, Bosch et Siemens chez Electricité Biesen à Nothum. Appelez le 95 80 99.',
+    },
+    projekte: {
+      title: 'Réalisations : éclairage, neuf, étables | Electricité Biesen',
+      description:
+        'Nos réalisations : électricité et éclairage dans des maisons, maisons préfabriquées, étables, halls et lieux publics du nord du Luxembourg, avec photos.',
+    },
+    ueberUns: {
+      title: 'Entreprise familiale à Nothum | Electricité Biesen',
+      description:
+        'Electricité Biesen est une entreprise d’électricité familiale à Nothum, commune du Lac de la Haute-Sûre. Découvrez l’équipe et notre façon de travailler.',
+    },
+    jobs: {
+      title: 'Emplois d’électricien à Nothum | Electricité Biesen',
+      description:
+        'Nous recrutons des électriciens monteurs et aides-monteurs pour le résidentiel, le tertiaire et l’industrie. CDI, lieu de travail Nothum. Postulez simplement.',
+    },
+    kontakt: {
+      title: 'Contact et demande de devis | Electricité Biesen, Nothum',
+      description:
+        'Appelez le 95 80 99 ou envoyez votre demande avec plans ou photos. Electricité Biesen, 14, Duerfstrooss, L-9678 Nothum. Joignable du lundi au vendredi.',
+    },
+    danke: {
+      title: 'Votre demande est bien arrivée | Electricité Biesen, Nothum',
+      description:
+        'Merci pour votre demande à Electricité Biesen à Nothum. Nous la lisons, regardons vos plans et vos photos et vous recontactons. Urgent ? Appelez le 95 80 99.',
+    },
+    impressum: {
+      title: 'Mentions légales | Electricité Biesen S.A., Nothum',
+      description:
+        'Mentions légales de l’Entreprise d’électricité BIESEN S.A., 14, Duerfstrooss, L-9678 Nothum : RCS B243775, autorisation d’établissement 10116411, hébergeur.',
+    },
+    datenschutz: {
+      title: 'Protection des données | Electricité Biesen, Nothum',
+      description:
+        'Quelles données Electricité Biesen à Nothum traite quand vous envoyez une demande ou postulez, combien de temps et quels sont vos droits. Sans cookies.',
+    },
+    notFound: {
+      title: 'Page introuvable | Electricité Biesen, Nothum',
+    },
+  },
+};
+
+export default fr;

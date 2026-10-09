@@ -1,0 +1,41 @@
+---
+/** Hausgeräte (D3, E3). Kein Onlineshop; Markennamen als Text, keine Hersteller-Logos. */
+import LeistungsSeite from '@/components/LeistungsSeite.astro';
+import { escapeHtml, rich, useT } from '@/i18n';
+import type { Lang } from '@/i18n/config';
+import { site, telHref } from '@/lib/site';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useT(lang);
+const s = t.seiten.hausgeraete;
+const tel = `<a href="${telHref}" class="zahl">${escapeHtml(site.telefon.anzeige)}</a>`;
+---
+<LeistungsSeite
+  lang={lang}
+  page="hausgeraete"
+  h1={s.h1}
+  intro={s.intro}
+  anliegen="hausgeraet"
+  arten={[]}
+  faq={['hausgeraete']}
+  serviceType="Home appliance sales"
+  ohneProjekte
+>
+  <section class="sektion" aria-labelledby="was-h">
+    <div class="raster">
+      <div class="sp-text">
+        <div class="block">
+          <h2 id="was-h">{s.wasH2}</h2>
+          <ul class="liste">{s.was.map((x) => <li>{x}</li>)}</ul>
+          <p class="prosa">{s.marken}</p>
+        </div>
+        <div class="block">
+          <p class="lead" set:html={rich(s.online, { tel })} />
+        </div>
+      </div>
+    </div>
+  </section>
+</LeistungsSeite>

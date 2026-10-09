@@ -1,0 +1,93 @@
+# Stellenanzeige aus der heutigen Website (E8).
+# [FEHLT] veroeffentlicht, gueltig_bis   [UNBESTÄTIGT] vollzeit, Stelle noch offen
+offen: true
+veroeffentlicht: null
+gueltig_bis: null
+vollzeit: null
+unbefristet: true
+reihenfolge: 1
+pfad:
+  de: elektromonteur
+  fr: electricien-monteur
+  lb: elektromonteur
+  en: electrician
+titel:
+  de: Elektromonteurin oder Elektromonteur
+  fr: Électricienne ou électricien monteur
+  lb: Elektromonteurin oder Elektromonteur
+  en: Electrician
+kurz:
+  de: Elektroinstallationen in Wohn-, Gewerbe- und Industriebauten, mit abgeschlossener Ausbildung und Berufserfahrung.
+  fr: Installations électriques dans le résidentiel, le tertiaire et l’industrie, avec formation terminée et expérience.
+  lb: Elektroinstallatiounen a Wunn-, Geschäfts- an Industriebauten, mat ofgeschlossener Ausbildung a Beruffserfarung.
+  en: Electrical installations in residential, commercial and industrial buildings, with a completed apprenticeship and experience.
+aufgaben:
+  de:
+    - Elektroinstallationen in Wohn-, Gewerbe- und Industriebauten
+    - neue Anlagen montieren
+    - Baustellen betreuen
+    - messen und Fehler suchen
+    - Sicherheitsvorschriften einhalten
+  fr:
+    - installations électriques dans des bâtiments résidentiels, tertiaires et industriels
+    - montage de nouvelles installations
+    - suivi des chantiers
+    - mesures et recherche de pannes
+    - respect des règles de sécurité
+  lb:
+    - Elektroinstallatiounen a Wunn-, Geschäfts- an Industriebauten
+    - nei Anlage montéieren
+    - Chantiere betreien
+    - moossen a Feeler sichen
+    - Sécherheetsvirschrëften anhalen
+  en:
+    - electrical installations in residential, commercial and industrial buildings
+    - installing new systems
+    - looking after building sites
+    - measuring and fault-finding
+    - following safety regulations
+profil:
+  de:
+    - abgeschlossene Ausbildung in Elektrotechnik
+    - Berufserfahrung als Elektroinstallateur
+    - Führerschein B
+    - Staplerschein von Vorteil
+    - gutes Französisch und/oder Deutsch, Luxemburgisch oder Portugiesisch von Vorteil
+    - zuverlässig, pünktlich, im Team und mit Kunden freundlich
+  fr:
+    - formation terminée en électrotechnique
+    - expérience comme électricien installateur
+    - permis B
+    - permis cariste, un atout
+    - bon français et/ou allemand, luxembourgeois ou portugais, un atout
+    - fiable, ponctuel, aimable en équipe et avec les clients
+  lb:
+    - ofgeschloss Ausbildung an Elektrotechnik
+    - Beruffserfarung als Elektroinstallateur
+    - Führerschäin B
+    - Staplerschäin vu Virdeel
+    - gutt Franséisch an/oder Däitsch, Lëtzebuergesch oder Portugisesch vu Virdeel
+    - zouverlässeg, pénktlech, frëndlech an der Equipe a mat de Clienten
+  en:
+    - completed training in electrical engineering
+    - experience as an electrician
+    - driving licence B
+    - forklift licence an advantage
+    - good French and/or German, Luxembourgish or Portuguese an advantage
+    - reliable, punctual, friendly in the team and with customers
+angebot:
+  de: []
+  fr: []
+  lb: []
+  en: []
+seo:
+  title:
+    de: Elektromonteurin/-monteur in Nothum | Electricité Biesen
+    fr: Électricien monteur (H/F) à Nothum | Electricité Biesen
+    lb: Elektromonteurin/-monteur zu Noutem | Electricité Biesen
+    en: Electrician job in Nothum, Luxembourg | Electricité Biesen
+  description:
+    de: Electricité Biesen in Nothum sucht eine Elektromonteurin oder einen Elektromonteur für Wohn-, Gewerbe- und Industriebau. Unbefristet, mit Führerschein B.
+    fr: Electricité Biesen à Nothum recrute une électricienne ou un électricien monteur pour le résidentiel, le tertiaire et l’industrie. CDI, permis B requis.
+    lb: Electricité Biesen zu Noutem sicht eng Elektromonteurin oder en Elektromonteur fir Wunn-, Geschäfts- an Industriebau. Onbefristte Kontrakt, Führerschäin B.
+    en: Electricité Biesen in Nothum is hiring an electrician for residential, commercial and industrial installations. Permanent contract, driving licence B.

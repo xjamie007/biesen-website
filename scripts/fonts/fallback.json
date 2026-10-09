@@ -1,0 +1,14 @@
+{
+  "regular": {
+    "sizeAdjust": "104.57%",
+    "ascentOverride": "93.39%",
+    "descentOverride": "24.66%",
+    "lineGapOverride": "0%"
+  },
+  "bold": {
+    "sizeAdjust": "103.78%",
+    "ascentOverride": "94.10%",
+    "descentOverride": "24.84%",
+    "lineGapOverride": "0%"
+  }
+}

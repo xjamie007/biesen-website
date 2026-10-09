@@ -1,0 +1,92 @@
+---
+/** Impressum (D3) mit den Daten aus B1. Fehlende Felder bleiben sichtbar [FEHLT]. */
+import Base from '@/layouts/Base.astro';
+import Seitenkopf from '@/components/Seitenkopf.astro';
+import { fmt, rich, useT } from '@/i18n';
+import { path, type Lang } from '@/i18n/config';
+import { breadcrumbs } from '@/lib/jsonld';
+import { mailHref, site, telHref } from '@/lib/site';
+import { datumText } from '@/lib/zeiten';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useT(lang);
+const s = t.seiten.impressum;
+const pfad = [
+  { name: t.nav.home, href: path(lang, 'home') },
+  { name: s.h1, href: path(lang, 'impressum') },
+];
+const zeilen: [string, string][] = [
+  [s.firma, site.legalName.replace("'", '’')],
+  [s.rechtsform, s.rechtsformWert],
+  [s.sitz, `${site.adresse.strasse}, ${site.adresse.plzAnzeige} ${site.adresse.ort}, ${s.land}`],
+  [s.rcs, `${site.rcs.gericht} ${site.rcs.nummer}`],
+  [s.mwst, site.mwst.bestaetigt ? site.mwst.nummer : `${site.mwst.nummer} ${s.mwstHinweis}`],
+  [s.vertretung, s.vertretungFehlt],
+  [s.verantwortlich, s.verantwortlichFehlt],
+];
+---
+<Base
+  lang={lang}
+  route={{ page: 'impressum' }}
+  title={t.seo.impressum.title}
+  description={t.seo.impressum.description}
+  jsonld={[breadcrumbs(pfad.map((p) => ({ name: p.name, url: p.href })))]}
+>
+  <Seitenkopf pfadLabel={t.a11y.pfad} pfad={pfad} h1={s.h1} />
+  <section class="sektion recht" aria-labelledby="herausgeber-h">
+    <div class="raster">
+      <div>
+        <div class="block">
+          <h2 id="herausgeber-h">{s.herausgeberH2}</h2>
+          <dl class="angaben">
+            {
+              zeilen.map(([k, v]) => (
+                <div>
+                  <dt>{k}</dt>
+                  <dd set:html={rich(v)} />
+                </div>
+              ))
+            }
+            <div>
+              <dt>{t.allgemein.telefon}</dt>
+              <dd><a href={telHref} class="zahl">{site.telefon.international}</a></dd>
+            </div>
+            <div>
+              <dt>{t.allgemein.fax}</dt>
+              <dd class="zahl">{site.fax.international.replace('-', '\u2011')}</dd>
+            </div>
+            <div>
+              <dt>{t.allgemein.email}</dt>
+              <dd><a href={mailHref}>{site.email}</a></dd>
+            </div>
+          </dl>
+        </div>
+        <div class="block prosa">
+          <h2>{s.genehmigungH2}</h2>
+          <p>{fmt(s.genehmigung, { nr: site.genehmigung.nummer, datum: datumText(lang, site.genehmigung.datum, false) })}</p>
+          <ul class="liste">{s.taetigkeiten.map((x) => <li>{x}</li>)}</ul>
+          <p set:html={rich(s.leitung)} />
+        </div>
+        <div class="block prosa">
+          <h2>{s.hostingH2}</h2>
+          <p>{s.hosting}</p>
+        </div>
+        <div class="block prosa">
+          <h2>{s.inhaltH2}</h2>
+          <p>{s.inhalt}</p>
+        </div>
+        <div class="block prosa">
+          <h2>{s.fotosH2}</h2>
+          <p set:html={rich(s.fotos)} />
+        </div>
+        <div class="block prosa">
+          <h2>{s.schriftH2}</h2>
+          <p>{s.schrift}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

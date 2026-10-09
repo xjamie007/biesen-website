@@ -1,0 +1,35 @@
+# Stollen mit Trockenmauerportal aus Schiefer und beleuchtetem Inneren
+# (alte Galerie: 2025/07/Beleuchtung-bild-0014.jpg und -0020.jpg).
+# [UNBESTÄTIGT] welcher Stollen, darf er gezeigt werden, Ortschaft, Jahr.
+titel:
+  de: Licht für einen Stollen
+  fr: Éclairage d’une galerie souterraine
+  lb: Liicht fir e Stollen
+  en: Lighting for a tunnel
+ortschaft: ""
+jahr: null
+art: besonders
+text:
+  de: ""
+  fr: ""
+  lb: ""
+  en: ""
+fotos:
+  - bild: ""
+    quelle: https://electricite-biesen.lu/wp-content/uploads/2025/07/Beleuchtung-bild-0014.jpg
+    alt:
+      de: Portal eines Stollens, als Trockenmauer aus Schiefer gebaut
+      fr: Portail d’une galerie, en pierres sèches d’ardoise
+      lb: Portal vun engem Stollen, als dréchen Mauer aus Lee gebaut
+      en: Entrance of a tunnel, built as a dry-stone wall of slate
+  - bild: ""
+    quelle: https://electricite-biesen.lu/wp-content/uploads/2025/07/Beleuchtung-bild-0020.jpg
+    alt:
+      de: Das Innere des Stollens, von Leuchten an den Wänden erhellt
+      fr: L’intérieur de la galerie, éclairé par des luminaires aux parois
+      lb: D’Bannenzäit vum Stollen, vu Luuchten un de Maueren beliicht
+      en: Inside the tunnel, lit by lights on the walls
+owend: null
+startseite: false
+reihenfolge: 6
+freigabe: false

@@ -1,0 +1,85 @@
+---
+/**
+ * Grundlayout: <html lang>, Title/Description, Canonical, hreflang (4 + x-default),
+ * Open Graph/Twitter, JSON-LD (Firma auf jeder Seite), Schrift-Preload, Skip-Link, Kopf, Fuß.
+ * Keine externen Einbindungen, keine Cookies.
+ */
+import '@/styles/global.css';
+import schriftUrl from '@/assets/fonts/schibsted-grotesk-var.woff2?url';
+import Kopf from '@/components/Kopf.astro';
+import Fuss from '@/components/Fuss.astro';
+import { useT } from '@/i18n';
+import { alternates as alts, pathFor, withBase, type Lang, type Route } from '@/i18n/config';
+import { firma } from '@/lib/jsonld';
+import { absolute, VORSCHAU } from '@/lib/site';
+
+interface Props {
+  lang: Lang;
+  route: Route;
+  title: string;
+  description: string;
+  noindex?: boolean;
+  ogBild?: { src: string; width: number; height: number; alt: string };
+  jsonld?: Record<string, unknown>[];
+  aktuell?: string;
+}
+
+const { lang, route, title, description, noindex = false, ogBild, jsonld = [], aktuell } = Astro.props;
+const t = useT(lang);
+const alternates = alts(route);
+const canonical = absolute(pathFor(lang, route));
+const og = ogBild ?? { src: withBase('/og/biesen.png'), width: 1200, height: 630, alt: t.meta.ogAlt };
+const ogUrl = absolute(og.src);
+const OG_LOCALE: Record<Lang, string> = { fr: 'fr_LU', de: 'de_LU', lb: 'lb_LU', en: 'en_GB' };
+const ld = [firma(), ...jsonld];
+const json = (d: unknown) => JSON.stringify(d).replace(/\u00AD/g, '').replace(/</g, '\\u003c');
+---
+<!doctype html>
+<html lang={lang} dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {(noindex || VORSCHAU) && <meta name="robots" content="noindex, follow" />}
+    <link rel="canonical" href={canonical} />
+    {!noindex && alternates.map((a) => <link rel="alternate" hreflang={a.lang} href={absolute(a.href)} />)}
+    {!noindex && <link rel="alternate" hreflang="x-default" href={absolute(alternates.find((a) => a.lang === 'fr')!.href)} />}
+    <link rel="preload" href={schriftUrl} as="font" type="font/woff2" crossorigin />
+    <link rel="icon" href={withBase('/favicon.svg')} type="image/svg+xml" />
+    <link rel="icon" href={withBase('/favicon-32.png')} type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href={withBase('/apple-touch-icon.png')} />
+    <meta name="theme-color" content="#ffffff" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={t.meta.siteName} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={OG_LOCALE[lang]} />
+    <meta property="og:image" content={ogUrl} />
+    <meta property="og:image:width" content={String(og.width)} />
+    <meta property="og:image:height" content={String(og.height)} />
+    <meta property="og:image:alt" content={og.alt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogUrl} />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    {ld.map((d) => <script type="application/ld+json" set:html={json(d)} />)}
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip knopf" href="#inhalt">{t.a11y.skip}</a>
+    <Kopf lang={lang} t={t} alternates={alternates} aktuell={aktuell ?? route.page} />
+    <main id="inhalt" tabindex="-1">
+      <slot />
+    </main>
+    <Fuss lang={lang} t={t} alternates={alternates} />
+  </body>
+</html>
+
+<style is:global>
+  main:focus {
+    outline: none;
+  }
+</style>

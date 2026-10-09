@@ -1,0 +1,180 @@
+---
+/**
+ * Startseite (D2), in dieser Reihenfolge:
+ * Hero mit Owend, Was wir machen, Wo wir gearbeitet haben, 26 Leute in Noutem,
+ * Häufige Fragen, Anrufen oder schreiben, Fuß.
+ */
+import Base from '@/layouts/Base.astro';
+import Owend from '@/components/Owend.astro';
+import Foto from '@/components/Foto.astro';
+import ProjektEintrag from '@/components/ProjektEintrag.astro';
+import Faq from '@/components/Faq.astro';
+import AnrufenSchreiben from '@/components/AnrufenSchreiben.astro';
+import { escapeHtml, rich, useT } from '@/i18n';
+import { path, type Lang } from '@/i18n/config';
+import { faqJsonItems, FAQ_KEYS } from '@/lib/faq';
+import { faqPage } from '@/lib/jsonld';
+import { heroPaar, startseitenProjekte } from '@/lib/projekte';
+import { projektBild } from '@/lib/bilder';
+import { getEntry } from 'astro:content';
+import { site, telHref, DEV } from '@/lib/site';
+import { withBase } from '@/i18n/config';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useT(lang);
+const testTexte = { tag: t.owend.testTag, abend: t.owend.testAbend };
+const paar = await heroPaar(lang, testTexte, t.owend.motivStartseite);
+const projekte = await startseitenProjekte();
+
+/** Fotos der Leistungen: aus freigegebenen Projekten, sonst Platzhalter mit Motiv */
+async function leistungsFoto(id: string, index = 0) {
+  const p = await getEntry('projekte', id);
+  if (!p || (!DEV && !p.data.freigabe)) return null;
+  const f = p.data.fotos[index];
+  return f ? { bild: projektBild(f.bild), alt: f.alt[lang] } : null;
+}
+const fotoNeubau = await leistungsFoto('fertighaus-module');
+const fotoLicht = await leistungsFoto('milchviehstall');
+
+const tel = `<a href="${telHref}" class="zahl">${escapeHtml(site.telefon.anzeige)}</a>`;
+const ogBild =
+  paar.bilder && !paar.test && paar.freigegeben
+    ? { src: withBase('/og/startseite.png'), width: 1200, height: 630, alt: paar.bilder.abend.alt }
+    : undefined;
+---
+<Base
+  lang={lang}
+  route={{ page: 'home' }}
+  title={t.seo.home.title}
+  description={t.seo.home.description}
+  ogBild={ogBild}
+  jsonld={faqJsonItems(t, FAQ_KEYS).length ? [faqPage(faqJsonItems(t, FAQ_KEYS))] : []}
+>
+  <section class="raster hero" aria-labelledby="hero-titel">
+    <div class="hero__text">
+      <h1 id="hero-titel">{t.home.h1}</h1>
+      <p class="lead">{t.home.lead}</p>
+      <p class="hero__aktion"><a class="knopf" href={path(lang, 'kontakt')}>{t.allgemein.angebotAnfragen}</a></p>
+      <p class="hero__telefon" set:html={rich(t.allgemein.oderAnrufen, { tel })} />
+    </div>
+    <Owend t={t} paar={paar} />
+  </section>
+
+  <section class="sektion" id="leistungen" aria-labelledby="leistungen-h">
+    <div class="raster">
+      <h2 id="leistungen-h" class="sektion__kopf">{t.home.leistungenH2}</h2>
+    </div>
+    <ul class="leistungen">
+      <li class="raster leistung">
+        <div class="leistung__text">
+          <h3>{t.leistungen.installation.name}</h3>
+          <p class="prosa">{t.leistungen.installation.text}</p>
+          <p class="leistung__link"><a href={path(lang, 'installation')}>{t.leistungen.installation.link}</a></p>
+        </div>
+        <Foto
+          class="leistung__foto voll"
+          bild={fotoNeubau?.bild ?? null}
+          alt={fotoNeubau?.alt ?? ''}
+          folgt={t.allgemein.fotoFolgt}
+          motiv={t.seiten.installation.fotoMotiv}
+          sizes="(min-width: 1024px) 50vw, 100vw"
+        />
+      </li>
+      <li class="raster leistung leistung--gross">
+        <div class="leistung__text">
+          <h3>{t.leistungen.licht.name}</h3>
+          <p class="prosa">{t.leistungen.licht.text}</p>
+          <p class="leistung__link"><a href={path(lang, 'licht')}>{t.leistungen.licht.link}</a></p>
+        </div>
+        <Foto
+          class="leistung__foto voll"
+          format="4-5"
+          bild={fotoLicht?.bild ?? null}
+          alt={fotoLicht?.alt ?? ''}
+          folgt={t.allgemein.fotoFolgt}
+          motiv={fotoLicht?.alt ?? t.leistungen.licht.name}
+          sizes="(min-width: 1024px) 57vw, 100vw"
+        />
+      </li>
+      <li class="raster leistung">
+        <div class="leistung__text">
+          <h3>{t.leistungen.photovoltaik.name}</h3>
+          <p class="prosa">{t.leistungen.photovoltaik.text}</p>
+          <p class="leistung__link"><a href={path(lang, 'photovoltaik')}>{t.leistungen.photovoltaik.link}</a></p>
+        </div>
+        <Foto
+          class="leistung__foto voll"
+          bild={null}
+          alt=""
+          folgt={t.allgemein.fotoFolgt}
+          motiv={t.seiten.photovoltaik.fotoMotiv}
+          sizes="(min-width: 1024px) 50vw, 100vw"
+        />
+      </li>
+      <li class="raster leistungen__ohne">
+        <div class="leistung leistung--ohne-foto">
+          <h3>{t.leistungen.sicherheit.name}</h3>
+          <p class="prosa">{t.leistungen.sicherheit.text}</p>
+          <p class="leistung__link"><a href={path(lang, 'sicherheit')}>{t.leistungen.sicherheit.link}</a></p>
+        </div>
+        <div class="leistung leistung--ohne-foto">
+          <h3>{t.leistungen.hausgeraete.name}</h3>
+          <p class="prosa" set:html={rich(t.leistungen.hausgeraete.text)} />
+          <p class="leistung__link"><a href={path(lang, 'hausgeraete')}>{t.leistungen.hausgeraete.link}</a></p>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <section class="sektion" aria-labelledby="projekte-h">
+    <div class="raster">
+      <h2 id="projekte-h" class="sektion__kopf">{t.home.projekteH2}</h2>
+    </div>
+    {
+      projekte.length > 0 ? (
+        <div class="projekte">
+          {projekte.map((p, i) => (
+            <ProjektEintrag lang={lang} t={t} projekt={p} variante="startseite" seite={i % 2 === 0 ? 'rechts' : 'links'} />
+          ))}
+        </div>
+      ) : (
+        <div class="raster">
+          <p set:html={rich(t.allgemein.projekteFehlen)} />
+        </div>
+      )
+    }
+    <div class="raster">
+      <p class="sektion__fuss"><a href={path(lang, 'projekte')}>{t.home.alleProjekte}</a></p>
+    </div>
+  </section>
+
+  <section class="sektion" aria-labelledby="team-h">
+    <div class="raster team">
+      <div class="team__text">
+        <h2 id="team-h">{t.home.teamH2}</h2>
+        <div class="prosa sektion__text">
+          <p>{t.home.team}</p>
+          <p set:html={rich(t.home.teamLeitung)} />
+          <p>
+            {t.home.jobs} <a href={path(lang, 'jobs')}>{t.home.jobsLink}</a>
+          </p>
+        </div>
+      </div>
+      <Foto class="team__foto voll" bild={null} alt="" folgt={t.allgemein.fotoFolgt} motiv={t.home.teamFoto} sizes="(min-width: 1024px) 50vw, 100vw" />
+    </div>
+  </section>
+
+  <section class="sektion" aria-labelledby="faq-h">
+    <div class="raster">
+      <div>
+        <h2 id="faq-h" class="sektion__kopf">{t.home.faqH2}</h2>
+        <Faq lang={lang} t={t} keys={FAQ_KEYS} />
+      </div>
+    </div>
+  </section>
+
+  <AnrufenSchreiben lang={lang} t={t} />
+</Base>

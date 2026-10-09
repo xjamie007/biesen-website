@@ -1,0 +1,35 @@
+---
+/** Kopf der Unterseiten: sichtbarer Pfad (passt zur BreadcrumbList), h1, Einleitung. */
+import { rich } from '@/i18n';
+
+interface Props {
+  pfadLabel: string;
+  pfad: { name: string; href: string }[];
+  h1: string;
+  intro?: string;
+  introHtml?: Record<string, string>;
+}
+const { pfadLabel, pfad, h1, intro, introHtml = {} } = Astro.props;
+---
+<div class="raster seitenkopf">
+  <div>
+    <nav aria-label={pfadLabel}>
+      <ol class="pfad__liste klein">
+        {
+          pfad.map((p, i) =>
+            i === pfad.length - 1 ? (
+              <li aria-current="page">{p.name}</li>
+            ) : (
+              <li>
+                <a href={p.href}>{p.name}</a>
+              </li>
+            ),
+          )
+        }
+      </ol>
+    </nav>
+    <h1>{h1}</h1>
+    {intro && <p class="lead" set:html={rich(intro, introHtml)} />}
+    <slot />
+  </div>
+</div>

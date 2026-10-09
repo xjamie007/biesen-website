@@ -1,0 +1,43 @@
+---
+/** Photovoltaik und Ladestationen (D3, E3). Förderung: Verweis auf FAQ 6. */
+import LeistungsSeite from '@/components/LeistungsSeite.astro';
+import { useT } from '@/i18n';
+import { path, type Lang } from '@/i18n/config';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useT(lang);
+const s = t.seiten.photovoltaik;
+---
+<LeistungsSeite
+  lang={lang}
+  page="photovoltaik"
+  h1={s.h1}
+  intro={s.intro}
+  anliegen="photovoltaik"
+  arten={['photovoltaik', 'ladestation']}
+  faq={['ladestation', 'zuschuesse']}
+  serviceType="Solar panel and EV charger installation"
+>
+  <section class="sektion" aria-labelledby="was-h">
+    <div class="raster">
+      <div class="sp-text">
+        <div class="block">
+          <h2 id="was-h">{s.wasH2}</h2>
+          <ul class="liste">{s.was.map((x) => <li>{x}</li>)}</ul>
+        </div>
+        <div class="block">
+          <h2>{s.pruefenH2}</h2>
+          <ul class="liste">{s.pruefen.map((x) => <li>{x}</li>)}</ul>
+        </div>
+        <div class="block">
+          <h2>{s.foerderungH2}</h2>
+          <p class="prosa">{s.foerderung}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <p slot="aktion" class="leistung__link"><a href={`${path(lang, 'kontakt')}?anliegen=ladestation`}>{s.anliegenLadestation}</a></p>
+</LeistungsSeite>

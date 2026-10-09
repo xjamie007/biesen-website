@@ -1,0 +1,37 @@
+---
+/**
+ * Sprachumschalter (C4, H): Liste von Links auf dieselbe Seite in der anderen Sprache,
+ * mit aria-current und der Beschriftung „Sprache“ für Screenreader.
+ */
+import { LANG_NAME, type Lang } from '@/i18n/config';
+import type { Dict } from '@/i18n';
+
+interface Props {
+  lang: Lang;
+  t: Dict;
+  alternates: { lang: Lang; href: string }[];
+  id: string;
+}
+const { lang, t, alternates, id } = Astro.props;
+---
+<div class="sprachen">
+  <span class="sr-only" id={id}>{t.a11y.sprache}</span>
+  <ul class="sprachen__liste" aria-labelledby={id}>
+    {
+      alternates.map((a) => (
+        <li>
+          <a
+            class="sprachen__link"
+            href={a.href}
+            hreflang={a.lang}
+            lang={a.lang}
+            aria-current={a.lang === lang ? 'page' : undefined}
+          >
+            {a.lang.toUpperCase()}
+            <span class="sr-only">, {LANG_NAME[a.lang]}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</div>

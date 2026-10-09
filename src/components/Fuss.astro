@@ -1,0 +1,50 @@
+---
+/**
+ * Fuß (C4) in Kalkputz: Name, Adresse und Telefon genau wie im JSON-LD, Zeiten kurz, E-Mail,
+ * Impressum, Datenschutz, Facebook (sobald die URL da ist), Sprachumschalter, Gewerbegenehmigung.
+ * Keine Logoleiste der Partner.
+ */
+import Sprachen from './Sprachen.astro';
+import { fmt, rich, type Dict } from '@/i18n';
+import { path, type Lang } from '@/i18n/config';
+import { mailHref, site, telHref } from '@/lib/site';
+import { kurzText, zeiten } from '@/lib/zeiten';
+
+interface Props {
+  lang: Lang;
+  t: Dict;
+  alternates: { lang: Lang; href: string }[];
+}
+const { lang, t, alternates } = Astro.props;
+---
+<footer class="fuss">
+  <div class="raster">
+    <div class="fuss__spalten">
+      <div>
+        <p class="fuss__name">{site.name}</p>
+        <address>
+          {site.adresse.strasse}<br />
+          {site.adresse.plzAnzeige} {site.adresse.ort}<br />
+          <a href={telHref} class="zahl">{site.telefon.international}</a><br />
+          <a href={mailHref}>{site.email}</a>
+        </address>
+      </div>
+      <div>
+        <p class="fuss__name">{t.footer.zeitenKurz}</p>
+        <p class="zahl">{kurzText(t)}</p>
+        {!zeiten.bestaetigt && <p set:html={rich(t.zeiten.unbestaetigtKurz)} />}
+      </div>
+      <div>
+        <ul class="fuss__links">
+          <li><a href={path(lang, 'impressum')}>{t.nav.impressum}</a></li>
+          <li><a href={path(lang, 'datenschutz')}>{t.nav.datenschutz}</a></li>
+          <li>
+            {site.facebook ? <a href={site.facebook}>{t.footer.facebook}</a> : <span set:html={rich(t.footer.facebookFehlt)} />}
+          </li>
+        </ul>
+        <Sprachen lang={lang} t={t} alternates={alternates} id="sprache-fuss" />
+        <p class="neben">{fmt(t.footer.genehmigung, { nr: site.genehmigung.nummer })}</p>
+      </div>
+    </div>
+  </div>
+</footer>
