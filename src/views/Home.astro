@@ -3,7 +3,7 @@
  * Startseite (D2). Ziel: In 15 Sekunden ist klar, wer Biesen ist, was der Betrieb macht, wo er
  * arbeitet und wie man ihn erreicht. Reihenfolge:
  * 1. Hero: „Ihr Elektriker im Norden Luxemburgs“, alle Leistungen in einem Satz, Anfrage und
- *    Telefon, darunter die fünf Leistungen als Kacheln (mobil eine wischbare Reihe), dann zwei Fakten.
+ *    Telefon, darunter die fünf Leistungen als Kacheln (mobil in zwei Spalten), dann zwei Fakten.
  * 2. Laufband mit den Leistungen.
  * 3. Die Leistungen ausführlich (Karten).
  * 4. Über uns: ein Satz, der beim Scrollen Wort für Wort aufleuchtet, Zahlen, offene Stellen.
@@ -81,7 +81,7 @@ const ogBild =
           {
             t.home.h1.split(' ').map((w, i) => (
               <>
-                <span class="hero__wort" style={`--i:${i}`}>{w}</span>{' '}
+                <span class="hero__wort" style={`--i:${i}`}><span>{w}</span></span>{' '}
               </>
             ))
           }
@@ -330,16 +330,3 @@ const ogBild =
 
   <AnrufenSchreiben lang={lang} t={t} />
 </Base>
-
-<script>
-  // Lichtpunkt unter dem Mauszeiger auf den Kacheln und Karten (nur Maus, nur ohne reduzierte Bewegung)
-  if (matchMedia('(hover: hover) and (prefers-reduced-motion: no-preference)').matches) {
-    document.addEventListener('pointermove', (e) => {
-      const el = (e.target as HTMLElement).closest<HTMLElement>('[data-licht], .karte');
-      if (!el) return;
-      const r = el.getBoundingClientRect();
-      el.style.setProperty('--mx', `${e.clientX - r.left}px`);
-      el.style.setProperty('--my', `${e.clientY - r.top}px`);
-    });
-  }
-</script>

@@ -1,7 +1,8 @@
 /**
  * Erster Bildschirm der Startseite: Steht ohne Scrollen da, wer wir sind, was wir machen, wo, wie man
  * anfragt und anruft, und stehen alle fünf Leistungen im Bild? Für typische Bildschirmgrößen und alle
- * Sprachen. Prüft nur die Höhe (die Kacheln auf dem Handy sind eine Wischreihe).
+ * Sprachen. Eine Kachel zählt nur, wenn ihr Name ganz im Bild steht (oben, unten, links, rechts) und
+ * kein Wort aus der Kachel ragt.
  *
  *   npm run build && npm run preview
  *   CHROME_PATH=… node scripts/dev/erster-bildschirm.mjs   (SPRACHEN=de,fr  BASE_URL=…)
@@ -41,8 +42,10 @@ for (const lang of (process.env.SPRACHEN ?? 'lb,de,en,fr').split(','))
       const sicht = (el) => {
         if (!el) return false;
         const b = el.getBoundingClientRect();
-        return b.top >= 0 && b.bottom <= innerHeight && b.height > 0;
+        return b.top >= 0 && b.bottom <= innerHeight && b.left >= 0 && b.right <= innerWidth && b.height > 0;
       };
+      // ganz lesbar: im Bild und nicht abgeschnitten (kein Wort ragt aus der Kachel)
+      const lesbar = (el) => sicht(el) && el.scrollWidth <= el.clientWidth + 1;
       const tel = [...document.querySelectorAll('a[href^="tel:"]')].some(sicht);
       const kacheln = [...document.querySelectorAll('.kachel__name')];
       return {
@@ -51,7 +54,7 @@ for (const lang of (process.env.SPRACHEN ?? 'lb,de,en,fr').split(','))
         anfrage: sicht(document.querySelector('.hero__aktionen .knopf')),
         telefon: tel,
         wo: sicht(document.querySelector('.hero__fakten')),
-        kacheln: `${kacheln.filter(sicht).length}/5`,
+        kacheln: `${kacheln.filter(lesbar).length}/5`,
       };
     });
     console.log(lang, `${w}x${h}`.padEnd(10), JSON.stringify(r));

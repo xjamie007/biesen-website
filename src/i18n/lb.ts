@@ -70,7 +70,7 @@ const lb: Dict = {
     },
     photovoltaik: {
       name: 'Photovoltaik a Luedstatiounen',
-      kurz: 'Stroum vum eegenen Daach, Lueden doheem',
+      kurz: 'Solaranlag op den Daach, Luedstatioun fir den Elektroauto',
       text: 'Photovoltaikanlage fir den Daach vun Haus, Haff oder Hal, déi sech spéider erweidere loossen. Luedstatioune fir Elektroautoen, doheem oder am Betrib.',
       link: 'Méi iwwer Photovoltaik a Luedstatiounen',
     },
@@ -104,7 +104,7 @@ const lb: Dict = {
 
   home: {
     h1: 'Ären Elektriker am Norde vu Lëtzebuerg',
-    lead: 'Elektroinstallatioun, Liicht, Photovoltaik, Luedstatiounen, Alarmanlagen an Haushaltsapparater fir Haus, Haff a Betrib. E Familljebetrib mat 26 Leit zu Noutem, no bei Wolz.',
+    lead: 'Elektroinstallatioun, Liicht, Photovoltaik, Luedstatiounen, Alarmanlagen an Haushaltsapparater fir Haus, Haff a Betrib. E Familljebetrib mat 26 Leit zu Noutem (Nothum), no bei Wolz.',
     leistungenH2: 'Elektriker fir Haus, Haff a Betrib',
     wahl: 'Ëm wat geet et bei Iech?',
     leistungenIntro: 'Mir schaffen a fënnef Beräicher, an Haiser, op Häff an a Betriber. Wielt e Beräich, fir méi ze erfueren.',

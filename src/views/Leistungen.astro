@@ -1,8 +1,10 @@
 ---
 /**
- * Alle Leistungen auf einer Seite: Sprungleiste im Seitenkopf, je Leistung ein Block mit Symbol,
- * Text, allem, was dazugehört, Link auf die Leistungsseite und „Angebot anfragen“ mit vorgewähltem
- * Anliegen. Danach der Weg zum Angebot, häufige Fragen und der Abschluss in Noutem-Blau.
+ * Alle Leistungen auf einer Seite: Sprungleiste, die unter dem Kopf mitläuft und den aktuellen
+ * Abschnitt zeigt (src/scripts/effekte.ts), je Leistung ein Block mit Symbol, Text, allem, was
+ * dazugehört, Link auf die Leistungsseite und „Angebot anfragen“ mit vorgewähltem Anliegen. Danach
+ * der Weg zum Angebot als gestapelte Karten (wie der Prozess auf der Nave-Website), häufige Fragen
+ * und der Abschluss in Noutem-Blau.
  */
 import Base from '@/layouts/Base.astro';
 import Seitenkopf from '@/components/Seitenkopf.astro';
@@ -38,23 +40,23 @@ const jsonld = [
 ];
 ---
 <Base lang={lang} route={{ page: 'leistungen' }} title={t.seo.leistungen.title} description={t.seo.leistungen.description} jsonld={jsonld}>
-  <Seitenkopf pfadLabel={t.a11y.pfad} pfad={pfad} h1={s.h1} intro={s.intro}>
-    <nav class="schnellwahl" aria-labelledby="schnellwahl-h">
-      <p id="schnellwahl-h" class="sr-only">{t.seiten.projekte.sprung}</p>
-      <ul class="schnellwahl__liste">
-        {
-          SERVICE_PAGES.map((p) => (
-            <li>
-              <a class:list={['chip', `farbe--${p}`]} href={`#leistung-${p}`}>
-                <Icon name={LEISTUNG_ICON[p]} size={20} />
-                {t.leistungen[p].name}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </nav>
-  </Seitenkopf>
+  <Seitenkopf pfadLabel={t.a11y.pfad} pfad={pfad} h1={s.h1} intro={s.intro} />
+
+  <nav class="sprungleiste" aria-labelledby="schnellwahl-h" data-sprungleiste>
+    <p id="schnellwahl-h" class="sr-only">{t.seiten.projekte.sprung}</p>
+    <ul class="sprungleiste__liste">
+      {
+        SERVICE_PAGES.map((p) => (
+          <li>
+            <a class:list={['chip', `farbe--${p}`]} href={`#leistung-${p}`}>
+              <Icon name={LEISTUNG_ICON[p]} size={20} />
+              {t.leistungen[p].name}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
 
   <section class="sektion" aria-labelledby="leistungen-h">
     <h2 id="leistungen-h" class="sr-only">{t.nav.leistungen}</h2>
@@ -102,8 +104,16 @@ const jsonld = [
     <div class="raster">
       <div>
         <h2 id="weg-h" class="sektion__kopf">{s.ablaufH2}</h2>
-        <ol class="schritte">
-          {s.ablauf.map((x) => <li class="schritt zeigen">{x}</li>)}
+        <ol class="stapel" data-stapel>
+          {
+            s.ablauf.map((x, i) => (
+              <li class="stapel__karte" style={`--i:${i}`}>
+                <span class="stapel__nr" aria-hidden="true">{i + 1}</span>
+                <p class="stapel__text">{x}</p>
+                <span class="stapel__zahl" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              </li>
+            ))
+          }
         </ol>
         <p class="klein schritte__hinweis" set:html={rich(s.ablaufHinweis)} />
       </div>

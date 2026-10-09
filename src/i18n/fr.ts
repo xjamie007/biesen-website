@@ -65,7 +65,7 @@ const fr: Dict = {
     },
     photovoltaik: {
       name: 'Photovoltaïque et bornes de recharge',
-      kurz: 'L’électricité de votre toit, la recharge à la maison',
+      kurz: 'Panneaux solaires sur le toit, borne pour la voiture électrique',
       text: 'Des installations photovoltaïques pour le toit de la maison, de la ferme ou du hall, extensibles par la suite. Des bornes de recharge pour voitures électriques, à la maison ou dans l’entreprise.',
       link: 'En savoir plus sur le photovoltaïque et les bornes',
     },

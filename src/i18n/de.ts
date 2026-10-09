@@ -70,7 +70,7 @@ const de = {
     },
     photovoltaik: {
       name: 'Photovoltaik und Ladestationen',
-      kurz: 'Strom vom eigenen Dach, Laden zu Hause',
+      kurz: 'Solaranlage aufs Dach, Ladestation fürs E-Auto',
       text: 'Photovoltaikanlagen für das Dach von Haus, Hof oder Halle, die sich später erweitern lassen. Ladestationen für Elektroautos, zu Hause oder im Betrieb.',
       link: 'Mehr zu Photovoltaik und Ladestationen',
     },
@@ -105,7 +105,7 @@ const de = {
 
   home: {
     h1: 'Ihr Elektriker im Norden Luxemburgs',
-    lead: 'Elektroinstallation, Licht, Photovoltaik, Ladestationen, Alarmanlagen und Hausgeräte für Haus, Hof und Betrieb. Ein Familienbetrieb mit 26 Leuten in Noutem, nahe Wiltz.',
+    lead: 'Elektroinstallation, Licht, Photovoltaik, Ladestationen, Alarmanlagen und Hausgeräte für Haus, Hof und Betrieb. Ein Familienbetrieb mit 26 Leuten in Noutem (Nothum), nahe Wiltz.',
     leistungenH2: 'Elektriker für Haus, Hof und Betrieb',
     wahl: 'Worum geht es bei Ihnen?',
     leistungenIntro: 'Wir arbeiten in fünf Bereichen, in Wohnhäusern, auf Höfen und in Betrieben. Wählen Sie einen Bereich, um mehr zu erfahren.',

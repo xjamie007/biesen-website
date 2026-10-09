@@ -50,7 +50,7 @@ Stand: 514 Texte offen, 0 geprüft.
 | `leistungen.licht.text` | Licht für Wohnräume, Treppen und Gärten, für Ställe und Hallen, für Straßen und Plätze. Wir überlegen mit Ihnen, wo welches Licht hingehört, und montieren es. | Liicht fir Wunnraim, Trapen a Gäert, fir Ställ an Hallen, fir Stroossen a Plazen. Mir iwwerleeë mat Iech, wou wéi e Liicht higehéiert, a mir montéieren et. |
 | `leistungen.licht.link` | Projekte bei Tag und am Abend ansehen | Projeten am Dag an am Owend kucken |
 | `leistungen.photovoltaik.name` | Photovoltaik und Ladestationen | Photovoltaik a Luedstatiounen |
-| `leistungen.photovoltaik.kurz` | Strom vom eigenen Dach, Laden zu Hause | Stroum vum eegenen Daach, Lueden doheem |
+| `leistungen.photovoltaik.kurz` | Solaranlage aufs Dach, Ladestation fürs E-Auto | Solaranlag op den Daach, Luedstatioun fir den Elektroauto |
 | `leistungen.photovoltaik.text` | Photovoltaikanlagen für das Dach von Haus, Hof oder Halle, die sich später erweitern lassen. Ladestationen für Elektroautos, zu Hause oder im Betrieb. | Photovoltaikanlage fir den Daach vun Haus, Haff oder Hal, déi sech spéider erweidere loossen. Luedstatioune fir Elektroautoen, doheem oder am Betrib. |
 | `leistungen.photovoltaik.link` | Mehr zu Photovoltaik und Ladestationen | Méi iwwer Photovoltaik a Luedstatiounen |
 | `leistungen.sicherheit.name` | Alarm, Kameras, Brandmelder | Alarm, Kameraen, Brandmelder |
@@ -72,7 +72,7 @@ Stand: 514 Texte offen, 0 geprüft.
 | `owend.testAbend` | Test Abend | Test Owend |
 | `owend.motivStartseite` | Wohnhaus mit Außen- und Gartenbeleuchtung | Wunnhaus mat Liicht dobaussen an am Gaart |
 | `home.h1` | Ihr Elektriker im Norden Luxemburgs | Ären Elektriker am Norde vu Lëtzebuerg |
-| `home.lead` | Elektroinstallation, Licht, Photovoltaik, Ladestationen, Alarmanlagen und Hausgeräte für Haus, Hof und Betrieb. Ein Familienbetrieb mit 26 Leuten in Noutem, nahe Wiltz. | Elektroinstallatioun, Liicht, Photovoltaik, Luedstatiounen, Alarmanlagen an Haushaltsapparater fir Haus, Haff a Betrib. E Familljebetrib mat 26 Leit zu Noutem, no bei Wolz. |
+| `home.lead` | Elektroinstallation, Licht, Photovoltaik, Ladestationen, Alarmanlagen und Hausgeräte für Haus, Hof und Betrieb. Ein Familienbetrieb mit 26 Leuten in Noutem (Nothum), nahe Wiltz. | Elektroinstallatioun, Liicht, Photovoltaik, Luedstatiounen, Alarmanlagen an Haushaltsapparater fir Haus, Haff a Betrib. E Familljebetrib mat 26 Leit zu Noutem (Nothum), no bei Wolz. |
 | `home.leistungenH2` | Elektriker für Haus, Hof und Betrieb | Elektriker fir Haus, Haff a Betrib |
 | `home.wahl` | Worum geht es bei Ihnen? | Ëm wat geet et bei Iech? |
 | `home.leistungenIntro` | Wir arbeiten in fünf Bereichen, in Wohnhäusern, auf Höfen und in Betrieben. Wählen Sie einen Bereich, um mehr zu erfahren. | Mir schaffen a fënnef Beräicher, an Haiser, op Häff an a Betriber. Wielt e Beräich, fir méi ze erfueren. |

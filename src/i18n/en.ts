@@ -62,7 +62,7 @@ const en: Dict = {
     },
     photovoltaik: {
       name: 'Solar power and EV charging',
-      kurz: 'Power from your own roof, charging at home',
+      kurz: 'Solar panels on your roof, a charger for your electric car',
       text: 'Solar installations for the roof of your house, farm or hall that can be extended later. Charging points for electric cars, at home or at work.',
       link: 'More on solar power and charging points',
     },

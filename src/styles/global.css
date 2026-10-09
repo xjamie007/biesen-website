@@ -657,7 +657,8 @@
       border-color 180ms ease,
       color 180ms ease,
       box-shadow 220ms ease,
-      transform 220ms var(--sanft);
+      transform 220ms var(--sanft),
+      translate 300ms var(--sanft);
   }
 
   /* Lichtstreifen, der beim Überfahren über den Knopf läuft */
@@ -795,8 +796,7 @@
   }
 
   /* Chips: Sprungmarken und Schnellwahl der Leistungen */
-  .chips,
-  .schnellwahl__liste {
+  .chips {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
@@ -1624,10 +1624,6 @@
     max-width: 54ch;
   }
 
-  .schnellwahl {
-    margin-top: 32px;
-  }
-
   /* ---------------- Hero: in 15 Sekunden klar ---------------- */
   .hero {
     padding-block: 36px 40px;
@@ -1672,11 +1668,21 @@
     letter-spacing: -0.045em;
   }
 
-  /* Die Überschrift baut sich Wort für Wort auf */
+  /* Die Überschrift baut sich Wort für Wort auf: jedes Wort fährt aus einer Maske hoch (wie bei
+     Nave). Abgeschnitten wird nur unten, damit Akzente auf Großbuchstaben (É, Ä) ganz bleiben;
+     Polster und negativer Rand lassen den Unterlängen Platz, ohne den Zeilenabstand zu ändern. */
   .hero__wort {
     display: inline-block;
-    animation: wort-auf 800ms var(--sanft) both;
-    animation-delay: calc(var(--i, 0) * 70ms + 80ms);
+    clip-path: inset(-0.5em -0.25em 0 -0.25em);
+    padding-bottom: 0.1em;
+    margin-bottom: -0.1em;
+    vertical-align: bottom;
+  }
+
+  .hero__wort > span {
+    display: inline-block;
+    animation: wort-auf 1s var(--sanft) both;
+    animation-delay: calc(var(--i, 0) * 70ms + 100ms);
   }
 
   .hero__lead {
@@ -1775,6 +1781,24 @@
     }
   }
 
+  /* Sehr schmale Handys (360 px): Überschrift und Einleitung etwas kleiner, damit alle fünf
+     Kacheln noch im ersten Bildschirm stehen */
+  @media (max-width: 23.999rem) {
+    .hero__titel {
+      font-size: 2.125rem;
+    }
+
+    .hero__lead {
+      margin-top: 14px;
+      font-size: 1.0625rem;
+      line-height: 1.45;
+    }
+
+    .hero__aktionen {
+      margin-top: 18px;
+    }
+  }
+
   /* ---------------- Fünf Kacheln: was wir machen, auf einen Blick ---------------- */
   .wahl {
     margin-top: 40px;
@@ -1804,31 +1828,25 @@
     padding: 0;
   }
 
-  /* Mobil: eine Reihe zum Wischen, jede Kachel mit Symbol und Name */
+  /* Mobil: alle fünf Kacheln auf einen Blick, zwei Spalten, die letzte über die ganze Breite.
+     (Eine Wischreihe zeigte nur zweieinhalb Kacheln; im Test konnte niemand „Ladestation“ lesen.) */
   @media (max-width: 47.999rem) {
     .wahl {
-      margin-top: 28px;
+      margin-top: 22px;
     }
 
     .wahl__titel {
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       text-align: left;
     }
 
     .wahl__liste {
-      display: flex;
-      gap: 10px;
-      margin-inline: calc(var(--rand) * -1);
-      padding: 4px var(--rand) 14px;
-      overflow-x: auto;
-      overscroll-behavior-x: contain;
-      scroll-snap-type: x mandatory;
-      scroll-padding-inline: var(--rand);
-      scrollbar-width: none;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
     }
 
-    .wahl__liste::-webkit-scrollbar {
-      display: none;
+    .wahl__liste > :last-child:nth-child(odd) {
+      grid-column: 1 / -1;
     }
   }
 
@@ -1997,30 +2015,34 @@
     }
   }
 
-  /* Handys: Kachel mit Symbol über dem Namen, für die Wischreihe. Steht hinter den Grundregeln,
-     damit es sie überschreibt. */
+  /* Handys: kompakte Kachel, Symbol links, Name rechts. Steht hinter den Grundregeln, damit es
+     sie überschreibt. Lange Wörter (Photovoltaïque, Luedstatiounen) dürfen getrennt werden. */
   @media (max-width: 47.999rem) {
-    .kachel {
-      flex: 0 0 9.5rem;
-      scroll-snap-align: start;
-    }
-
     .kachel__link {
-      grid-template-columns: minmax(0, 1fr);
-      grid-template-areas: 'symbol' 'name';
-      align-content: start;
-      row-gap: 10px;
-      padding: 14px;
+      grid-template-columns: auto minmax(0, 1fr);
+      grid-template-areas: 'symbol name';
+      column-gap: 8px;
+      min-height: 56px;
+      padding: 10px 8px;
+      border-radius: 16px;
     }
 
     .kachel__symbol {
-      width: 44px;
-      height: 44px;
-      border-radius: 13px;
+      width: 30px;
+      height: 30px;
+      border-radius: 10px;
+    }
+
+    .kachel__symbol svg {
+      width: 20px;
+      height: 20px;
     }
 
     .kachel__name {
-      font-size: 0.9375rem;
+      hyphens: auto;
+      font-size: clamp(0.8125rem, 0.1rem + 3.3vw, 0.9375rem);
+      line-height: 1.2;
+      letter-spacing: -0.015em;
     }
 
     .kachel__kurz,
@@ -2051,8 +2073,13 @@
       font-size: 0.875rem;
     }
 
+    /* aus dem Grid-Bereich lösen, sonst bezieht sich top auf die Pfeil-Zeile statt auf die Kachel */
     .kachel__pfeil {
-      display: none;
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      grid-area: auto;
+      margin: 0;
     }
   }
 
@@ -2111,8 +2138,13 @@
       font-size: 0.8125rem;
     }
 
+    /* aus dem Grid-Bereich lösen, sonst bezieht sich top auf die Pfeil-Zeile statt auf die Kachel */
     .kachel__pfeil {
-      display: none;
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      grid-area: auto;
+      margin: 0;
     }
   }
 
@@ -3900,6 +3932,158 @@
     }
   }
 
+  /* Sprungleiste der Leistungen: klebt unter dem Kopf, halbdurchsichtig wie bei Nave und Apple;
+     der Chip des Abschnitts, in dem man gerade ist, ist gefüllt (src/scripts/effekte.ts) */
+  .sprungleiste {
+    position: sticky;
+    top: var(--kopf-ist, var(--kopf-hoehe));
+    z-index: 50;
+    border-block: 1px solid var(--color-himmel-rand);
+    background: rgb(255 255 255 / 0.86);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+  }
+
+  .sprungleiste__liste {
+    display: flex;
+    gap: 8px;
+    width: max-content;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 10px var(--rand);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    list-style: none;
+    scrollbar-width: none;
+  }
+
+  .sprungleiste__liste::-webkit-scrollbar {
+    display: none;
+  }
+
+  .sprungleiste .chip {
+    white-space: nowrap;
+  }
+
+  .sprungleiste .chip svg {
+    color: var(--akzent-text, var(--color-noutem-blau));
+  }
+
+  .sprungleiste .chip[aria-current='true'] {
+    border-color: var(--akzent, var(--color-noutem-blau));
+    background: var(--akzent-hell, var(--color-himmel));
+    box-shadow: inset 0 0 0 1px var(--akzent, var(--color-noutem-blau));
+  }
+
+  /* Was unter dem Kopf klebt, rückt auf Seiten mit Sprungleiste um deren Höhe weiter nach unten
+     (10 + 44 + 10 px und die beiden Linien) */
+  main:has(.sprungleiste) {
+    --leiste-hoehe: 66px;
+  }
+
+  /* Sprungziele nicht unter Kopf und Sprungleiste verstecken */
+  .leistungsblock {
+    scroll-margin-top: 72px;
+  }
+
+  /* Ablauf als gestapelte Karten (wie der Prozess auf der Nave-Website): jede Karte bleibt oben
+     stehen, die nächste rutscht darüber; die untere wird etwas kleiner und dunkler (--sp aus
+     src/scripts/effekte.ts, bei reduzierter Bewegung nicht gesetzt) */
+  .stapel {
+    display: grid;
+    gap: 24px;
+    list-style: none;
+    margin: 0;
+    padding: 0 0 6vh;
+  }
+
+  .stapel__karte {
+    position: sticky;
+    top: calc(var(--kopf-ist, var(--kopf-hoehe)) + var(--leiste-hoehe, 0px) + 20px + var(--i, 0) * 14px);
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: clamp(20px, 4vw, 56px);
+    align-items: center;
+    min-height: min(300px, 46vh);
+    padding: clamp(28px, 5vw, 56px);
+    overflow: hidden;
+    border-radius: 28px;
+    background:
+      radial-gradient(90% 120% at 100% 0%, rgb(0 112 192 / 0.5), transparent 55%),
+      linear-gradient(160deg, #12386a, var(--color-nuecht) 70%);
+    color: var(--color-weiss);
+    box-shadow:
+      0 -12px 40px rgb(7 26 51 / 0.14),
+      0 24px 60px rgb(7 26 51 / 0.22);
+    transform-origin: 50% 0;
+    scale: calc(1 - var(--sp, 0) * 0.05);
+    filter: brightness(calc(1 - var(--sp, 0) * 0.3));
+  }
+
+  .stapel__karte:nth-child(even) {
+    background:
+      radial-gradient(90% 120% at 0% 0%, rgb(255 202 36 / 0.3), transparent 55%),
+      linear-gradient(160deg, #12386a, var(--color-nuecht) 70%);
+  }
+
+  .stapel__karte > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .stapel__nr {
+    display: grid;
+    place-items: center;
+    width: clamp(64px, 9vw, 112px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--color-bletz-giel);
+    color: var(--color-nuecht);
+    box-shadow: var(--schatten-giel);
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.5rem);
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Große Ziffer im Hintergrund, nur Schmuck */
+  .stapel__zahl {
+    position: absolute;
+    right: clamp(16px, 3vw, 40px);
+    bottom: -0.18em;
+    z-index: 0;
+    color: rgb(255 255 255 / 0.05);
+    font-family: var(--font-display);
+    font-size: clamp(7rem, 5rem + 8vw, 13rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.06em;
+    pointer-events: none;
+  }
+
+  .stapel__text {
+    max-width: 30ch;
+    font-family: var(--font-display);
+    font-size: clamp(1.375rem, 1rem + 1.6vw, 2.25rem);
+    font-weight: 750;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  @media (max-width: 47.999rem) {
+    .stapel__karte {
+      top: calc(var(--kopf-ist, var(--kopf-hoehe)) + var(--leiste-hoehe, 0px) + 12px + var(--i, 0) * 10px);
+      grid-template-columns: minmax(0, 1fr);
+      gap: 18px;
+      min-height: 0;
+    }
+
+    .stapel__nr {
+      width: 56px;
+    }
+  }
+
   .liste {
     margin: 16px 0 0;
     padding-left: 1.25em;
@@ -4624,6 +4808,16 @@
       }
     }
 
+    /* Hero: beim Scrollen fährt der Inhalt etwas hoch, wird kleiner und blendet aus (wie bei Nave
+       und Apple). Gemessen am Scrollweg der Seite, fertig nach 80 % der Bildschirmhöhe. */
+    .hero__inhalt {
+      animation-name: hero-weg;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 80vh;
+    }
+
     /* Der Satz über den Betrieb leuchtet beim Scrollen Wort für Wort auf */
     /* Alle vier Effekte nur mit forwards: was noch unter dem Bildschirm liegt, steht im Endzustand
        (Druck, Ganzseiten-Screenshots, Suchmaschinen) und startet erst beim Hereinscrollen. */
@@ -4755,13 +4949,19 @@
 
 @keyframes wort-auf {
   from {
-    opacity: 0;
-    translate: 0 0.35em;
+    translate: 0 135%;
   }
 
   to {
-    opacity: 1;
     translate: none;
+  }
+}
+
+@keyframes hero-weg {
+  to {
+    opacity: 0;
+    translate: 0 -64px;
+    scale: 0.94;
   }
 }
 
