@@ -61,7 +61,7 @@ export const PAGE_SLUGS = {
   sicherheit: {
     fr: 'alarme-video-detection-incendie',
     de: 'alarm-video-brandmelder',
-    lb: 'alarm-video-brandmelder',
+    lb: 'alarm-video-feiermelder',
     en: 'alarm-cctv-fire-detection',
   },
   hausgeraete: { fr: 'electromenager', de: 'hausgeraete', lb: 'haushaltsapparater', en: 'home-appliances' },

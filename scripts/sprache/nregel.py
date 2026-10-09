@@ -30,14 +30,15 @@ for z in open(sys.argv[2], encoding='utf8'):
         w = [x for x in re.findall(r"[A-Za-zÀ-ÖØ-öø-ÿ’'\-]+|\d+", abschnitt)]
         for a, b in zip(w, w[1:]):
             if b.isdigit() or a.isdigit(): continue
+            a = re.sub(r"^[dD][’']", '', a)          # d’Leeschtungen vun → Leeschtungen
             al = anlaut(b)
             if not al: continue
             if a.endswith('n') and al not in BLEIBT and al not in VOKAL:
                 ohne = a[:-2] if a.endswith('nn') and gibt(a[:-2]) else a[:-1]
                 if gibt(ohne) and gibt(a):
                     funde.append(('n-zu-viel', e['key'], f'{a} {b}', f'→ {ohne} {b}'))
-            elif not a.endswith('n') and (al in BLEIBT or al in VOKAL) and len(a) > 1:
-                if gibt(a + 'n') and gibt(a) and a.lower() not in ('e', 'de', 'eng', 'mir', 'dir', 'hir', 'se', 'si', 'ze', 'déi', 'dee', 'wéi', 'fir', 'vir', 'nëmme'):
+            elif not a.endswith('n') and (al in BLEIBT or al in VOKAL) and (len(a) > 1 or a.lower() == 'a'):
+                if gibt(a + 'n') and gibt(a) and a.lower() not in ('de', 'eng', 'mir', 'dir', 'hir', 'se', 'si', 'ze', 'déi', 'dee', 'wéi', 'fir', 'vir', 'nëmme', 'méi', 'no', 'wee'):
                     funde.append(('n-fehlt?', e['key'], f'{a} {b}', f'→ {a}n {b}'))
 for f in funde: print('\t'.join(f))
 print(f'# {len(funde)} Stellen', file=sys.stderr)

@@ -49,7 +49,7 @@ const lb: Dict = {
     adresse: 'Adress',
     fotoFolgt: 'Foto kënnt nach: {motiv}',
     fotopaarFolgt: 'Fotopaar kënnt nach: {motiv}',
-    nichtFreigegeben: 'net fräigi',
+    nichtFreigegeben: 'net fräiginn',
     projekteFehlen: '[FEHLT — freigegebene Projekte mit Ortschaft, Jahr und Text]',
     passendeProjekte: 'Projeten',
     passendeFragen: 'Heefeg Froen',
@@ -59,7 +59,7 @@ const lb: Dict = {
     installation: {
       name: 'Neibau a Renovatioun',
       kurz: 'Elektresch fir nei an al Haiser',
-      text: 'Mir plangen a leeën d’Elektresch fir nei Haiser, och fir Fäerdeghaiser, a bréngen al Installatiounen op den aktuelle Stand: Verdeeler, Leitungen, Steckdousen, Gemeinschaftsantennen a Gebaisteierung mat KNX.',
+      text: 'Mir plangen a leeën d’Elektresch fir nei Haiser, och fir Fäerdeghaiser, a bréngen al Installatiounen op den aktuelle Stand: Verdeeler, Leedungen, Steckdousen, Gemeinschaftsantennen a Gebaisteierung mat KNX.',
       link: 'Méi iwwer Neibau a Renovatioun',
     },
     licht: {
@@ -83,7 +83,7 @@ const lb: Dict = {
     hausgeraete: {
       name: 'Haushaltsapparater',
       kurz: 'AEG, Miele, Liebherr, Bosch, Siemens',
-      text: 'Wäschmaschinnen, Frigoen, Bakuewen a Kichenapparater vun AEG, Miele, Liebherr, Bosch a Siemens. [UNBESTÄTIGT — Ausstellung, Lieferung und Anschluss ergänzen]',
+      text: 'Wäschmaschinnen, Frigoen, Bakiewen a Kichenapparater vun AEG, Miele, Liebherr, Bosch a Siemens. [UNBESTÄTIGT — Ausstellung, Lieferung und Anschluss ergänzen]',
       link: 'Bei d’Haushaltsapparater',
     },
   },
@@ -159,7 +159,7 @@ const lb: Dict = {
     },
     angebot: {
       q: 'Wat braucht Dir fir eng Offer?',
-      a: 'Den Uert, wat gemaach soll ginn, a wéini. Pläng oder Fotoen hëllefe vill: e Grondrëss, en Elektroplang oder e Foto vun der Sécherungskëscht. Dir kënnt alles am {formular} eroplueden.',
+      a: 'Den Uert, wat gemaach soll ginn, a wéini. Pläng oder Fotoen hëllefe vill: e Grondrëss, en Elektroplang oder eng Foto vun der Sécherungskëscht. Dir kënnt alles am {formular} eroplueden.',
       formular: 'Ufroformulaire',
     },
     kostenlos: {
@@ -172,11 +172,11 @@ const lb: Dict = {
     },
     ladestation: {
       q: 'Kann ech doheem eng Luedstatioun fir mäin Elektroauto kréien?',
-      a: 'Dat iwwerpréiwe mir fir Äert Haus: ob den Haususchloss an de Verdeeler d’Leeschtung droen, wéi de Kabel bei de Parkplaz kënnt an ob d’Statioun sech mat enger Photovoltaikanlag verbanne léisst. Duerno kritt Dir eng Offer. [UNBESTÄTIGT — Meldung beim Netzbetreiber durch Biesen?]',
+      a: 'Dat iwwerpréiwe mir fir Äert Haus: ob den Haususchloss an de Verdeeler d’Leeschtung droen, wéi de Kabel bei d’Parkplaz kënnt an ob d’Statioun sech mat enger Photovoltaikanlag verbanne léisst. Duerno kritt Dir eng Offer. [UNBESTÄTIGT — Meldung beim Netzbetreiber durch Biesen?]',
     },
     zuschuesse: {
       q: 'Gëtt et Subside fir Photovoltaik oder Luedstatiounen?',
-      a: 'De Staat fërdert béides iwwer de Programm Klimabonus. D’Konditiounen an d’Montante ännere sech; den aktuelle Stand fannt Dir op {klimabonus}. [UNBESTÄTIGT — Stand vor Livegang prüfen; hilft Biesen beim Antrag?]',
+      a: 'De Staat fërdert béides iwwer de Programm Klimabonus. D’Konditiounen an d’Montanten ännere sech; den aktuelle Stand fannt Dir op {klimabonus}. [UNBESTÄTIGT — Stand vor Livegang prüfen; hilft Biesen beim Antrag?]',
     },
     hausgeraete: {
       q: 'Verkaaft Dir Haushaltsapparater? Kann ech se mir ukucken?',
@@ -210,7 +210,7 @@ const lb: Dict = {
       wasH2: 'Wat mir maachen',
       was: [
         'Elektroplang a Steckdouseplang',
-        'Verdeeler a Leitungen',
+        'Verdeeler a Leedungen',
         'Schalter, Steckdousen, Uschlëss',
         'Gemeinschaftsantennen a Residenzen',
         'Gebaisteierung mat KNX',
@@ -219,14 +219,14 @@ const lb: Dict = {
       fertighausH2: 'Fir Fäerdeghaiser',
       fertighaus: 'Mir leeën d’Elektresch och a Fäerdeghaiser a stëmmen eis mam Hiersteller of. [UNBESTÄTIGT — Ablauf, Herstellernamen]',
       renovierungH2: 'Renovatioun an Ëmbau',
-      renovierung: 'Mir iwwerpréiwe bestoend Installatiounen, erneiere se a brénge se op den aktuelle Stand. Fir en éischt Gespréich hëlleft e Foto vun der Sécherungskëscht.',
+      renovierung: 'Mir iwwerpréiwe bestoend Installatiounen, erneiere se a brénge se op den aktuelle Stand. Fir en éischt Gespréich hëlleft eng Foto vun der Sécherungskëscht.',
       anliegenRenovierung: 'Offer fir eng Renovatioun ufroen',
       ablaufH2: 'Esou leeft en Neibau of',
       ablauf: [
         'Dir schéckt eis Är Pläng.',
         'Mir schwätze mat Iech of, wou Steckdousen, Schalter a Liicht hikommen.',
         'Réiinstallatioun am Réibau.',
-        'Feininstallatioun, wann d’Maueren fäerdeg sinn.',
+        'Feininstallatioun nom Bestrach.',
         'Alles a Betrib huelen an iwwerpréiwen.',
       ],
       ablaufHinweis: '[UNBESTÄTIGT — Ablauf vom Kunden bestätigen lassen, ebenso wer den Netzanschluss beim Netzbetreiber beantragt]',
@@ -266,7 +266,7 @@ const lb: Dict = {
     },
     photovoltaik: {
       h1: 'Photovoltaik a Luedstatiounen',
-      intro: 'Mir baue Photovoltaikanlage fir Wunnhaiser, Haff a Betriber an installéiere Luedstatioune fir Elektroautoen. Béides léisst sech verbannen, sou datt Ären Auto mam Stroum vum eegenen Daach luet. [UNBESTÄTIGT — bietet Biesen diese Kopplung an?]',
+      intro: 'Mir baue Photovoltaikanlage fir Wunnhaiser, Häff a Betriber an installéiere Luedstatioune fir Elektroautoen. Béides léisst sech verbannen, sou datt Ären Auto mam Stroum vum eegenen Daach geluede gëtt. [UNBESTÄTIGT — bietet Biesen diese Kopplung an?]',
       wasH2: 'Wat mir maachen',
       was: [
         'Photovoltaikanlage fir den Daach vun Haus, Haff oder Hal',
@@ -292,7 +292,7 @@ const lb: Dict = {
       h1: 'Haushaltsapparater vun AEG, Miele, Liebherr, Bosch a Siemens',
       intro: '[FEHLT — Ausstellung, Beratung, Lieferung, Anschluss, Reparatur]',
       wasH2: 'Wat mir verkafen',
-      was: ['Wäschmaschinnen', 'Frigoen', 'Bakuewen', 'Kichenapparater'],
+      was: ['Wäschmaschinnen', 'Frigoen', 'Bakiewen', 'Kichenapparater'],
       marken: 'Marken: AEG, Miele, Liebherr, Bosch a Siemens.',
       online: 'Mir verkafen net online. Fir Präisser a Verfügbarkeet rufft eis un: {tel}.',
     },
@@ -409,18 +409,18 @@ const lb: Dict = {
     },
     datenschutz: {
       h1: 'Dateschutzerklärung',
-      intro: 'Mir veraarbechten Är Donnéeën nëmmen, fir Är Ufro oder Bewerbung ze beäntweren. Dës Websäit setzt keng Cookien, notzt keng Analyse- oder Reklammendéngschter a luet keng Inhalter vun anere Serveren.',
+      intro: 'Mir veraarbechten Är Donnéeën nëmmen, fir Är Ufro oder Bewerbung ze beaarbechten. Dës Websäit setzt keng Cookien an notzt keng Analyse- oder Reklammendéngschter; et gi keng Inhalter vun anere Servere gelueden.',
       verantwortlichH2: 'Responsabel',
       verantwortlich: 'Entreprise d’électricité BIESEN S.A., 14, Duerfstrooss, L-9678 Nothum, Lëtzebuerg. Telefon +352 95 80 99, {email}.',
       formularH2: 'Ufroformulaire',
-      formular: 'Wann Dir den Ufroformulaire schéckt, kréie mir d’Informatiounen, déi Dir aginn: ëm wat et geet, d’Zort vu Gebai, d’Uertschaft, Är Beschreiwung, Ären Numm, Är E-Mail-Adress, wann Dir wëllt Är Telefonsnummer, an d’Pläng oder Fotoen, déi Dir eropluet. Mir notze se, fir Är Ufro ze beaarbechten an Iech eng Offer ze schreiwen.',
+      formular: 'Wann Dir den Ufroformulaire schéckt, kréie mir d’Informatiounen, déi Dir agitt: ëm wat et geet, d’Zort vu Gebai, d’Uertschaft, Är Beschreiwung, Ären Numm, Är E-Mail-Adress, wann Dir wëllt Är Telefonsnummer, an d’Pläng oder Fotoen, déi Dir eropluet. Mir notze se, fir Är Ufro ze beaarbechten an Iech eng Offer ze schreiwen.',
       rechtsgrundlage: 'Rechtsgrondlag ass Är Zoustëmmung (Art. 6 Par. 1 Bst. a DSGVO) an d’Virbereedung vun engem Kontrakt op Är Ufro (Art. 6 Par. 1 Bst. b DSGVO). Dir kënnt Är Zoustëmmung all Moment per E-Mail oder Telefon zréckzéien.',
       speicherung: 'Är Ufro an Är Fichiere gi bei Supabase an engem Datenzenter an der Europäescher Unioun gespäichert. D’Fichiere leien an engem private Späicher; an der E-Mail un eise Büro stinn nëmme Linken, déi no enger gewësser Zäit oflafen. D’E-Mail verschéckt [UNBESTÄTIGT — EU-Mailanbieter, mit Nave klären].',
       loeschung: 'Gëtt aus Ärer Ufro keen Optrag, läsche mir Ufro a Fichieren no [FEHLT — Löschfrist mit dem Kunden festlegen, Vorschlag: 6 Monaten]. Ënnerlage fir en Optrag hale mir esou laang op, wéi d’Gesetz et verlaangt.',
       missbrauch: 'Fir Mëssbrauch ze begrenzen, späichere mir 24 Stonnen e verschlësselte Wäert (Hash) vun Ärer IP-Adress. Doraus léisst sech Är Adress net zréckrechnen.',
       kontaktH2: 'E-Mail, Telefon a Bewerbungen',
       kontakt: 'Wann Dir eis urufft, eis eng E-Mail schreift oder Iech per E-Mail bewerbt, veraarbechte mir Är Informatiounen, fir Iech z’äntweren oder Är Bewerbung ze préiwen. Bewerbungsënnerlage läsche mir, wann d’Plaz besat ass, ausser Dir sidd domat averstanen, datt mir se méi laang halen. [UNBESTÄTIGT — Frist für Bewerbungen]',
-      hostingH2: 'Hosting a Server-Logdateien',
+      hostingH2: 'Hosting a Server-Logfichieren',
       hosting: 'D’Websäit gëtt vu GitHub Pages (GitHub, Inc., Vereenegt Staaten) ausgeliwwert. Bei all Opruff veraarbecht GitHub Är IP-Adress an technesch Informatioune wéi Browser an Auerzäit, fir d’Säiten auszeliwweren an d’Sécherheet ze garantéieren. GitHub ass nom EU-US-Dateschutzkader (Data Privacy Framework) zertifiéiert. Rechtsgrondlag ass eist berechtegt Interessi un enger sécherer an erreechbarer Websäit (Art. 6 Par. 1 Bst. f DSGVO).',
       dienstleisterH2: 'Wien an eisem Optrag Donnéeë veraarbecht',
       dienstleister: [
@@ -489,7 +489,7 @@ const lb: Dict = {
     },
     nurLadestation: 'Just bei enger Luedstatioun',
     abstand: {
-      legende: 'Wéi wäit ass de Parkplaz vun der Sécherungskëscht ewech?',
+      legende: 'Wéi wäit ass d’Parkplaz vun der Sécherungskëscht ewech?',
       optionen: { unter10: 'manner wéi 10 m', bis25: '10 bis 25 m', ueber25: 'méi wéi 25 m', unbekannt: 'weess ech net' },
     },
     pv: {
@@ -498,7 +498,7 @@ const lb: Dict = {
     },
     nurHausgeraet: 'Just bei engem Haushaltsapparat',
     geraet: { label: 'Wéi en Apparat sicht Dir?' },
-    ortschaft: { label: 'Uertschaft', hinweis: 'Esou wësse mir, wien a Ärer Géigend ass.' },
+    ortschaft: { label: 'Uertschaft', hinweis: 'Esou wësse mir, wien an Ärer Géigend ass.' },
     start: {
       label: 'Wéini soll et lassgoen?',
       leer: 'Wielt w.e.g.',
@@ -520,7 +520,7 @@ const lb: Dict = {
     },
     dateien: {
       label: 'Pläng oder Fotoen',
-      hinweis: 'E Grondrëss, en Elektroplang oder e Foto vun der Sécherungskëscht. Bis zu 5 Fichieren, all héchstens 10 MB, Biller oder PDF.',
+      hinweis: 'E Grondrëss, en Elektroplang oder eng Foto vun der Sécherungskëscht. Bis zu 5 Fichieren, all héchstens 10 MB, Biller oder PDF.',
       gewaehlt: 'Erausgesicht:',
     },
     name: { label: 'Numm' },
@@ -581,12 +581,12 @@ const lb: Dict = {
     leistungen: {
       title: 'Leeschtungen op ee Bléck, Noutem | Electricité Biesen',
       description:
-        'All d’Leeschtungen vun Electricité Biesen zu Noutem: Elektroinstallatioun, Liicht, Photovoltaik, Luedstatiounen, Alarm, Feiermelder an Haushaltsapparater.',
+        'All d’Leeschtunge vun Electricité Biesen zu Noutem: Elektroinstallatioun, Liicht, Photovoltaik, Luedstatiounen, Alarm, Feiermelder an Haushaltsapparater.',
     },
     installation: {
       title: 'Elektroinstallatioun Neibau, Ëmbau | Electricité Biesen',
       description:
-        'Elektresch fir Neibau, Fäerdeghaus a Renovatioun am Éislek an am Norden: Verdeeler, Leitungen, Steckdousen, Antennen a KNX. Electricité Biesen vun Noutem.',
+        'Elektresch fir Neibau, Fäerdeghaus a Renovatioun am Éislek an am Norden: Verdeeler, Leedungen, Steckdousen, Antennen a KNX. Electricité Biesen vun Noutem.',
     },
     licht: {
       title: 'Liicht fir Haus, Stall an Hal, Noutem | Electricité Biesen',
@@ -606,7 +606,7 @@ const lb: Dict = {
     hausgeraete: {
       title: 'Haushaltsapparater AEG, Miele, Bosch | Electricité Biesen',
       description:
-        'Wäschmaschinnen, Frigoen, Bakuewen a Kichenapparater vun AEG, Miele, Liebherr, Bosch a Siemens bei Electricité Biesen zu Noutem. Rufft eis un: 95 80 99.',
+        'Wäschmaschinnen, Frigoen, Bakiewen a Kichenapparater vun AEG, Miele, Liebherr, Bosch a Siemens bei Electricité Biesen zu Noutem. Rufft eis un: 95 80 99.',
     },
     projekte: {
       title: 'Projeten: Liicht, Neibau a Ställ | Electricité Biesen',

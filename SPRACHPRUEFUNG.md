@@ -45,7 +45,7 @@ Rechtschreibung (vom Wörterbuch bestätigt, die Ersatzform ist jeweils im Wört
 | Rechenzentrum | Datenzenter | Datenschutz, Formular |
 | Pflichtfeld | Flichtfeld | Formular |
 | Saddeldaach | Suedeldaach | Formular |
-| Brandmelder, Brandmeldeanlag(en) | Feiermelder | Leistung Sicherheit, SEO, Formular (10×); der Pfad bleibt `alarm-video-brandmelder` |
+| Brandmelder, Brandmeldeanlag(en) | Feiermelder | Leistung Sicherheit, SEO, Formular (10×); der luxemburgische Pfad heißt jetzt `/lb/alarm-video-feiermelder/` |
 | datselwecht, Deeselwechte, Déiselwecht | dat selwecht, Dee selwechte, Déi selwecht | Licht, Projekte |
 
 Umformuliert, weil das Wort nicht im Wörterbuch steht und es eine sichere Alternative gibt:
@@ -66,6 +66,17 @@ Formen, „B“ wird „Bee“ gesprochen); in die andere Richtung „Fotoe hël
 
 Dazu: die Knöpfe des Prüfmodus standen auf Deutsch („Offene Punkte zeigen“) → „Oppe Punkte weisen /
 verstoppen“.
+
+## Luxemburgisch: weitere Mittel
+
+| Mittel | Ergebnis |
+|---|---|
+| Original-Repository `spellchecker-lu/dictionary-lb-lu` (über GitHub erreichbar) | Stand 2.1 vom 25.01.2023, derselbe wie im npm-Paket. Zusätzlich genutzt: `unmunched.dic` (346 666 ausgeschriebene Wortformen) und der Thesaurus |
+| spaCy `spacy-lookups-data`: Lemma-Tabelle (305 399 Formen) und Normalisierungstabelle | Abgleich aller 943 verschiedenen Wörter mit drei Quellen: 810 kennen alle drei; die übrigen sind die oben bewerteten Eigennamen, Abkürzungen und Zusammensetzungen. Normalisierung (alte Schreibungen wie „dass“ → „datt“): keine Treffer. Kleinschreibung bei Substantiven: nur Beispiel-E-Mail und Ergänzungsstrich |
+| Zwei unabhängige Durchsichten (KI-Lektorat, je 256 Texte, mit deutschem Ausgangstext) auf Grammatik, Geschlecht, Fall, Konjugation, n-Regel und Germanismen | 21 Funde; jeder im Wörterbuch nachgeschlagen oder grammatisch begründet, 19 übernommen (unten). Ersetzt keine muttersprachliche Durchsicht |
+| Verbesserte n-Regel-Prüfung (erkennt jetzt „d’Leeschtungen vun“ und „a“ vor Vokal) | danach ein weiterer Fund („Servere gelueden“) |
+
+Aus den Durchsichten übernommen: „net fräigi“ → „net fräiginn“ (Satzende); „bei de Parkplaz“, „ass de Parkplaz“ → „d’Parkplaz“ (weiblich wie „Plaz“); „d’Montante ännere“ → „d’Montanten ännere“; „Haff a Betriber“ → „Häff a Betriber“ (Mehrzahl); „e Foto“ → „eng Foto“ (3×, weiblich); „Verfügbarkeet“ → „Disponibilitéit“; „déi Dir aginn“ → „déi Dir agitt“; „wien a Ärer“ → „wien an Ärer“; „d’Leeschtungen vun“ → „d’Leeschtunge vun“; „Staplerschäin vu“ → „Staplerschäi vu“; „Leitungen“ → „Leedungen“ (4×, das luxemburgische Wort); „Bakuewen“ → „Bakiewen“ (Mehrzahl, 3×); „ze beäntweren“ → „ze beaarbechten“ (Ausgangstext: bearbeiten); „Server-Logdateien“ → „Server-Logfichieren“; „wann d’Maueren fäerdeg sinn“ → „nom Bestrach“ (genauer für „nach dem Verputzen“, „Bestrach“ steht im Wörterbuch); „luet“ umformuliert zu „geluede gëtt“ bzw. „gi … gelueden“, weil das Wörterbuch nicht klärt, ob „luet“ die Form für er/sie ist; Pfad `alarm-video-brandmelder` → `alarm-video-feiermelder`.
 
 ## Luxemburgisch: geprüft und so gelassen
 
