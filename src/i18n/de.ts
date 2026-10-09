@@ -30,6 +30,7 @@ const de = {
   nav: {
     home: 'Startseite',
     leistungen: 'Leistungen',
+    alleLeistungen: 'Alle Leistungen im Überblick',
     projekte: 'Projekte',
     ueberUns: 'Über uns',
     jobs: 'Jobs',
@@ -101,6 +102,8 @@ const de = {
     h1: 'Strom und Licht für Haus, Hof und Betrieb',
     lead: 'Wir sind ein Elektrobetrieb mit 26 Leuten in Noutem, in der Stauseegemeinde. Wir verlegen die Elektrik in neuen und alten Häusern, in Ställen und Hallen und montieren Licht, Photovoltaik und Ladestationen.',
     leistungenH2: 'Was wir machen',
+    leistungenIntro: 'Wir arbeiten in fünf Bereichen, in Wohnhäusern, auf Höfen und in Betrieben. Wählen Sie einen Bereich, um mehr zu erfahren.',
+    alleLeistungen: 'Alle Leistungen im Überblick',
     projekteH2: 'Wo wir gearbeitet haben',
     alleProjekte: 'Alle Projekte',
     teamH2: '26 Leute in Noutem',
@@ -173,6 +176,21 @@ const de = {
   },
 
   seiten: {
+    leistungen: {
+      h1: 'Unsere Leistungen im Überblick',
+      intro: 'Elektroinstallation für Neubau und Renovierung, Licht, Photovoltaik und Ladestationen, Alarm- und Brandmeldeanlagen und Hausgeräte. Hier sehen Sie alle Bereiche auf einen Blick.',
+      dazu: 'Dazu gehört',
+      ablaufH2: 'So kommen Sie zu Ihrem Angebot',
+      ablauf: [
+        'Sie rufen an oder schicken uns Ihre Anfrage, gern mit Plänen oder Fotos.',
+        'Wir besprechen mit Ihnen, was gemacht werden soll, bei größeren Projekten vor Ort.',
+        'Sie bekommen ein schriftliches Angebot.',
+        'Wir führen die Arbeiten aus und nehmen alles mit Ihnen in Betrieb.',
+      ],
+      ablaufHinweis: '[UNBESTÄTIGT — Ablauf vom Kunden bestätigen lassen]',
+      unsicherH2: 'Nicht sicher, welcher Bereich passt?',
+      unsicher: 'Beschreiben Sie uns kurz, worum es geht. Wir sagen Ihnen, was möglich ist und wer sich darum kümmert.',
+    },
     installation: {
       h1: 'Elektrik für Neubau und Renovierung',
       intro: 'Ob Sie neu bauen, ein Fertighaus aufstellen lassen oder ein altes Haus umbauen: Wir planen die Elektrik mit Ihnen, verlegen sie und nehmen sie in Betrieb.',
@@ -538,6 +556,11 @@ const de = {
       title: 'Elektriker in Nothum, nahe Wiltz | Electricité Biesen',
       description:
         'Electricité Biesen in Nothum: Elektroinstallation für Neubau und Renovierung, Licht, Photovoltaik, Ladestationen und Alarmanlagen. Familienbetrieb, 26 Leute.',
+    },
+    leistungen: {
+      title: 'Alle Leistungen im Überblick, Nothum | Electricité Biesen',
+      description:
+        'Alle Leistungen von Electricité Biesen in Nothum auf einen Blick: Elektroinstallation, Licht, Photovoltaik, Ladestationen, Alarm, Brandmelder, Hausgeräte.',
     },
     installation: {
       title: 'Elektroinstallation Neubau, Umbau | Electricité Biesen',

@@ -1,0 +1,41 @@
+---
+/**
+ * Karte neben dem Inhalt der Leistungsseiten (ab 1024 px, läuft beim Scrollen mit): Symbol der
+ * Leistung, Telefon, Zeiten kurz, „Angebot anfragen“ mit vorgewähltem Anliegen, Link auf die Übersicht.
+ * Mobil steht dasselbe im Abschluss der Seite, deshalb ist die Karte dort ausgeblendet.
+ */
+import Icon from './Icon.astro';
+import type { Dict } from '@/i18n';
+import { path, type Lang, type ServicePage } from '@/i18n/config';
+import { LEISTUNG_ICON } from '@/lib/icons';
+import { ANLIEGEN } from '@/lib/leistungen';
+import { site, telHref } from '@/lib/site';
+import { kurzText } from '@/lib/zeiten';
+
+interface Props {
+  lang: Lang;
+  t: Dict;
+  page: ServicePage;
+}
+const { lang, t, page } = Astro.props;
+---
+<aside class="seitenkarte" aria-labelledby="seitenkarte-h">
+  <span class="symbol symbol--gross" aria-hidden="true"><Icon name={LEISTUNG_ICON[page]} size={36} /></span>
+  <p id="seitenkarte-h" class="h3 seitenkarte__titel">{t.home.kontaktH2}</p>
+  <p class="seitenkarte__nummer">
+    <a class="grosse-nummer" href={telHref}><span class="sr-only">{t.allgemein.telefon} </span>{site.telefon.anzeige}</a>
+  </p>
+  <p class="klein neben zahl">{kurzText(t)}</p>
+  <p class="seitenkarte__aktion">
+    <a class="knopf" href={`${path(lang, 'kontakt')}?anliegen=${ANLIEGEN[page]}`}>
+      {t.allgemein.angebotAnfragen}
+      <Icon name="pfeil" size={20} />
+    </a>
+  </p>
+  <p>
+    <a class="textlink" href={path(lang, 'leistungen')}>
+      {t.nav.alleLeistungen}
+      <Icon name="pfeil" size={20} />
+    </a>
+  </p>
+</aside>

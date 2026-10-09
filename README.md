@@ -7,7 +7,7 @@ Die Besonderheit ist **„Owend“**: Ein Biesen-Projekt wird vom selben Stativ 
 - Offene Punkte, Fragen an den Kunden und fehlende Fotos: [`OFFENE-PUNKTE.md`](OFFENE-PUNKTE.md)
 - Luxemburgische Texte zur Prüfung durch einen Muttersprachler: [`LB-REVIEW.md`](LB-REVIEW.md)
 
-**Stand 06.10.2026:** Gebaut und geprüft. Es ist noch kein Projekt freigegeben und es gibt noch kein Fotopaar. Deshalb zeigt die Website an allen Fotostellen eine Fläche in Kalkputz („Foto folgt: …“, „Fotopaar folgt: …“), und alle fehlenden oder unbestätigten Angaben sind sichtbar markiert. So nicht live schalten.
+**Stand 09.10.2026:** Neu gestaltet (siehe „Gestaltung“) und um die Seite „Leistungen“ mit allen fünf Bereichen ergänzt. Es ist noch kein Projekt freigegeben und es gibt noch kein Fotopaar. Deshalb zeigt die Website an allen Fotostellen eine helle Fläche mit Kamerasymbol („Foto folgt: …“), im Hero ein gezeichnetes Haus, das von Tag zu Abend wechselt („Fotopaar folgt: …“), und alle fehlenden oder unbestätigten Angaben sind sichtbar markiert. So nicht live schalten.
 
 ## Technik
 
@@ -15,8 +15,9 @@ Die Besonderheit ist **„Owend“**: Ein Biesen-Projekt wird vom selben Stativ 
 |---|---|
 | Framework | Astro 7, statisch |
 | Interaktiv | Vanilla-TypeScript: Menü, Formular, Regler; Inline-Skript (644 Bytes) als Fallback für Owend. Kein React: Nichts auf der Seite braucht es. |
-| Styling | Tailwind CSS 4 mit den Tokens aus dem Designkonzept (`src/styles/global.css`), Standardfarben und -schatten von Tailwind entfernt |
-| Animation | CSS Scroll-Driven Animations, Fallback per Intersection Observer |
+| Styling | Tailwind CSS 4 mit eigenen Tokens (`src/styles/global.css`), Standardfarben und -schatten von Tailwind entfernt |
+| Symbole | eigene SVG-Pfade in `src/lib/icons.ts` (`Icon.astro`), keine Icon-Bibliothek |
+| Animation | CSS Scroll-Driven Animations (Owend, Kopf, Einblenden), Fallback per Intersection Observer; ohne Unterstützung steht alles still und sichtbar |
 | Schrift | Schibsted Grotesk, variabel 400–900, selbst gehostet (46 KB WOFF2) |
 | Formular | Supabase Edge Function `anfrage` (EU), privater Bucket `anfragen`, Mail über einen EU-Anbieter |
 | Hosting | GitHub Pages über GitHub Actions |
@@ -69,10 +70,11 @@ src/
   pages/[lang]/[...path].astro  ein Einstieg für alle Seiten und Sprachen (übersetzte URLs aus i18n/config.ts)
   pages/404.astro               eine 404-Seite für alle Sprachen
   pages/sitemap.xml.ts, robots.txt.ts, og/[name].png.ts
-  views/                        eine Datei pro Seite (Home, Installation, Licht, …)
-  components/                   Kopf, Fuß, Owend (Hero), OwendRegler, Foto, Faq, Zeiten, Anfrageformular …
+  views/                        eine Datei pro Seite (Home, Leistungen, Installation, Licht, …)
+  components/                   Kopf, Fuß, Owend (Hero), OwendSzene, OwendRegler, Foto, Faq, Zeiten, Anfrageformular,
+                                Leistungskarte, Seitenkarte, Aufruf, Icon …
   i18n/                         config.ts (Sprachen, URLs), de.ts (Ausgangssprache), fr.ts, lb.ts, en.ts
-  lib/                          projekte.ts, zeiten.ts, feiertage.ts, jsonld.ts, faq.ts, bilder.ts, exif.ts
+  lib/                          projekte.ts, leistungen.ts, icons.ts, zeiten.ts, feiertage.ts, jsonld.ts, faq.ts, bilder.ts, exif.ts
   content/projekte/*.yaml       ein Projekt pro Datei
   content/jobs/*.yaml           eine Stelle pro Datei
   content/oeffnungszeiten.json  Zeiten, Feiertage, Betriebsferien – einzige Quelle für Tabellen, Fuß und JSON-LD
@@ -115,7 +117,7 @@ freigabe: true                  # nur true erscheint im Produktiv-Build
 
 - Fotos in Originalauflösung nach `src/assets/projekte/` legen; der Build rechnet sie in AVIF und WebP (480, 768, 1080, 1600, 2000 px) um, nie größer als das Original. Hausnummern, Kennzeichen und Gesichter von Unbeteiligten vorher unkenntlich machen.
 - Die vorhandenen Einträge (Milchviehstall, Fertighaus-Module, Ösling-Haus, Halle, Treppe, Stollen) haben `freigabe: false` und leere Felder. In jeder Datei steht oben, welches Original aus der alten Galerie anzufragen ist.
-- Die Fotos der Leistungen auf der Startseite kommen aus den Projekten `fertighaus-module` (Neubau) und `milchviehstall` (Licht), sobald diese freigegeben sind.
+- Die Fotos der Leistungskarten auf der Startseite (Neubau und Licht) kommen aus den Projekten `fertighaus-module` und `milchviehstall`, sobald diese freigegeben sind. Bis dahin sind es Karten ohne Foto.
 
 ### Fotopaare (Owend)
 
@@ -170,7 +172,7 @@ Sind die Zeiten mit dem Kunden geklärt, `"bestaetigt": true` setzen; dann versc
 
 ### Luxemburgisch prüfen lassen
 
-Jeder luxemburgische Text ist ein Entwurf und trägt das Flag `review: "lb-native"` (`src/i18n/lb.ts`, gilt auch für alle `lb`-Felder in `src/content/` und die luxemburgischen URLs). Die vollständige Liste mit deutschem Ausgangstext steht in [`LB-REVIEW.md`](LB-REVIEW.md) (heute 478 Texte), gruppiert nach Datei. Ablauf:
+Jeder luxemburgische Text ist ein Entwurf und trägt das Flag `review: "lb-native"` (`src/i18n/lb.ts`, gilt auch für alle `lb`-Felder in `src/content/` und die luxemburgischen URLs). Die vollständige Liste mit deutschem Ausgangstext steht in [`LB-REVIEW.md`](LB-REVIEW.md) (heute 494 Texte), gruppiert nach Datei. Ablauf:
 
 1. Muttersprachler korrigiert direkt in `src/i18n/lb.ts` bzw. in den YAML-Dateien.
 2. Geprüfte Schlüssel in `src/i18n/lb-geprueft.json` eintragen (z. B. `"home.h1"`, `"projekte/milchviehstall.titel"`, `"slug.licht"`).
@@ -255,7 +257,7 @@ Geprüft gegen die Sitemap der alten Seite (`page-sitemap.xml`, 8 Adressen, Stan
 |---|---|
 | `/` | `/fr/` |
 | `/uber-uns/` | `/de/ueber-uns/` |
-| `/dienstleistungen/` | `/de/#leistungen` |
+| `/dienstleistungen/` | `/de/leistungen/` |
 | `/galerie/` | `/de/projekte/` |
 | `/jobs/` | `/de/jobs/` |
 | `/kontakt/` | `/de/kontakt/` |
@@ -299,6 +301,18 @@ Bis die Vektordatei des Logos da ist: ein „B“ in Weiß auf Noutem-Blau (Favi
 - Zufriedene Kunden um eine Bewertung bitten (z. B. QR-Code auf der Rechnung), ohne Gegenleistung, nur echte Bewertungen.
 - Editus, Yellow und maison.lu auf dieselben NAP-Daten und Zeiten bringen.
 
+## Gestaltung (seit 09.10.2026)
+
+Die erste Fassung war sehr zurückhaltend (Weiß und Kalkputz, keine Symbole, keine Schatten, nicht stickyer Kopf). Auf Wunsch von Nave ist sie jetzt farbiger und lebendiger. Die Inhaltsregeln (keine Werbewörter, keine erfundenen Angaben, offene Punkte sichtbar) gelten unverändert.
+
+- **Farben:** aus dem Logo Noutem-Blau `#0070c0` und Bletz-Giel `#ffca24`; dazu aus dem Owend-Konzept die blaue Stunde: Blo-Stonn `#0d2c54` und Nuecht `#071a33` für Hero, Seitenköpfe und Fuß, Himmel `#eef5fc` als helle Fläche, Mound `#c6d5e9` für Text auf Dunkel. Gelb nur für den Hauptknopf auf dunklem Grund, Akzente und den Blitz in den Überzeilen.
+- **Logo:** steht immer auf Weiß und wird nie verändert: im Kopf 48 px (mobil) bzw. 64 px hoch (Desktop, beim Scrollen 52 px), im Fuß auf einer weißen Karte. Ausgeliefert als WebP in 64 und 128 px Höhe.
+- **Kopf:** bleibt oben stehen (`position: sticky`, Milchglas über einem Pseudo-Element, damit das mobile Menü mit `position: fixed` nicht im Kopf eingesperrt wird). Beim Scrollen bekommt er einen Schatten und wird flacher. Ohne JavaScript scrollt er mobil normal mit, weil dann die ganze Navigation darin steht.
+- **Leistungen:** eigene Seite mit allen fünf Bereichen (Text, alles, was dazugehört, Link zur Leistungsseite, „Angebot anfragen“ mit vorgewähltem Anliegen), Sprungleiste, Weg zum Angebot in vier Schritten [UNBESTÄTIGT]. Auf der Startseite stehen die fünf Leistungen als Karten (zwei große, drei kleine), im Hero als Chips, im Fuß als Liste. Jede Leistungsseite zeigt die anderen vier als Karten und am Desktop eine mitlaufende Kontaktkarte.
+- **Hero ohne Fotopaar:** `OwendSzene.astro` zeichnet ein Haus im Ösling (Schieferdach, Hügel, Pollerleuchten) am Nachmittag und zur blauen Stunde. Beide Fassungen liegen übereinander wie die Fotos und blenden mit derselben Animation über. Sobald ein Fotopaar freigegeben ist, ersetzt es die Zeichnung.
+- **Effekte:** Karten heben sich beim Überfahren, das Symbol wird gelb, oben wächst eine Leiste von Blau nach Gelb; Lichtstreifen über den Knöpfen; Unterstrich der Navigation wächst in Gelb; Inhalte kommen beim Scrollen leicht von unten (nur `forwards`, damit nichts unsichtbar bleibt); ein warmer Lichtschein wandert langsam durch Hero und Seitenköpfe; Sterne und Leuchten der Zeichnung flackern leicht. Bei reduzierter Bewegung steht alles still.
+- **Scroll-Animationen nur als Einzel-Eigenschaften:** Der CSS-Optimierer von Tailwind zieht `animation-timeline` sonst in die Kurzschreibweise `animation`, und Chrome verwirft die ganze Angabe. Genau das war in der ersten Fassung passiert: Owend stand dort sofort auf Abend. Deshalb in `global.css` nie `animation:` zusammen mit `animation-timeline` schreiben.
+
 ## Entscheidungen und Abweichungen vom Briefing
 
 - **Owend mobil mit View-Timeline statt `scroll(root)`:** Mit `scroll(root)` hängt der Zeitpunkt von der Textlänge der Sprache ab (das Foto steht auf Französisch 96 px tiefer). Die View-Timeline misst am Foto und trifft das Ziel („Abend ist da, wenn die Unterkante die Bildschirmmitte erreicht“) in allen Sprachen. Am Desktop gilt `scroll(root)` mit 4–60 vh wie vorgegeben. Das Foto-Feld nutzt `overflow: clip` statt `hidden`, sonst misst die Timeline am falschen Container.
@@ -308,16 +322,19 @@ Bis die Vektordatei des Logos da ist: ein „B“ in Weiß auf Noutem-Blau (Favi
 - **Kein `areaServed`, kein Zitat, keine Sterne, kein `foundingDate`** (B4, B5, G3).
 - **Fehlerseite der Function:** siehe „Formular“ (HTML nur mit eigener Supabase-Domain).
 - **Fehlerfarbe:** Die Palette hat kein Rot. Fehler stehen in Lei, fett, mit einem Balken davor; das Feld bekommt einen 2-px-Rahmen in Lei. Farbe ist nie der einzige Hinweis.
-- **„Leistungen“ ohne Pfeil:** Es gibt keine Icons außer Plus/Minus an der FAQ. Der Knopf trägt `aria-expanded`; ohne JavaScript ist er ein Link auf `#leistungen`.
+- **„Leistungen“ im Kopf:** Mit JavaScript klappt eine Karte mit allen fünf Leistungen (Symbol und Name) und dem Link „Alle Leistungen im Überblick“ auf. Der Knopf trägt `aria-expanded`; ohne JavaScript ist er ein Link auf die Übersichtsseite.
 - **Fußzeile:** Telefon in der internationalen Schreibweise „+352 95 80 99“, genau wie im JSON-LD (NAP). Groß und im Hero steht „95 80 99“ wie vorgegeben.
 - **Projekt-Arten:** `besonders` ergänzt (für den Stollen, Bereich „Besondere Orte“ der Lichtseite). Ein sechster Eintrag `treppe` ergänzt, weil Treppenbeleuchtung in der Galerie belegt ist und das Treppenhaus auf der Motivliste steht; so hat die Lichtseite drei geplante Paare (Stall, Halle, Treppenhaus). Ein Paar „Straße oder Platz“ kommt dazu, wenn öffentliche Referenzen bestätigt sind.
-- **Linien:** nur zwischen den FAQ-Einträgen und an Eingabefeldern. Das Untermenü „Leistungen“ ist eine Fläche in Kalkputz ohne Rahmen und Schatten; ausgewählte Optionen im Formular haben einen 2-px-Rahmen in Noutem-Blau (kein Schatten).
-- **Seitenkopf der Unterseiten:** sichtbarer Pfad („Startseite / Licht“), weil `BreadcrumbList` dem sichtbaren Inhalt entsprechen muss.
+- **Seitenkopf der Unterseiten:** sichtbarer Pfad („Startseite / Leistungen / Licht“), weil `BreadcrumbList` dem sichtbaren Inhalt entsprechen muss.
 - **404:** Ohne JavaScript stehen alle vier Fassungen untereinander, mit JavaScript nur die der Sprache aus dem Pfad.
 - **favicon.ico** zusätzlich, damit Browser, die `/favicon.ico` direkt anfragen, keine 404 bekommen.
 - **TypeScript 6 statt 7:** `astro check` unterstützt TypeScript 7 noch nicht.
 
-## Prüfprotokoll (06.10.2026, lokal)
+## Prüfprotokoll
+
+**09.10.2026, nach der Neugestaltung (lokal):** Vitest 102 Tests grün (dazu Title/Description der Seite „Leistungen“ in vier Sprachen), `astro check` 0 Fehler, Build-Prüfung 73 HTML-Seiten ohne Befund. Screenshots in Chromium bei 390, 1024 und 1440 px (DE, FR, LB, EN), reduzierte Bewegung und ohne JavaScript; kein waagerechtes Scrollen, keine Konsolenfehler. Lighthouse nach der Neugestaltung noch nicht gemessen.
+
+**06.10.2026, erste Fassung (lokal):**
 
 | Prüfung | Ergebnis |
 |---|---|

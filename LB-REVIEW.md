@@ -3,7 +3,7 @@
 Jeder luxemburgische Text ist ein Entwurf und trägt das Flag `review: "lb-native"`, bis er in `src/i18n/lb-geprueft.json` eingetragen ist.
 Diese Datei schreibt `npm run lb-review`; bitte nicht von Hand ändern. Korrekturen direkt in `src/i18n/lb.ts` bzw. in den YAML-Dateien, danach den Schlüssel in `lb-geprueft.json` eintragen.
 
-Stand: 478 Texte offen, 0 geprüft.
+Stand: 494 Texte offen, 0 geprüft.
 
 ## Übersetzungsdatei src/i18n/lb.ts
 
@@ -23,6 +23,7 @@ Stand: 478 Texte offen, 0 geprüft.
 | `a11y.neuesFenster` | (öffnet eine andere Website) | (mécht eng aner Websäit op) |
 | `nav.home` | Startseite | Startsäit |
 | `nav.leistungen` | Leistungen | Leeschtungen |
+| `nav.alleLeistungen` | Alle Leistungen im Überblick | All d’Leeschtungen op ee Bléck |
 | `nav.projekte` | Projekte | Projeten |
 | `nav.ueberUns` | Über uns | Iwwer eis |
 | `nav.jobs` | Jobs | Jobs |
@@ -68,6 +69,8 @@ Stand: 478 Texte offen, 0 geprüft.
 | `home.h1` | Strom und Licht für Haus, Hof und Betrieb | Stroum a Liicht fir Haus, Haff a Betrib |
 | `home.lead` | Wir sind ein Elektrobetrieb mit 26 Leuten in Noutem, in der Stauseegemeinde. Wir verlegen die Elektrik in neuen und alten Häusern, in Ställen und Hallen und montieren Licht, Photovoltaik und Ladestationen. | Mir sinn en Elektrobetrib mat 26 Leit zu Noutem, an der Stauséigemeng. Mir leeën d’Elektresch an neien an alen Haiser, a Ställ an Hallen a montéieren Liicht, Photovoltaik a Luedstatiounen. |
 | `home.leistungenH2` | Was wir machen | Wat mir maachen |
+| `home.leistungenIntro` | Wir arbeiten in fünf Bereichen, in Wohnhäusern, auf Höfen und in Betrieben. Wählen Sie einen Bereich, um mehr zu erfahren. | Mir schaffen a fënnef Beräicher, an Haiser, op Häff an a Betriber. Wielt e Beräich, fir méi ze erfueren. |
+| `home.alleLeistungen` | Alle Leistungen im Überblick | All d’Leeschtungen op ee Bléck |
 | `home.projekteH2` | Wo wir gearbeitet haben | Wou mir geschafft hunn |
 | `home.alleProjekte` | Alle Projekte | All d’Projeten |
 | `home.teamH2` | 26 Leute in Noutem | 26 Leit zu Noutem |
@@ -116,6 +119,16 @@ Stand: 478 Texte offen, 0 geprüft.
 | `faq.hausgeraete.a` | Wir verkaufen Geräte von AEG, Miele, Liebherr, Bosch und Siemens. [FEHLT — Ausstellung, Lieferung, Anschluss] | Mir verkafen Apparater vun AEG, Miele, Liebherr, Bosch a Siemens. [FEHLT — Ausstellung, Lieferung, Anschluss] |
 | `faq.sprachen.q` | In welchen Sprachen kann ich mit Ihnen sprechen? | A wéi enge Sprooche kann ech mat Iech schwätzen? |
 | `faq.sprachen.a` | Luxemburgisch, Französisch und Deutsch. [UNBESTÄTIGT — auch Portugiesisch und Englisch?] | Lëtzebuergesch, Franséisch an Däitsch. [UNBESTÄTIGT — auch Portugiesisch und Englisch?] |
+| `seiten.leistungen.h1` | Unsere Leistungen im Überblick | Eis Leeschtungen op ee Bléck |
+| `seiten.leistungen.intro` | Elektroinstallation für Neubau und Renovierung, Licht, Photovoltaik und Ladestationen, Alarm- und Brandmeldeanlagen und Hausgeräte. Hier sehen Sie alle Bereiche auf einen Blick. | Elektroinstallatioun fir Neibau a Renovatioun, Liicht, Photovoltaik a Luedstatiounen, Alarm- a Brandmeldeanlagen an Haushaltsapparater. Hei gesitt Dir all d’Beräicher op enger Säit. |
+| `seiten.leistungen.dazu` | Dazu gehört | Dozou gehéiert |
+| `seiten.leistungen.ablaufH2` | So kommen Sie zu Ihrem Angebot | Esou kritt Dir Är Offer |
+| `seiten.leistungen.ablauf[0]` | Sie rufen an oder schicken uns Ihre Anfrage, gern mit Plänen oder Fotos. | Dir rufft eis un oder schéckt eis Är Ufro, am beschte mat Pläng oder Fotoen. |
+| `seiten.leistungen.ablauf[1]` | Wir besprechen mit Ihnen, was gemacht werden soll, bei größeren Projekten vor Ort. | Mir schwätze mat Iech iwwer dat, wat gemaach gi soll, bei gréissere Projeten op der Plaz. |
+| `seiten.leistungen.ablauf[2]` | Sie bekommen ein schriftliches Angebot. | Dir kritt eng schrëftlech Offer. |
+| `seiten.leistungen.ablauf[3]` | Wir führen die Arbeiten aus und nehmen alles mit Ihnen in Betrieb. | Mir maachen d’Aarbechten a setzen alles mat Iech a Betrib. |
+| `seiten.leistungen.unsicherH2` | Nicht sicher, welcher Bereich passt? | Net sécher, wéi e Beräich passt? |
+| `seiten.leistungen.unsicher` | Beschreiben Sie uns kurz, worum es geht. Wir sagen Ihnen, was möglich ist und wer sich darum kümmert. | Beschreift eis kuerz, ëm wat et geet. Mir soen Iech, wat méiglech ass a wien sech dorëm këmmert. |
 | `seiten.installation.h1` | Elektrik für Neubau und Renovierung | Elektresch fir Neibau a Renovatioun |
 | `seiten.installation.intro` | Ob Sie neu bauen, ein Fertighaus aufstellen lassen oder ein altes Haus umbauen: Wir planen die Elektrik mit Ihnen, verlegen sie und nehmen sie in Betrieb. | Ob Dir nei baut, e Fäerdeghaus opstelle loosst oder en aalt Haus ëmbaut: Mir plangen d’Elektresch mat Iech, leeën se a setzen se a Betrib. |
 | `seiten.installation.wasH2` | Was wir machen | Wat mir maachen |
@@ -392,6 +405,8 @@ Stand: 478 Texte offen, 0 geprüft.
 | `footer.facebook` | Facebook | Facebook |
 | `seo.home.title` | Elektriker in Nothum, nahe Wiltz \| Electricité Biesen | Elektriker zu Noutem, bei Wolz \| Electricité Biesen |
 | `seo.home.description` | Electricité Biesen in Nothum: Elektroinstallation für Neubau und Renovierung, Licht, Photovoltaik, Ladestationen und Alarmanlagen. Familienbetrieb, 26 Leute. | Electricité Biesen zu Noutem: Elektroinstallatioun fir Neibau a Renovatioun, Liicht, Photovoltaik, Luedstatiounen an Alarmanlagen. Familljebetrib, 26 Leit. |
+| `seo.leistungen.title` | Alle Leistungen im Überblick, Nothum \| Electricité Biesen | Leeschtungen op ee Bléck, Noutem \| Electricité Biesen |
+| `seo.leistungen.description` | Alle Leistungen von Electricité Biesen in Nothum auf einen Blick: Elektroinstallation, Licht, Photovoltaik, Ladestationen, Alarm, Brandmelder, Hausgeräte. | All d’Leeschtungen vun Electricité Biesen zu Noutem: Elektroinstallatioun, Liicht, Photovoltaik, Luedstatiounen, Alarm, Brandmelder an Haushaltsapparater. |
 | `seo.installation.title` | Elektroinstallation Neubau, Umbau \| Electricité Biesen | Elektroinstallatioun Neibau, Ëmbau \| Electricité Biesen |
 | `seo.installation.description` | Elektrik für Neubau, Fertighaus und Renovierung im Norden Luxemburgs: Verteiler, Leitungen, Steckdosen, Antennen und KNX. Electricité Biesen aus Nothum. | Elektresch fir Neibau, Fäerdeghaus a Renovatioun am Éislek an am Norden: Verdeeler, Leitungen, Steckdousen, Antennen a KNX. Electricité Biesen vu Noutem. |
 | `seo.licht.title` | Beleuchtung für Haus, Stall und Halle \| Electricité Biesen | Liicht fir Haus, Stall an Hal, Noutem \| Electricité Biesen |
@@ -422,6 +437,7 @@ Stand: 478 Texte offen, 0 geprüft.
 
 | Schlüssel | Deutsch (Ausgangstext) | Luxemburgisch (Entwurf) |
 |---|---|---|
+| `slug.leistungen` | /de/leistungen/ | /lb/leeschtungen/ |
 | `slug.installation` | /de/elektroinstallation/ | /lb/elektroinstallatioun/ |
 | `slug.licht` | /de/licht/ | /lb/liicht/ |
 | `slug.photovoltaik` | /de/photovoltaik-ladestation/ | /lb/photovoltaik-luedstatioun/ |

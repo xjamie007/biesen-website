@@ -1,12 +1,14 @@
 ---
 /**
- * Fuß (C4) in Kalkputz: Name, Adresse und Telefon genau wie im JSON-LD, Zeiten kurz, E-Mail,
- * Impressum, Datenschutz, Facebook (sobald die URL da ist), Sprachumschalter, Gewerbegenehmigung.
- * Keine Logoleiste der Partner.
+ * Fuß (C4) in Nachtblau: Logo auf Weiß, alle Leistungen, Name, Adresse und Telefon genau wie im
+ * JSON-LD, Zeiten kurz, E-Mail, Impressum, Datenschutz, Facebook (sobald die URL da ist),
+ * Sprachumschalter, Gewerbegenehmigung. Keine Logoleiste der Partner.
  */
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
 import Sprachen from './Sprachen.astro';
 import { fmt, rich, type Dict } from '@/i18n';
-import { path, type Lang } from '@/i18n/config';
+import { path, SERVICE_PAGES, type Lang } from '@/i18n/config';
 import { mailHref, site, telHref } from '@/lib/site';
 import { kurzText, zeiten } from '@/lib/zeiten';
 
@@ -20,31 +22,50 @@ const { lang, t, alternates } = Astro.props;
 <footer class="fuss">
   <div class="raster">
     <div class="fuss__spalten">
-      <div>
+      <div class="fuss__marke">
+        <a class="fuss__logo" href={path(lang, 'home')}><Logo alt={t.a11y.logo} loading="lazy" /></a>
         <p class="fuss__name">{site.name}</p>
         <address>
-          {site.adresse.strasse}<br />
-          {site.adresse.plzAnzeige} {site.adresse.ort}<br />
-          <a href={telHref} class="zahl">{site.telefon.international}</a><br />
-          <a href={mailHref}>{site.email}</a>
+          <span class="fuss__zeile"><Icon name="ort" size={18} /><span>{site.adresse.strasse}<br />{site.adresse.plzAnzeige} {site.adresse.ort}</span></span>
+          <a class="fuss__zeile" href={telHref}><Icon name="telefon" size={18} /><span class="zahl">{site.telefon.international}</span></a>
+          <a class="fuss__zeile" href={mailHref}><Icon name="mail" size={18} /><span>{site.email}</span></a>
         </address>
       </div>
-      <div>
-        <p class="fuss__name">{t.footer.zeitenKurz}</p>
-        <p class="zahl">{kurzText(t)}</p>
-        {!zeiten.bestaetigt && <p set:html={rich(t.zeiten.unbestaetigtKurz)} />}
-      </div>
-      <div>
-        <ul class="fuss__links">
-          <li><a href={path(lang, 'impressum')}>{t.nav.impressum}</a></li>
-          <li><a href={path(lang, 'datenschutz')}>{t.nav.datenschutz}</a></li>
-          <li>
-            {site.facebook ? <a href={site.facebook}>{t.footer.facebook}</a> : <span set:html={rich(t.footer.facebookFehlt)} />}
-          </li>
+      <nav aria-labelledby="fuss-leistungen-h">
+        <p id="fuss-leistungen-h" class="fuss__titel">{t.nav.leistungen}</p>
+        <ul class="fuss__liste">
+          {
+            SERVICE_PAGES.map((p) => (
+              <li>
+                <a href={path(lang, p)}>{t.leistungen[p].name}</a>
+              </li>
+            ))
+          }
+          <li><a href={path(lang, 'leistungen')}>{t.nav.alleLeistungen}</a></li>
         </ul>
-        <Sprachen lang={lang} t={t} alternates={alternates} id="sprache-fuss" />
-        <p class="neben">{fmt(t.footer.genehmigung, { nr: site.genehmigung.nummer })}</p>
+      </nav>
+      <div>
+        <p class="fuss__titel">{t.footer.zeitenKurz}</p>
+        <p class="fuss__zeile"><Icon name="uhr" size={18} /><span class="zahl">{kurzText(t)}</span></p>
+        {!zeiten.bestaetigt && <p set:html={rich(t.zeiten.unbestaetigtKurz)} />}
+        <ul class="fuss__liste fuss__liste--seiten">
+          <li><a href={path(lang, 'projekte')}>{t.nav.projekte}</a></li>
+          <li><a href={path(lang, 'ueberUns')}>{t.nav.ueberUns}</a></li>
+          <li><a href={path(lang, 'jobs')}>{t.nav.jobs}</a></li>
+          <li><a href={path(lang, 'kontakt')}>{t.nav.kontakt}</a></li>
+        </ul>
       </div>
+    </div>
+    <div class="fuss__unten">
+      <ul class="fuss__links">
+        <li><a href={path(lang, 'impressum')}>{t.nav.impressum}</a></li>
+        <li><a href={path(lang, 'datenschutz')}>{t.nav.datenschutz}</a></li>
+        <li>
+          {site.facebook ? <a href={site.facebook}>{t.footer.facebook}</a> : <span set:html={rich(t.footer.facebookFehlt)} />}
+        </li>
+      </ul>
+      <p class="fuss__genehmigung">{fmt(t.footer.genehmigung, { nr: site.genehmigung.nummer })}</p>
+      <Sprachen lang={lang} t={t} alternates={alternates} id="sprache-fuss" />
     </div>
   </div>
 </footer>

@@ -16,7 +16,7 @@ const base = BASE_PATH.replace(/\/$/, '');
 const ALT = {
   '/': '/fr/',
   '/uber-uns/': '/de/ueber-uns/',
-  '/dienstleistungen/': '/de/#leistungen',
+  '/dienstleistungen/': '/de/leistungen/',
   '/galerie/': '/de/projekte/',
   '/jobs/': '/de/jobs/',
   '/kontakt/': '/de/kontakt/',

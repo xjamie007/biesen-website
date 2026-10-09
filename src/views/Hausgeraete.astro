@@ -1,6 +1,7 @@
 ---
 /** Hausgeräte (D3, E3). Kein Onlineshop; Markennamen als Text, keine Hersteller-Logos. */
 import LeistungsSeite from '@/components/LeistungsSeite.astro';
+import Seitenkarte from '@/components/Seitenkarte.astro';
 import { escapeHtml, rich, useT } from '@/i18n';
 import type { Lang } from '@/i18n/config';
 import { site, telHref } from '@/lib/site';
@@ -29,13 +30,14 @@ const tel = `<a href="${telHref}" class="zahl">${escapeHtml(site.telefon.anzeige
       <div class="sp-text">
         <div class="block">
           <h2 id="was-h">{s.wasH2}</h2>
-          <ul class="liste">{s.was.map((x) => <li>{x}</li>)}</ul>
+          <ul class="liste liste--haken">{s.was.map((x) => <li>{x}</li>)}</ul>
           <p class="prosa">{s.marken}</p>
         </div>
         <div class="block">
           <p class="lead" set:html={rich(s.online, { tel })} />
         </div>
       </div>
+      <Seitenkarte lang={lang} t={t} page="hausgeraete" />
     </div>
   </section>
 </LeistungsSeite>

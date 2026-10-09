@@ -37,6 +37,7 @@ type SlugTable = Record<Lang, string>;
 /** Seiten mit festem Slug. Leerer Slug = Startseite der Sprache. */
 export const PAGE_SLUGS = {
   home: { fr: '', de: '', lb: '', en: '' },
+  leistungen: { fr: 'services', de: 'leistungen', lb: 'leeschtungen', en: 'services' },
   installation: {
     fr: 'installation-electrique',
     de: 'elektroinstallation',

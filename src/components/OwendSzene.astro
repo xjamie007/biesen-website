@@ -1,0 +1,178 @@
+---
+/**
+ * Platzhalter für Owend, solange es kein freigegebenes Fotopaar gibt: ein gezeichnetes Haus im Ösling
+ * (Schieferdach, Hügel, Garten mit Pollerleuchten), einmal am Nachmittag und einmal zur blauen Stunde
+ * mit eingeschaltetem Licht. Beide Fassungen liegen übereinander wie die Fotos und blenden genauso über.
+ * Rein dekorativ: Die Bedeutung trägt das aria-label am Stapel („Fotopaar folgt: …“).
+ */
+interface Props {
+  variante: 'tag' | 'abend';
+}
+const { variante } = Astro.props;
+const abend = variante === 'abend';
+const id = (x: string) => `sz-${variante}-${x}`;
+const url = (x: string) => `url(#${id(x)})`;
+
+const farbe = abend
+  ? {
+      himmel: ['#0a1d3d', '#163f78', '#4a78b8'],
+      huegelFern: '#1b3b66',
+      wald: '#132d52',
+      huegelNah: '#11284a',
+      wiese: '#0c2142',
+      wand: '#2f4369',
+      dach: '#0b1526',
+      fenster: '#ffd36b',
+      tuer: '#ffc94d',
+      weg: '#33446a',
+      poller: '#1d2a40',
+      baum: '#0f2746',
+      stamm: '#0b1a30',
+    }
+  : {
+      himmel: ['#6fb2e8', '#a9d3f3', '#e3f1fb'],
+      huegelFern: '#93c08d',
+      wald: '#5a8f5c',
+      huegelNah: '#6ea96a',
+      wiese: '#82b874',
+      wand: '#f6f3ec',
+      dach: '#3d4551',
+      fenster: '#a7c8e2',
+      tuer: '#546376',
+      weg: '#ddd5c4',
+      poller: '#6b7480',
+      baum: '#4f8a52',
+      stamm: '#6b5440',
+    };
+
+/** Pollerleuchten am Weg: x, y (Fuß), Größe */
+const poller = [
+  [262, 548, 1],
+  [338, 548, 1],
+  [240, 584, 1.2],
+  [360, 584, 1.2],
+] as const;
+/** Fenster: x, y, Breite, Höhe */
+const fenster = [
+  [222, 420, 42, 36],
+  [336, 420, 42, 36],
+] as const;
+const sterne = [
+  [60, 60, 1.6], [130, 120, 1.1], [190, 45, 1.3], [250, 95, 0.9], [370, 40, 1.4], [420, 110, 1], [520, 70, 1.6], [565, 140, 1.1], [95, 185, 0.9], [480, 30, 1],
+] as const;
+---
+<svg class="szene" viewBox="0 0 600 600" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id={id('himmel')} x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color={farbe.himmel[0]} />
+      <stop offset="0.55" stop-color={farbe.himmel[1]} />
+      <stop offset="1" stop-color={farbe.himmel[2]} />
+    </linearGradient>
+    {
+      abend ? (
+        <>
+          <radialGradient id={id('schein')}>
+            <stop offset="0" stop-color="#ffd36b" stop-opacity="0.85" />
+            <stop offset="0.4" stop-color="#ffb84a" stop-opacity="0.35" />
+            <stop offset="1" stop-color="#ffb84a" stop-opacity="0" />
+          </radialGradient>
+          <linearGradient id={id('kegel')} x1="0" y1="1" x2="0" y2="0">
+            <stop offset="0" stop-color="#ffd36b" stop-opacity="0.75" />
+            <stop offset="1" stop-color="#ffd36b" stop-opacity="0" />
+          </linearGradient>
+          <filter id={id('weich')} x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="8" />
+          </filter>
+        </>
+      ) : (
+        <radialGradient id={id('sonne')}>
+          <stop offset="0" stop-color="#fff6c8" stop-opacity="0.95" />
+          <stop offset="0.45" stop-color="#ffe58a" stop-opacity="0.55" />
+          <stop offset="1" stop-color="#ffe58a" stop-opacity="0" />
+        </radialGradient>
+      )
+    }
+  </defs>
+
+  <rect width="600" height="600" fill={url('himmel')} />
+
+  {
+    abend ? (
+      <g fill="#ffffff">
+        {sterne.map(([x, y, r]) => (
+          <circle class="szene__stern" cx={x} cy={y} r={r} opacity="0.85" />
+        ))}
+      </g>
+    ) : (
+      <g>
+        <circle cx="462" cy="140" r="110" fill={url('sonne')} />
+        <circle cx="462" cy="140" r="38" fill="#fff1a8" />
+        <g fill="#ffffff" opacity="0.9">
+          <ellipse cx="140" cy="130" rx="54" ry="16" />
+          <ellipse cx="172" cy="118" rx="34" ry="18" />
+          <ellipse cx="350" cy="200" rx="44" ry="12" />
+          <ellipse cx="374" cy="191" rx="26" ry="13" />
+        </g>
+      </g>
+    )
+  }
+
+  <path d="M0 352 C80 318 160 326 240 342 C330 360 400 316 480 310 C540 306 580 318 600 326 L600 600 L0 600 Z" fill={farbe.huegelFern} />
+  <g fill={farbe.wald}>
+    <path d="M30 352 l14 -34 l14 34 Z M52 348 l12 -28 l12 28 Z M470 318 l14 -34 l14 34 Z M494 316 l12 -30 l12 30 Z M518 318 l11 -26 l11 26 Z M540 322 l13 -30 l13 30 Z" />
+  </g>
+  <path d="M0 425 C120 388 220 398 320 412 C420 426 500 398 600 402 L600 600 L0 600 Z" fill={farbe.huegelNah} />
+  <path d="M0 505 C150 484 450 484 600 505 L600 600 L0 600 Z" fill={farbe.wiese} />
+
+  {/* Baum links und rechts */}
+  <rect x="112" y="440" width="9" height="68" fill={farbe.stamm} />
+  <circle cx="116" cy="430" r="38" fill={farbe.baum} />
+  <circle cx="92" cy="452" r="24" fill={farbe.baum} />
+  <rect x="496" y="462" width="7" height="46" fill={farbe.stamm} />
+  <circle cx="500" cy="452" r="26" fill={farbe.baum} />
+
+  {abend && <ellipse cx="300" cy="470" rx="170" ry="90" fill={url('schein')} opacity="0.35" filter={url('weich')} />}
+
+  {/* Haus mit Schieferdach */}
+  <rect x="345" y="330" width="18" height="44" fill={farbe.dach} />
+  <rect x="205" y="395" width="190" height="112" fill={farbe.wand} />
+  <path d="M188 402 L300 312 L412 402 Z" fill={farbe.dach} />
+  <circle cx="300" cy="368" r="14" fill={farbe.fenster} />
+
+  {
+    abend && (
+      <g>
+        <path d="M212 507 L200 420 L232 420 Z" fill={url('kegel')} opacity="0.55" />
+        <path d="M388 507 L400 420 L368 420 Z" fill={url('kegel')} opacity="0.55" />
+        {fenster.map(([x, y, w, h]) => (
+          <rect x={x - 10} y={y - 10} width={w + 20} height={h + 20} rx="10" fill="#ffd36b" opacity="0.5" filter={url('weich')} />
+        ))}
+        <circle cx="300" cy="368" r="24" fill="#ffd36b" opacity="0.45" filter={url('weich')} />
+      </g>
+    )
+  }
+
+  {
+    fenster.map(([x, y, w, h]) => (
+      <g>
+        <rect x={x} y={y} width={w} height={h} rx="3" fill={farbe.fenster} />
+        <path d={`M${x + w / 2} ${y} v${h} M${x} ${y + h / 2} h${w}`} stroke={farbe.wand} stroke-width="3" />
+      </g>
+    ))
+  }
+  <rect x="284" y="440" width="32" height="67" rx="3" fill={farbe.tuer} />
+  {abend && <rect x="276" y="432" width="48" height="80" rx="8" fill="#ffd36b" opacity="0.35" filter={url('weich')} />}
+
+  {/* Weg zur Tür mit Pollerleuchten */}
+  <path d="M288 507 C282 540 258 572 234 600 L366 600 C342 572 318 540 312 507 Z" fill={farbe.weg} />
+  {
+    poller.map(([x, y, s]) => (
+      <g>
+        {abend && <ellipse cx={x} cy={y + 2} rx={26 * s} ry={9 * s} fill={url('schein')} />}
+        {abend && <circle cx={x} cy={y - 18 * s} r={16 * s} fill={url('schein')} class="szene__licht" />}
+        <rect x={x - 3.5 * s} y={y - 20 * s} width={7 * s} height={20 * s} rx={1.5 * s} fill={farbe.poller} />
+        <rect x={x - 3.5 * s} y={y - 20 * s} width={7 * s} height={4 * s} rx={1.5 * s} fill={abend ? '#ffe7a3' : '#9aa3ad'} />
+      </g>
+    ))
+  }
+</svg>

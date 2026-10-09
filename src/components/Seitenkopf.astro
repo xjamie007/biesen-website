@@ -1,6 +1,11 @@
 ---
-/** Kopf der Unterseiten: sichtbarer Pfad (passt zur BreadcrumbList), h1, Einleitung. */
+/**
+ * Kopf der Unterseiten als Band in Blaue-Stunde-Blau: sichtbarer Pfad (passt zur BreadcrumbList),
+ * auf Leistungsseiten das Symbol der Leistung, h1, Einleitung. Der Slot steht unter der Einleitung.
+ */
+import Icon from './Icon.astro';
 import { rich } from '@/i18n';
+import type { IconName } from '@/lib/icons';
 
 interface Props {
   pfadLabel: string;
@@ -8,11 +13,12 @@ interface Props {
   h1: string;
   intro?: string;
   introHtml?: Record<string, string>;
+  icon?: IconName;
 }
-const { pfadLabel, pfad, h1, intro, introHtml = {} } = Astro.props;
+const { pfadLabel, pfad, h1, intro, introHtml = {}, icon } = Astro.props;
 ---
 <div class="raster seitenkopf">
-  <div>
+  <div class="seitenkopf__inhalt">
     <nav aria-label={pfadLabel}>
       <ol class="pfad__liste klein">
         {
@@ -28,6 +34,7 @@ const { pfadLabel, pfad, h1, intro, introHtml = {} } = Astro.props;
         }
       </ol>
     </nav>
+    {icon && <span class="symbol symbol--hell seitenkopf__symbol" aria-hidden="true"><Icon name={icon} size={32} /></span>}
     <h1>{h1}</h1>
     {intro && <p class="lead" set:html={rich(intro, introHtml)} />}
     <slot />

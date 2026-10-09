@@ -2,7 +2,7 @@
 /**
  * Logo (B7): bis zur Vektordatei das Original-PNG (485 × 298 px), nicht nachgezeichnet,
  * nicht verändert. Ausgeliefert verkleinert als WebP in einfacher und doppelter Dichte.
- * Höhe per CSS: 40 px mobil, 52 px ab 1024 px.
+ * Steht immer auf Weiß. Höhe per CSS: 48 px mobil, 64 px ab 1024 px, beim Scrollen 48 px.
  */
 import { Image } from 'astro:assets';
 import logo from '@/assets/brand/logo.png';
@@ -13,4 +13,4 @@ interface Props {
 }
 const { alt, loading = 'eager' } = Astro.props;
 ---
-<Image src={logo} alt={alt} height={52} densities={[1, 2]} format="webp" quality={90} loading={loading} decoding="async" />
+<Image src={logo} alt={alt} height={64} densities={[1, 2]} format="webp" quality={90} loading={loading} decoding="async" />

@@ -1,10 +1,11 @@
 ---
 /**
- * „Anrufen oder schreiben“ (D2.6, E7) in Kalkputz: die große Telefonnummer als typografisches
+ * „Anrufen oder schreiben“ (D2.6, E7) in Noutem-Blau: die große Telefonnummer als typografisches
  * Bild der Seite (ein tel:-Link, der als Zahl wirkt, nicht als Knopf), Zeiten, E-Mail, Adresse,
  * Knopf „Angebot anfragen“.
  */
 import Zeiten from './Zeiten.astro';
+import Icon from './Icon.astro';
 import { escapeHtml, rich, type Dict } from '@/i18n';
 import { path, type Lang } from '@/i18n/config';
 import { adresseZeile, mailHref, site, telHref } from '@/lib/site';
@@ -19,18 +20,23 @@ const schreiben = rich(t.home.schreiben, {
   adresse: escapeHtml(`${site.name}, ${adresseZeile}`),
 });
 ---
-<section class="sektion flaeche" aria-labelledby="anrufen-h">
+<section class="sektion flaeche flaeche--blau kontaktband" aria-labelledby="anrufen-h">
   <div class="raster">
     <div class="kontakt__links">
       <h2 id="anrufen-h">{t.home.kontaktH2}</h2>
       <p class="kontakt__nummer">
-        <a class="grosse-nummer" href={telHref}>{site.telefon.anzeige}</a>
+        <a class="grosse-nummer" href={telHref}><Icon name="telefon" size={40} class="grosse-nummer__symbol" />{site.telefon.anzeige}</a>
       </p>
       <Zeiten lang={lang} t={t} />
     </div>
     <div class="kontakt__rechts">
       <p class="kontakt__schreiben prosa" set:html={schreiben} />
-      <p class="kontakt__aktion"><a class="knopf" href={path(lang, 'kontakt')}>{t.allgemein.angebotAnfragen}</a></p>
+      <p class="kontakt__aktion">
+        <a class="knopf knopf--giel" href={path(lang, 'kontakt')}>
+          {t.allgemein.angebotAnfragen}
+          <Icon name="pfeil" size={20} />
+        </a>
+      </p>
     </div>
   </div>
 </section>

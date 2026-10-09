@@ -6,10 +6,13 @@
  *   1. ohne Scroll-Driven Animations, mit JavaScript: Intersection Observer (Inline-Script < 1 KB)
  *   2. ohne beides: Abendfoto statisch
  *   3. reduzierte Bewegung: beide Fotos als Paar, jedes mit seiner Uhrzeit
- *   4. kein freigegebenes Paar: Fläche in Kalkputz „Fotopaar folgt: [Motiv]“, keine Animation
+ *   4. kein freigegebenes Paar: ein gezeichnetes Haus im Ösling am Nachmittag und zur blauen Stunde
+ *      (OwendSzene), das genauso überblendet, mit dem Hinweis „Fotopaar folgt: [Motiv]“
  * Die Bildunterschrift ist statisch und nennt beide Uhrzeiten.
  */
 import { Picture } from 'astro:assets';
+import OwendSzene from './OwendSzene.astro';
+import Icon from './Icon.astro';
 import { fmt, rich, type Dict } from '@/i18n';
 import type { Paar } from '@/lib/projekte';
 
@@ -32,8 +35,13 @@ const sizes = `(min-width: 1024px) ${desktop}vw, ${mobil}vw`;
 const ortFehlt = !paar.ort || !paar.projekt;
 const zeitFehlt = !b || !b.tag.uhrzeit || !b.abend.uhrzeit;
 ---
-<figure class:list={['owend', b && 'owend--animiert']} style={`--fokus:${paar.fokus}`}>
-  <div class="owend__stapel" style={paar.test ? 'position:relative' : undefined}>
+<figure class:list={['owend', 'owend--animiert', !b && 'owend--szene']} style={`--fokus:${paar.fokus}`}>
+  <div
+    class="owend__stapel"
+    style={paar.test ? 'position:relative' : undefined}
+    role={b ? undefined : 'img'}
+    aria-label={b ? undefined : fmt(t.allgemein.fotopaarFolgt, { motiv: paar.motiv })}
+  >
     {
       b ? (
         <>
@@ -65,9 +73,18 @@ const zeitFehlt = !b || !b.tag.uhrzeit || !b.abend.uhrzeit;
           {paar.test && <span class="testmarke">Dev: {paar.motiv}</span>}
         </>
       ) : (
-        <div class="platzhalter" role="img" aria-label={fmt(t.allgemein.fotopaarFolgt, { motiv: paar.motiv })}>
-          <span aria-hidden="true">{fmt(t.allgemein.fotopaarFolgt, { motiv: paar.motiv })}</span>
-        </div>
+        <>
+          <div class="owend__bild owend__tag">
+            <OwendSzene variante="tag" />
+          </div>
+          <div class="owend__bild owend__abend">
+            <OwendSzene variante="abend" />
+          </div>
+          <p class="owend__folgt" aria-hidden="true">
+            <Icon name="kamera" size={18} />
+            {fmt(t.allgemein.fotopaarFolgt, { motiv: paar.motiv })}
+          </p>
+        </>
       )
     }
   </div>
@@ -88,24 +105,18 @@ const zeitFehlt = !b || !b.tag.uhrzeit || !b.abend.uhrzeit;
     }
   </figcaption>
 </figure>
-{
-  b && (
-    <>
-      <div class="owend__marke" aria-hidden="true" />
-      <script is:inline>
-        (function () {
-          var f = document.querySelector('.owend--animiert');
-          var m = document.querySelector('.owend__marke');
-          if (!f || !m || !('IntersectionObserver' in window)) return;
-          if (window.CSS && CSS.supports('animation-timeline: scroll()')) return;
-          if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-          f.classList.add('owend--js');
-          new IntersectionObserver(function (e) {
-            var x = e[e.length - 1];
-            f.classList.toggle('ist-abend', !x.isIntersecting && x.boundingClientRect.top < 0);
-          }).observe(m);
-        })();
-      </script>
-    </>
-  )
-}
+<div class="owend__marke" aria-hidden="true" />
+<script is:inline>
+  (function () {
+    var f = document.querySelector('.owend--animiert');
+    var m = document.querySelector('.owend__marke');
+    if (!f || !m || !('IntersectionObserver' in window)) return;
+    if (window.CSS && CSS.supports('animation-timeline: scroll()')) return;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    f.classList.add('owend--js');
+    new IntersectionObserver(function (e) {
+      var x = e[e.length - 1];
+      f.classList.toggle('ist-abend', !x.isIntersecting && x.boundingClientRect.top < 0);
+    }).observe(m);
+  })();
+</script>

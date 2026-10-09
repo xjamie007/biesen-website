@@ -1,19 +1,23 @@
 ---
 /**
- * Gemeinsamer Rahmen der Leistungsseiten (D3): h1, Einleitung, Inhalt (Slot), passende Projekte,
- * passende Fragen, Knopf „Angebot anfragen“ mit vorgewähltem Anliegen.
+ * Gemeinsamer Rahmen der Leistungsseiten (D3): Seitenkopf mit Symbol, h1, Einleitung, Inhalt (Slot),
+ * passende Projekte, passende Fragen, die anderen vier Leistungen als Karten und der Abschluss
+ * „Anrufen oder schreiben“ mit vorgewähltem Anliegen.
  * JSON-LD: Service (provider = Firma), BreadcrumbList, FAQPage (nur Fragen ohne offene Punkte).
  */
 import Base from '@/layouts/Base.astro';
 import Seitenkopf from './Seitenkopf.astro';
 import ProjektEintrag from './ProjektEintrag.astro';
 import Faq from './Faq.astro';
-import { escapeHtml, rich, stripOpenPoints, useT } from '@/i18n';
-import { path, type Lang, type ServicePage } from '@/i18n/config';
+import Aufruf from './Aufruf.astro';
+import Icon from './Icon.astro';
+import Leistungskarte from './Leistungskarte.astro';
+import { rich, stripOpenPoints, useT } from '@/i18n';
+import { path, SERVICE_PAGES, type Lang, type ServicePage } from '@/i18n/config';
 import { breadcrumbs, faqPage, service } from '@/lib/jsonld';
 import { faqJsonItems, type FaqKey } from '@/lib/faq';
 import { paarFuer, projekteNachArt, type Art } from '@/lib/projekte';
-import { site, telHref } from '@/lib/site';
+import { LEISTUNG_ICON } from '@/lib/icons';
 
 interface Props {
   lang: Lang;
@@ -31,6 +35,7 @@ const { lang, page, h1, intro, anliegen, arten, faq, serviceType, ohneProjekte =
 const t = useT(lang);
 const pfad = [
   { name: t.nav.home, href: path(lang, 'home') },
+  { name: t.nav.leistungen, href: path(lang, 'leistungen') },
   { name: t.leistungen[page].name, href: path(lang, page) },
 ];
 const projekte = ohneProjekte ? [] : await projekteNachArt(arten);
@@ -42,11 +47,10 @@ const jsonld = [
   breadcrumbs(pfad.map((p) => ({ name: p.name, url: p.href }))),
   ...(faqItems.length ? [faqPage(faqItems)] : []),
 ];
-const tel = `<a href="${telHref}" class="zahl">${escapeHtml(site.telefon.anzeige)}</a>`;
 const seo = t.seo[page];
 ---
 <Base lang={lang} route={{ page }} title={seo.title} description={seo.description} jsonld={jsonld}>
-  <Seitenkopf pfadLabel={t.a11y.pfad} pfad={pfad} h1={h1} intro={intro} />
+  <Seitenkopf pfadLabel={t.a11y.pfad} pfad={pfad} h1={h1} intro={intro} icon={LEISTUNG_ICON[page]} />
 
   <slot />
 
@@ -84,13 +88,22 @@ const seo = t.seo[page];
     )
   }
 
-  <section class="sektion flaeche" aria-label={t.allgemein.angebotAnfragen}>
+  <section class="sektion" aria-labelledby="weitere-h">
     <div class="raster">
-      <div>
-        <p><a class="knopf" href={`${path(lang, 'kontakt')}?anliegen=${anliegen}`}>{t.allgemein.angebotAnfragen}</a></p>
-        <slot name="aktion" />
-        <p class="hero__telefon" set:html={rich(t.allgemein.oderAnrufen, { tel })} />
-      </div>
+      <h2 id="weitere-h" class="sektion__kopf">{t.nav.leistungen}</h2>
+      <ul class="karten karten--kompakt">
+        {SERVICE_PAGES.filter((p) => p !== page).map((p) => <Leistungskarte lang={lang} t={t} page={p} punkte={0} class="zeigen" />)}
+      </ul>
+      <p class="sektion__fuss">
+        <a class="textlink" href={path(lang, 'leistungen')}>
+          {t.nav.alleLeistungen}
+          <Icon name="pfeil" size={20} />
+        </a>
+      </p>
     </div>
   </section>
+
+  <Aufruf lang={lang} t={t} titel={t.home.kontaktH2} anliegen={anliegen}>
+    <slot name="aktion" />
+  </Aufruf>
 </Base>

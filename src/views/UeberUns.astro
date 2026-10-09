@@ -51,7 +51,7 @@ const pfad = [
         </div>
         <div class="block">
           <h2>{s.mitgliedH2}</h2>
-          <ul class="liste">{s.mitglied.map((m) => <li>{m}</li>)}</ul>
+          <ul class="stichpunkte stichpunkte--gross">{s.mitglied.map((m) => <li>{m}</li>)}</ul>
           <p class="klein" set:html={rich(s.mitgliedHinweis)} />
         </div>
         <div class="block">

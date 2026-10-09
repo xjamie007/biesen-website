@@ -1,6 +1,7 @@
 ---
 /** Alarm, Kameras, Brandmelder (D3, E3). */
 import LeistungsSeite from '@/components/LeistungsSeite.astro';
+import Seitenkarte from '@/components/Seitenkarte.astro';
 import { rich, useT } from '@/i18n';
 import type { Lang } from '@/i18n/config';
 
@@ -26,13 +27,14 @@ const s = t.seiten.sicherheit;
       <div class="sp-text">
         <div class="block">
           <h2 id="was-h">{s.wasH2}</h2>
-          <ul class="liste">{s.was.map((x) => <li>{x}</li>)}</ul>
+          <ul class="liste liste--haken">{s.was.map((x) => <li>{x}</li>)}</ul>
         </div>
         <div class="block">
           <h2>{s.kameraH2}</h2>
           <p class="prosa" set:html={rich(s.kamera)} />
         </div>
       </div>
+      <Seitenkarte lang={lang} t={t} page="sicherheit" />
     </div>
   </section>
 </LeistungsSeite>

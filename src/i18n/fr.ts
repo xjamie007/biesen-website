@@ -26,6 +26,7 @@ const fr: Dict = {
   nav: {
     home: 'Accueil',
     leistungen: 'Services',
+    alleLeistungen: 'Tous nos services en un coup d’œil',
     projekte: 'Réalisations',
     ueberUns: 'Entreprise',
     jobs: 'Emplois',
@@ -95,6 +96,8 @@ const fr: Dict = {
     h1: 'Électricité et lumière pour maison, ferme et entreprise',
     lead: 'Nous sommes une entreprise d’électricité de 26 personnes à Nothum, dans la commune du Lac de la Haute-Sûre. Nous réalisons l’électricité des maisons neuves et anciennes, des étables et des halls, et installons éclairage, photovoltaïque et bornes de recharge.',
     leistungenH2: 'Ce que nous faisons',
+    leistungenIntro: 'Nous travaillons dans cinq domaines, dans les maisons, les fermes et les entreprises. Choisissez un domaine pour en savoir plus.',
+    alleLeistungen: 'Tous nos services en un coup d’œil',
     projekteH2: 'Là où nous avons travaillé',
     alleProjekte: 'Toutes nos réalisations',
     teamH2: '26 personnes à Nothum',
@@ -167,6 +170,21 @@ const fr: Dict = {
   },
 
   seiten: {
+    leistungen: {
+      h1: 'Nos services en un coup d’œil',
+      intro: 'Installation électrique pour le neuf et la rénovation, éclairage, photovoltaïque et bornes de recharge, alarmes et détection incendie, électroménager. Voici tous nos domaines sur une seule page.',
+      dazu: 'Ce que cela comprend',
+      ablaufH2: 'Comment obtenir votre devis',
+      ablauf: [
+        'Vous nous appelez ou nous envoyez votre demande, idéalement avec des plans ou des photos.',
+        'Nous discutons avec vous des travaux à réaliser, sur place pour les projets plus importants.',
+        'Vous recevez un devis écrit.',
+        'Nous réalisons les travaux et mettons l’installation en service avec vous.',
+      ],
+      ablaufHinweis: '[UNBESTÄTIGT — Ablauf vom Kunden bestätigen lassen]',
+      unsicherH2: 'Vous ne savez pas quel domaine correspond ?',
+      unsicher: 'Décrivez-nous brièvement votre projet. Nous vous dirons ce qui est possible et qui s’en occupe.',
+    },
     installation: {
       h1: 'L’électricité pour le neuf et la rénovation',
       intro: 'Que vous construisiez, fassiez monter une maison préfabriquée ou transformiez une maison ancienne : nous concevons l’électricité avec vous, nous la posons et nous la mettons en service.',
@@ -530,6 +548,11 @@ const fr: Dict = {
       title: 'Électricien à Nothum, près de Wiltz | Electricité Biesen',
       description:
         'Electricité Biesen à Nothum : installation électrique neuf et rénovation, éclairage, photovoltaïque, bornes de recharge et alarmes. Entreprise familiale.',
+    },
+    leistungen: {
+      title: 'Nos services en un coup d’œil, Nothum | Electricité Biesen',
+      description:
+        'Tous les services d’Electricité Biesen à Nothum : installation électrique, éclairage, photovoltaïque, bornes de recharge, alarmes, incendie, électroménager.',
     },
     installation: {
       title: 'Électricité neuf et rénovation, Nothum | Electricité Biesen',

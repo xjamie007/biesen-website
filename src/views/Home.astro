@@ -1,19 +1,22 @@
 ---
 /**
  * Startseite (D2), in dieser Reihenfolge:
- * Hero mit Owend, Was wir machen, Wo wir gearbeitet haben, 26 Leute in Noutem,
- * Häufige Fragen, Anrufen oder schreiben, Fuß.
+ * Hero in Blaue-Stunde-Blau mit Owend, Leistungen als Karten, Wo wir gearbeitet haben,
+ * 26 Leute in Noutem, Häufige Fragen, Anrufen oder schreiben, Fuß.
  */
 import Base from '@/layouts/Base.astro';
 import Owend from '@/components/Owend.astro';
 import Foto from '@/components/Foto.astro';
+import Icon from '@/components/Icon.astro';
+import Leistungskarte from '@/components/Leistungskarte.astro';
 import ProjektEintrag from '@/components/ProjektEintrag.astro';
 import Faq from '@/components/Faq.astro';
 import AnrufenSchreiben from '@/components/AnrufenSchreiben.astro';
-import { escapeHtml, rich, useT } from '@/i18n';
-import { path, type Lang } from '@/i18n/config';
+import { rich, useT } from '@/i18n';
+import { path, SERVICE_PAGES, type Lang } from '@/i18n/config';
 import { faqJsonItems, FAQ_KEYS } from '@/lib/faq';
 import { faqPage } from '@/lib/jsonld';
+import { LEISTUNG_ICON } from '@/lib/icons';
 import { heroPaar, startseitenProjekte } from '@/lib/projekte';
 import { projektBild } from '@/lib/bilder';
 import { getEntry } from 'astro:content';
@@ -29,17 +32,22 @@ const testTexte = { tag: t.owend.testTag, abend: t.owend.testAbend };
 const paar = await heroPaar(lang, testTexte, t.owend.motivStartseite);
 const projekte = await startseitenProjekte();
 
-/** Fotos der Leistungen: aus freigegebenen Projekten, sonst Platzhalter mit Motiv */
+/** Fotos der Leistungskarten: aus freigegebenen Projekten, sonst ohne Foto */
 async function leistungsFoto(id: string, index = 0) {
   const p = await getEntry('projekte', id);
   if (!p || (!DEV && !p.data.freigabe)) return null;
   const f = p.data.fotos[index];
   return f ? { bild: projektBild(f.bild), alt: f.alt[lang] } : null;
 }
-const fotoNeubau = await leistungsFoto('fertighaus-module');
-const fotoLicht = await leistungsFoto('milchviehstall');
+const fotos = {
+  installation: await leistungsFoto('fertighaus-module'),
+  licht: await leistungsFoto('milchviehstall'),
+};
 
-const tel = `<a href="${telHref}" class="zahl">${escapeHtml(site.telefon.anzeige)}</a>`;
+/** „26 Leute in Noutem“: die Zahl wird groß gesetzt, der Rest bleibt die Überschrift */
+const [teamZahl, ...teamRest] = t.home.teamH2.split(' ');
+const teamMitZahl = /^\d+$/.test(teamZahl);
+
 const ogBild =
   paar.bilder && !paar.test && paar.freigegeben
     ? { src: withBase('/og/startseite.png'), width: 1200, height: 630, alt: paar.bilder.abend.alt }
@@ -55,83 +63,82 @@ const ogBild =
 >
   <section class="raster hero" aria-labelledby="hero-titel">
     <div class="hero__text">
-      <h1 id="hero-titel">{t.home.h1}</h1>
-      <p class="lead">{t.home.lead}</p>
-      <p class="hero__aktion"><a class="knopf" href={path(lang, 'kontakt')}>{t.allgemein.angebotAnfragen}</a></p>
-      <p class="hero__telefon" set:html={rich(t.allgemein.oderAnrufen, { tel })} />
+      <p class="eyebrow eyebrow--hell auftritt"><Icon name="blitz" size={16} />{t.meta.ogAlt}</p>
+      <h1 id="hero-titel" class="auftritt">{t.home.h1}</h1>
+      <p class="lead auftritt">{t.home.lead}</p>
+      <p class="hero__aktionen auftritt">
+        <a class="knopf knopf--giel" href={path(lang, 'kontakt')}>
+          {t.allgemein.angebotAnfragen}
+          <Icon name="pfeil" size={20} />
+        </a>
+        <a class="knopf knopf--rand" href={telHref}>
+          <Icon name="telefon" size={20} />
+          <span class="sr-only">{t.allgemein.telefon} </span><span class="zahl">{site.telefon.anzeige}</span>
+        </a>
+      </p>
+      <nav class="hero__leistungen auftritt" aria-labelledby="hero-leistungen-h">
+        <p id="hero-leistungen-h" class="label label--hell">{t.nav.leistungen}</p>
+        <ul class="chips">
+          {
+            SERVICE_PAGES.map((p) => (
+              <li>
+                <a class="chip chip--hell" href={path(lang, p)}>
+                  <Icon name={LEISTUNG_ICON[p]} size={18} />
+                  {t.leistungen[p].name}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
     </div>
     <Owend t={t} paar={paar} />
   </section>
 
   <section class="sektion" id="leistungen" aria-labelledby="leistungen-h">
     <div class="raster">
-      <h2 id="leistungen-h" class="sektion__kopf">{t.home.leistungenH2}</h2>
+      <div class="sektion__kopf">
+        <p class="eyebrow"><Icon name="blitz" size={16} />{t.nav.leistungen}</p>
+        <h2 id="leistungen-h">{t.home.leistungenH2}</h2>
+        <p class="lead sektion__lead">{t.home.leistungenIntro}</p>
+      </div>
+      <ul class="karten">
+        {
+          SERVICE_PAGES.map((p) => {
+            const foto = p === 'installation' || p === 'licht' ? fotos[p] : null;
+            return (
+              <Leistungskarte lang={lang} t={t} page={p} class="zeigen">
+                {foto && (
+                  <Foto
+                    slot="foto"
+                    class="karte__foto"
+                    bild={foto.bild}
+                    alt={foto.alt}
+                    folgt={t.allgemein.fotoFolgt}
+                    motiv={t.leistungen[p].name}
+                    sizes="(min-width: 1024px) 40vw, 100vw"
+                  />
+                )}
+              </Leistungskarte>
+            );
+          })
+        }
+      </ul>
+      <p class="sektion__fuss">
+        <a class="knopf knopf--hell" href={path(lang, 'leistungen')}>
+          {t.home.alleLeistungen}
+          <Icon name="pfeil" size={20} />
+        </a>
+      </p>
     </div>
-    <ul class="leistungen">
-      <li class="raster leistung">
-        <div class="leistung__text">
-          <h3>{t.leistungen.installation.name}</h3>
-          <p class="prosa">{t.leistungen.installation.text}</p>
-          <p class="leistung__link"><a href={path(lang, 'installation')}>{t.leistungen.installation.link}</a></p>
-        </div>
-        <Foto
-          class="leistung__foto voll"
-          bild={fotoNeubau?.bild ?? null}
-          alt={fotoNeubau?.alt ?? ''}
-          folgt={t.allgemein.fotoFolgt}
-          motiv={t.seiten.installation.fotoMotiv}
-          sizes="(min-width: 1024px) 50vw, 100vw"
-        />
-      </li>
-      <li class="raster leistung leistung--gross">
-        <div class="leistung__text">
-          <h3>{t.leistungen.licht.name}</h3>
-          <p class="prosa">{t.leistungen.licht.text}</p>
-          <p class="leistung__link"><a href={path(lang, 'licht')}>{t.leistungen.licht.link}</a></p>
-        </div>
-        <Foto
-          class="leistung__foto voll"
-          format="4-5"
-          bild={fotoLicht?.bild ?? null}
-          alt={fotoLicht?.alt ?? ''}
-          folgt={t.allgemein.fotoFolgt}
-          motiv={fotoLicht?.alt ?? t.leistungen.licht.name}
-          sizes="(min-width: 1024px) 57vw, 100vw"
-        />
-      </li>
-      <li class="raster leistung">
-        <div class="leistung__text">
-          <h3>{t.leistungen.photovoltaik.name}</h3>
-          <p class="prosa">{t.leistungen.photovoltaik.text}</p>
-          <p class="leistung__link"><a href={path(lang, 'photovoltaik')}>{t.leistungen.photovoltaik.link}</a></p>
-        </div>
-        <Foto
-          class="leistung__foto voll"
-          bild={null}
-          alt=""
-          folgt={t.allgemein.fotoFolgt}
-          motiv={t.seiten.photovoltaik.fotoMotiv}
-          sizes="(min-width: 1024px) 50vw, 100vw"
-        />
-      </li>
-      <li class="raster leistungen__ohne">
-        <div class="leistung leistung--ohne-foto">
-          <h3>{t.leistungen.sicherheit.name}</h3>
-          <p class="prosa">{t.leistungen.sicherheit.text}</p>
-          <p class="leistung__link"><a href={path(lang, 'sicherheit')}>{t.leistungen.sicherheit.link}</a></p>
-        </div>
-        <div class="leistung leistung--ohne-foto">
-          <h3>{t.leistungen.hausgeraete.name}</h3>
-          <p class="prosa" set:html={rich(t.leistungen.hausgeraete.text)} />
-          <p class="leistung__link"><a href={path(lang, 'hausgeraete')}>{t.leistungen.hausgeraete.link}</a></p>
-        </div>
-      </li>
-    </ul>
   </section>
 
   <section class="sektion" aria-labelledby="projekte-h">
     <div class="raster">
-      <h2 id="projekte-h" class="sektion__kopf">{t.home.projekteH2}</h2>
+      <div class="sektion__kopf">
+        <p class="eyebrow"><Icon name="blitz" size={16} />{t.nav.projekte}</p>
+        <h2 id="projekte-h">{t.home.projekteH2}</h2>
+      </div>
     </div>
     {
       projekte.length > 0 ? (
@@ -142,19 +149,35 @@ const ogBild =
         </div>
       ) : (
         <div class="raster">
-          <p set:html={rich(t.allgemein.projekteFehlen)} />
+          <p class="hinweisflaeche" set:html={rich(t.allgemein.projekteFehlen)} />
         </div>
       )
     }
     <div class="raster">
-      <p class="sektion__fuss"><a href={path(lang, 'projekte')}>{t.home.alleProjekte}</a></p>
+      <p class="sektion__fuss">
+        <a class="textlink" href={path(lang, 'projekte')}>
+          {t.home.alleProjekte}
+          <Icon name="pfeil" size={20} />
+        </a>
+      </p>
     </div>
   </section>
 
-  <section class="sektion" aria-labelledby="team-h">
+  <section class="sektion flaeche" aria-labelledby="team-h">
     <div class="raster team">
-      <div class="team__text">
-        <h2 id="team-h">{t.home.teamH2}</h2>
+      <div class="team__text zeigen">
+        <p class="eyebrow"><Icon name="blitz" size={16} />{t.nav.ueberUns}</p>
+        <h2 id="team-h" class="team__titel">
+          {
+            teamMitZahl ? (
+              <>
+                <span class="team__zahl zahl">{teamZahl}</span> <span>{teamRest.join(' ')}</span>
+              </>
+            ) : (
+              t.home.teamH2
+            )
+          }
+        </h2>
         <div class="prosa sektion__text">
           <p>{t.home.team}</p>
           <p set:html={rich(t.home.teamLeitung)} />
@@ -163,7 +186,7 @@ const ogBild =
           </p>
         </div>
       </div>
-      <Foto class="team__foto voll" bild={null} alt="" folgt={t.allgemein.fotoFolgt} motiv={t.home.teamFoto} sizes="(min-width: 1024px) 50vw, 100vw" />
+      <Foto class="team__foto zeigen" bild={null} alt="" folgt={t.allgemein.fotoFolgt} motiv={t.home.teamFoto} sizes="(min-width: 1024px) 50vw, 100vw" />
     </div>
   </section>
 

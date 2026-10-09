@@ -1,0 +1,44 @@
+---
+/**
+ * Eine Leistung als Karte (Startseite): Symbol, Name, Text, Stichpunkte, Link auf die Leistungsseite.
+ * Ist ein Foto aus einem freigegebenen Projekt da, steht es oben in der Karte (Slot „foto“).
+ * Die ganze Karte ist klickbar (der Link legt sich mit ::after über die Karte), der Linktext bleibt
+ * für Screenreader eindeutig.
+ */
+import Icon from './Icon.astro';
+import { rich, type Dict } from '@/i18n';
+import { path, type Lang, type ServicePage } from '@/i18n/config';
+import { LEISTUNG_ICON } from '@/lib/icons';
+import { kartenPunkte } from '@/lib/leistungen';
+
+interface Props {
+  lang: Lang;
+  t: Dict;
+  page: ServicePage;
+  /** Wie viele Stichpunkte die Karte zeigt */
+  punkte?: number;
+  class?: string;
+}
+const { lang, t, page, punkte = 4, class: klasse } = Astro.props;
+const l = t.leistungen[page];
+const liste = kartenPunkte(t, page).slice(0, punkte);
+---
+<li class:list={['karte', `karte--${page}`, klasse]}>
+  <slot name="foto" />
+  <span class="symbol" aria-hidden="true"><Icon name={LEISTUNG_ICON[page]} size={28} /></span>
+  <h3 class="karte__titel">{l.name}</h3>
+  <p class="karte__text" set:html={rich(l.text)} />
+  {
+    liste.length > 0 && (
+      <ul class="stichpunkte">
+        {liste.map((x) => <li>{x}</li>)}
+      </ul>
+    )
+  }
+  <p class="karte__link">
+    <a href={path(lang, page)}>
+      <span>{l.link}</span>
+      <Icon name="pfeil" size={20} />
+    </a>
+  </p>
+</li>

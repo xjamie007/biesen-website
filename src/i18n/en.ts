@@ -23,6 +23,7 @@ const en: Dict = {
   nav: {
     home: 'Home',
     leistungen: 'Services',
+    alleLeistungen: 'All services at a glance',
     projekte: 'Projects',
     ueberUns: 'About us',
     jobs: 'Jobs',
@@ -92,6 +93,8 @@ const en: Dict = {
     h1: 'Power and light for homes, farms and businesses',
     lead: 'We are an electrical contractor with 26 people in Nothum, in the Lac de la Haute-Sûre municipality. We wire new and old houses, cowsheds and halls, and install lighting, solar power and charging points.',
     leistungenH2: 'What we do',
+    leistungenIntro: 'We work in five areas, in homes, on farms and in businesses. Choose an area to find out more.',
+    alleLeistungen: 'All services at a glance',
     projekteH2: 'Where we have worked',
     alleProjekte: 'All projects',
     teamH2: '26 people in Nothum',
@@ -164,6 +167,21 @@ const en: Dict = {
   },
 
   seiten: {
+    leistungen: {
+      h1: 'Our services at a glance',
+      intro: 'Electrical installation for new builds and renovation, lighting, solar power and EV charging, alarms and fire detection, and home appliances. Here you can see every area on one page.',
+      dazu: 'What this includes',
+      ablaufH2: 'How to get a quote',
+      ablauf: [
+        'You call us or send your enquiry, ideally with plans or photos.',
+        'We discuss the work with you, on site for larger projects.',
+        'You receive a written quote.',
+        'We carry out the work and commission the installation with you.',
+      ],
+      ablaufHinweis: '[UNBESTÄTIGT — Ablauf vom Kunden bestätigen lassen]',
+      unsicherH2: 'Not sure which area fits?',
+      unsicher: 'Tell us briefly what you have in mind. We will tell you what is possible and who will look after it.',
+    },
     installation: {
       h1: 'Wiring for new builds and renovation',
       intro: 'Whether you are building a new house, having a prefabricated house put up or converting an old one: we plan the wiring with you, install it and put it into service.',
@@ -527,6 +545,11 @@ const en: Dict = {
       title: 'Electrician in Nothum, near Wiltz | Electricité Biesen',
       description:
         'Electricité Biesen in Nothum: electrical installation for new builds and renovation, lighting, solar power, EV charging and alarms. A family business of 26.',
+    },
+    leistungen: {
+      title: 'Our services: wiring, lighting, solar | Electricité Biesen',
+      description:
+        'Every service from Electricité Biesen in Nothum at a glance: electrical installation, lighting, solar power, EV charging, alarms, fire detection, appliances.',
     },
     installation: {
       title: 'Electrical installation, new builds | Electricité Biesen',

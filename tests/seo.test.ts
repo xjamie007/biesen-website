@@ -7,7 +7,7 @@ import { readdirSync, readFileSync } from 'node:fs';
 import { DICTS } from '@/i18n';
 import { LANGS } from '@/i18n/config';
 
-const SEITEN = ['home', 'installation', 'licht', 'photovoltaik', 'sicherheit', 'hausgeraete', 'projekte', 'ueberUns', 'jobs', 'kontakt', 'danke', 'impressum', 'datenschutz'] as const;
+const SEITEN = ['home', 'leistungen', 'installation', 'licht', 'photovoltaik', 'sicherheit', 'hausgeraete', 'projekte', 'ueberUns', 'jobs', 'kontakt', 'danke', 'impressum', 'datenschutz'] as const;
 
 /** Sehr einfacher YAML-Leser für die seo-Blöcke der Job-Dateien */
 function jobSeo(datei: string) {

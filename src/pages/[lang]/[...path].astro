@@ -6,6 +6,7 @@
 import { LANGS, PAGE_SLUGS, routePath, type Lang, type PageKey, type Route } from '@/i18n/config';
 import { jobRoute, offeneJobs, type Job } from '@/lib/jobs';
 import Home from '@/views/Home.astro';
+import Leistungen from '@/views/Leistungen.astro';
 import Installation from '@/views/Installation.astro';
 import Licht from '@/views/Licht.astro';
 import Photovoltaik from '@/views/Photovoltaik.astro';
@@ -41,6 +42,7 @@ const lang = Astro.params.lang as Lang;
 const { route, job } = Astro.props as { route: Route; job?: Job };
 ---
 {route.page === 'home' && <Home lang={lang} />}
+{route.page === 'leistungen' && <Leistungen lang={lang} />}
 {route.page === 'installation' && <Installation lang={lang} />}
 {route.page === 'licht' && <Licht lang={lang} />}
 {route.page === 'photovoltaik' && <Photovoltaik lang={lang} />}

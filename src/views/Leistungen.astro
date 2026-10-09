@@ -1,0 +1,116 @@
+---
+/**
+ * Alle Leistungen auf einer Seite: Sprungleiste im Seitenkopf, je Leistung ein Block mit Symbol,
+ * Text, allem, was dazugehört, Link auf die Leistungsseite und „Angebot anfragen“ mit vorgewähltem
+ * Anliegen. Danach der Weg zum Angebot, häufige Fragen und der Abschluss in Noutem-Blau.
+ */
+import Base from '@/layouts/Base.astro';
+import Seitenkopf from '@/components/Seitenkopf.astro';
+import Icon from '@/components/Icon.astro';
+import Faq from '@/components/Faq.astro';
+import Aufruf from '@/components/Aufruf.astro';
+import { rich, useT } from '@/i18n';
+import { path, SERVICE_PAGES, type Lang } from '@/i18n/config';
+import { breadcrumbs, faqPage } from '@/lib/jsonld';
+import { faqJsonItems, type FaqKey } from '@/lib/faq';
+import { LEISTUNG_ICON } from '@/lib/icons';
+import { ANLIEGEN, leistungsPunkte } from '@/lib/leistungen';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useT(lang);
+const s = t.seiten.leistungen;
+const pfad = [
+  { name: t.nav.home, href: path(lang, 'home') },
+  { name: t.nav.leistungen, href: path(lang, 'leistungen') },
+];
+const FRAGEN: readonly FaqKey[] = ['angebot', 'kostenlos', 'gebiet'];
+const faqItems = faqJsonItems(t, FRAGEN);
+const jsonld = [breadcrumbs(pfad.map((p) => ({ name: p.name, url: p.href }))), ...(faqItems.length ? [faqPage(faqItems)] : [])];
+---
+<Base lang={lang} route={{ page: 'leistungen' }} title={t.seo.leistungen.title} description={t.seo.leistungen.description} jsonld={jsonld}>
+  <Seitenkopf pfadLabel={t.a11y.pfad} pfad={pfad} h1={s.h1} intro={s.intro}>
+    <nav class="schnellwahl" aria-labelledby="schnellwahl-h">
+      <p id="schnellwahl-h" class="sr-only">{t.seiten.projekte.sprung}</p>
+      <ul class="schnellwahl__liste">
+        {
+          SERVICE_PAGES.map((p) => (
+            <li>
+              <a class="chip chip--hell" href={`#leistung-${p}`}>
+                <Icon name={LEISTUNG_ICON[p]} size={20} />
+                {t.leistungen[p].name}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </Seitenkopf>
+
+  <section class="sektion" aria-labelledby="leistungen-h">
+    <h2 id="leistungen-h" class="sr-only">{t.nav.leistungen}</h2>
+    <div class="raster">
+      <ul class="leistungsbloecke">
+        {
+          SERVICE_PAGES.map((p, i) => {
+            const l = t.leistungen[p];
+            return (
+              <li class:list={['leistungsblock', i > 0 && 'zeigen']} id={`leistung-${p}`}>
+                <div class="leistungsblock__haupt">
+                  <span class="symbol symbol--gross" aria-hidden="true">
+                    <Icon name={LEISTUNG_ICON[p]} size={36} />
+                  </span>
+                  <h3 id={`leistung-${p}-h`} class="leistungsblock__titel">{l.name}</h3>
+                  <p class="leistungsblock__text" set:html={rich(l.text)} />
+                  <p class="leistungsblock__aktionen">
+                    <a class="knopf" href={path(lang, p)}>
+                      {l.link}
+                      <Icon name="pfeil" size={20} />
+                    </a>
+                    <a class="textlink" href={`${path(lang, 'kontakt')}?anliegen=${ANLIEGEN[p]}`}>{t.allgemein.angebotAnfragen}</a>
+                  </p>
+                </div>
+                <div class="leistungsblock__punkte">
+                  <p class="label">{s.dazu}</p>
+                  <ul class="haken">
+                    {leistungsPunkte(t, p).map((x) => (
+                      <li>
+                        <Icon name="haken" size={20} />
+                        <span>{x}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="sektion flaeche" aria-labelledby="weg-h">
+    <div class="raster">
+      <div>
+        <h2 id="weg-h" class="sektion__kopf">{s.ablaufH2}</h2>
+        <ol class="schritte">
+          {s.ablauf.map((x) => <li class="schritt zeigen">{x}</li>)}
+        </ol>
+        <p class="klein schritte__hinweis" set:html={rich(s.ablaufHinweis)} />
+      </div>
+    </div>
+  </section>
+
+  <section class="sektion" aria-labelledby="fragen-h">
+    <div class="raster">
+      <div>
+        <h2 id="fragen-h" class="sektion__kopf">{t.allgemein.passendeFragen}</h2>
+        <Faq lang={lang} t={t} keys={FRAGEN} />
+      </div>
+    </div>
+  </section>
+
+  <Aufruf lang={lang} t={t} titel={s.unsicherH2} text={s.unsicher} />
+</Base>

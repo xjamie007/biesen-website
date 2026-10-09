@@ -31,6 +31,7 @@ const lb: Dict = {
   nav: {
     home: 'Startsäit',
     leistungen: 'Leeschtungen',
+    alleLeistungen: 'All d’Leeschtungen op ee Bléck',
     projekte: 'Projeten',
     ueberUns: 'Iwwer eis',
     jobs: 'Jobs',
@@ -100,6 +101,8 @@ const lb: Dict = {
     h1: 'Stroum a Liicht fir Haus, Haff a Betrib',
     lead: 'Mir sinn en Elektrobetrib mat 26 Leit zu Noutem, an der Stauséigemeng. Mir leeën d’Elektresch an neien an alen Haiser, a Ställ an Hallen a montéieren Liicht, Photovoltaik a Luedstatiounen.',
     leistungenH2: 'Wat mir maachen',
+    leistungenIntro: 'Mir schaffen a fënnef Beräicher, an Haiser, op Häff an a Betriber. Wielt e Beräich, fir méi ze erfueren.',
+    alleLeistungen: 'All d’Leeschtungen op ee Bléck',
     projekteH2: 'Wou mir geschafft hunn',
     alleProjekte: 'All d’Projeten',
     teamH2: '26 Leit zu Noutem',
@@ -172,6 +175,21 @@ const lb: Dict = {
   },
 
   seiten: {
+    leistungen: {
+      h1: 'Eis Leeschtungen op ee Bléck',
+      intro: 'Elektroinstallatioun fir Neibau a Renovatioun, Liicht, Photovoltaik a Luedstatiounen, Alarm- a Brandmeldeanlagen an Haushaltsapparater. Hei gesitt Dir all d’Beräicher op enger Säit.',
+      dazu: 'Dozou gehéiert',
+      ablaufH2: 'Esou kritt Dir Är Offer',
+      ablauf: [
+        'Dir rufft eis un oder schéckt eis Är Ufro, am beschte mat Pläng oder Fotoen.',
+        'Mir schwätze mat Iech iwwer dat, wat gemaach gi soll, bei gréissere Projeten op der Plaz.',
+        'Dir kritt eng schrëftlech Offer.',
+        'Mir maachen d’Aarbechten a setzen alles mat Iech a Betrib.',
+      ],
+      ablaufHinweis: '[UNBESTÄTIGT — Ablauf vom Kunden bestätigen lassen]',
+      unsicherH2: 'Net sécher, wéi e Beräich passt?',
+      unsicher: 'Beschreift eis kuerz, ëm wat et geet. Mir soen Iech, wat méiglech ass a wien sech dorëm këmmert.',
+    },
     installation: {
       h1: 'Elektresch fir Neibau a Renovatioun',
       intro: 'Ob Dir nei baut, e Fäerdeghaus opstelle loosst oder en aalt Haus ëmbaut: Mir plangen d’Elektresch mat Iech, leeën se a setzen se a Betrib.',
@@ -535,6 +553,11 @@ const lb: Dict = {
       title: 'Elektriker zu Noutem, bei Wolz | Electricité Biesen',
       description:
         'Electricité Biesen zu Noutem: Elektroinstallatioun fir Neibau a Renovatioun, Liicht, Photovoltaik, Luedstatiounen an Alarmanlagen. Familljebetrib, 26 Leit.',
+    },
+    leistungen: {
+      title: 'Leeschtungen op ee Bléck, Noutem | Electricité Biesen',
+      description:
+        'All d’Leeschtungen vun Electricité Biesen zu Noutem: Elektroinstallatioun, Liicht, Photovoltaik, Luedstatiounen, Alarm, Brandmelder an Haushaltsapparater.',
     },
     installation: {
       title: 'Elektroinstallatioun Neibau, Ëmbau | Electricité Biesen',

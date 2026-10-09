@@ -33,24 +33,25 @@ Weitere Punkte aus dem Bau:
 - **Bewerbungen:** Aufbewahrungsfrist für Bewerbungsunterlagen (Datenschutzerklärung)
 - **Rufnummer für Bewerbungen 95 80 99 13**: noch aktuell, Laurent Maillen weiterhin Ansprechpartner?
 
-## 2. Markierte Stellen in den Texten (43)
+## 2. Markierte Stellen in den Texten (44)
 
 Der Schlüssel gilt in allen vier Sprachen (`src/i18n/fr.ts`, `de.ts`, `lb.ts`, `en.ts`).
 
 | Seite | Schlüssel | Art | Was fehlt |
 |---|---|---|---|
 | Startseite, Projekte, Leistungsseiten | `allgemein.projekteFehlen` | FEHLT | freigegebene Projekte mit Ortschaft, Jahr und Text |
-| Startseite (Was wir machen) | `leistungen.hausgeraete.text` | UNBESTÄTIGT | Ausstellung, Lieferung und Anschluss ergänzen |
+| Startseite (Was wir machen), Leistungen (Übersicht), Karten auf den Leistungsseiten | `leistungen.hausgeraete.text` | UNBESTÄTIGT | Ausstellung, Lieferung und Anschluss ergänzen |
 | Startseite (Hero), Licht, Projekte | `owend.bildunterschriftFehlt` | FEHLT | Ortschaft, Projekt in drei bis fünf Wörtern, Uhrzeiten aus den EXIF-Daten |
 | Startseite (26 Leute in Noutem) | `home.teamLeitung` | UNBESTÄTIGT | Leitung und Ansprechpartner mit Rollen, siehe B3 |
 | Startseite (Anrufen oder schreiben), Kontakt | `zeiten.unbestaetigt` | UNBESTÄTIGT | 08:00–12:00 und 13:30–16:30 laut heutiger Website, 07:30–16:30 durchgehend laut Google und Editus |
 | Fuß (alle Seiten) | `zeiten.unbestaetigtKurz` | UNBESTÄTIGT | Zeiten |
-| Startseite und Lichtseite (FAQ) | `faq.gebiet.a` | UNBESTÄTIGT | Einsatzgebiet und zwei bis drei Ortsbeispiele |
-| Startseite, Neubau und Renovierung, Alarm (FAQ) | `faq.kostenlos.a` | UNBESTÄTIGT | so steht es auf der heutigen Website; auch für einen Termin vor Ort? |
+| Startseite, Lichtseite und Leistungen (FAQ) | `faq.gebiet.a` | UNBESTÄTIGT | Einsatzgebiet und zwei bis drei Ortsbeispiele |
+| Startseite, Leistungen, Neubau und Renovierung, Alarm (FAQ) | `faq.kostenlos.a` | UNBESTÄTIGT | so steht es auf der heutigen Website; auch für einen Termin vor Ort? |
 | Startseite, Photovoltaik und Ladestationen (FAQ) | `faq.ladestation.a` | UNBESTÄTIGT | Meldung beim Netzbetreiber durch Biesen? |
 | Startseite, Photovoltaik und Ladestationen (FAQ) | `faq.zuschuesse.a` | UNBESTÄTIGT | Stand vor Livegang prüfen; hilft Biesen beim Antrag? |
 | Startseite, Hausgeräte (FAQ) | `faq.hausgeraete.a` | FEHLT | Ausstellung, Lieferung, Anschluss |
 | Startseite (FAQ) | `faq.sprachen.a` | UNBESTÄTIGT | auch Portugiesisch und Englisch? |
+| Leistungen (Übersicht) | `seiten.leistungen.ablaufHinweis` | UNBESTÄTIGT | Ablauf vom Kunden bestätigen lassen |
 | Neubau und Renovierung | `seiten.installation.fertighaus` | UNBESTÄTIGT | Ablauf, Herstellernamen |
 | Neubau und Renovierung | `seiten.installation.ablaufHinweis` | UNBESTÄTIGT | Ablauf vom Kunden bestätigen lassen, ebenso wer den Netzanschluss beim Netzbetreiber beantragt |
 | Licht | `seiten.licht.bereiche.oeffentlich.text` | UNBESTÄTIGT | Referenzen, Auftraggeber |

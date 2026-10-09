@@ -1,0 +1,41 @@
+---
+/**
+ * Abschluss einer Seite in Noutem-Blau: Überschrift, kurzer Text, Knopf „Angebot anfragen“
+ * (auf Wunsch mit vorgewähltem Anliegen) und die Telefonnummer.
+ */
+import Icon from './Icon.astro';
+import type { Dict } from '@/i18n';
+import { path, type Lang } from '@/i18n/config';
+import { site, telHref } from '@/lib/site';
+
+interface Props {
+  lang: Lang;
+  t: Dict;
+  titel: string;
+  text?: string;
+  anliegen?: string;
+}
+const { lang, t, titel, text, anliegen } = Astro.props;
+const ziel = anliegen ? `${path(lang, 'kontakt')}?anliegen=${anliegen}` : path(lang, 'kontakt');
+---
+<section class="sektion flaeche flaeche--blau aufruf" aria-labelledby="aufruf-h">
+  <div class="raster">
+    <div class="aufruf__inhalt">
+      <div class="aufruf__text">
+        <h2 id="aufruf-h">{titel}</h2>
+        {text && <p class="lead">{text}</p>}
+        <slot />
+      </div>
+      <div class="aufruf__aktionen">
+        <a class="knopf knopf--giel" href={ziel}>
+          {t.allgemein.angebotAnfragen}
+          <Icon name="pfeil" size={20} />
+        </a>
+        <a class="knopf knopf--rand" href={telHref}>
+          <Icon name="telefon" size={20} />
+          <span class="sr-only">{t.allgemein.telefon} </span><span class="zahl">{site.telefon.anzeige}</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
