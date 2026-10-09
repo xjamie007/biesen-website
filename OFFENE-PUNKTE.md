@@ -10,6 +10,7 @@ Auf der Website sind alle Stellen sichtbar markiert (gestrichelter Rahmen: `[FEH
 2. **Freigegebener Absatz zur Geschichte** (B4). Bis dahin keine Jahreszahlen, kein „seit“, kein `foundingDate`. → `seiten.ueberUns.geschichte`
 3. **Vertretung der S.A. und Verantwortlicher fürs Impressum;** MwSt-Nummer in VIES prüfen. → Impressum
 4. **Hausgeräte:** Ausstellung in Nothum? Lieferung, Anschluss, Reparatur? Aktuelle Marken, Recht zur Nennung. → Hausgeräte, FAQ 7
+4a. **Marken für Photovoltaik, Wechselrichter, Ladestationen, Licht, Alarm und Kameras**, die genannt werden dürfen? Dann bekommt jede dieser Leistungsseiten ein Markenband wie die Hausgeräte. (Weder diese Website noch die heutige nennen bisher welche.)
 5. **Einsatzgebiet** (Gemeinden; auch Belgien?), **Störungsdienst** ja oder nein. Bis dahin kein `areaServed`, keine Notdienst-Frage. → FAQ 1
 6. **Anfragen:** Wer liest sie (`FORM_RECIPIENT`), wie schnell kommt eine Antwort, ist das Angebot kostenlos (auch mit Termin vor Ort)? → Danke-Seite, FAQ 3
 7. **Shooting der Tag-und-Abend-Fotopaare** (C5, Anleitung im README); Freigabe der Projekte mit Ortschaft; welcher Stollen; Teamfoto und Namen. → Abschnitt 3
@@ -17,7 +18,7 @@ Auf der Website sind alle Stellen sichtbar markiert (gestrichelter Rahmen: `[FEH
 9. **DNS-Zugang** für electricite-biesen.lu und biesen.lu (vermutlich bei Wedo Solutions); Mailversand über einen EU-Anbieter (SPF/DKIM für die Absenderadresse). → README „Livegang“
 10. **Facebook-URL;** Google-Unternehmensprofil übernehmen (README, G4).
 11. **Stellen** noch offen? Vollzeit? Lehrstellen? Stellenanzeigen auch auf Portugiesisch?
-12. **Mitgliedschaften und Labels** aktuell (FDA, FGT, KNX, SuperDrecksKëscht, Made in Luxembourg, Mir bilden aus)? Logos erlaubt? (Bis dahin nur als Text auf „Über uns“.)
+12. **Mitgliedschaften und Labels** aktuell (FDA, FGT, KNX, SuperDrecksKëscht, Made in Luxembourg, Mir bilden aus)? Logos erlaubt? (Bis dahin als Schrift im Markenband auf „Über uns“.)
 13. **Erlaubnis für das Zitat von Karin R.** Bis dahin kein Zitat, keine Sterne, kein Bewertungs-Widget.
 14. **Alle luxemburgischen Texte muttersprachlich prüfen lassen** → [`LB-REVIEW.md`](LB-REVIEW.md)
 
