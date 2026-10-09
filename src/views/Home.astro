@@ -3,7 +3,7 @@
  * Startseite (D2). Ziel: In 15 Sekunden ist klar, wer Biesen ist, was der Betrieb macht, wo er
  * arbeitet und wie man ihn erreicht. Reihenfolge:
  * 1. Hero: „Ihr Elektriker im Norden Luxemburgs“, alle Leistungen in einem Satz, Anfrage und
- *    Telefon, drei Fakten, darunter die fünf Leistungen als Kacheln.
+ *    Telefon, darunter die fünf Leistungen als Kacheln (mobil eine wischbare Reihe), dann zwei Fakten.
  * 2. Laufband mit den Leistungen.
  * 3. Die Leistungen ausführlich (Karten).
  * 4. Über uns: ein Satz, der beim Scrollen Wort für Wort aufleuchtet, Zahlen, offene Stellen.
@@ -76,7 +76,7 @@ const ogBild =
     <div class="hero__licht" aria-hidden="true"></div>
     <div class="raster">
       <div class="hero__inhalt">
-        <p class="eyebrow eyebrow--pille auftritt"><Icon name="blitz" size={16} />{t.meta.ogAlt}</p>
+        <p class="eyebrow eyebrow--pille hero__marke auftritt"><Icon name="blitz" size={16} />{t.meta.ogAlt}</p>
         <h1 id="hero-titel" class="hero__titel">
           {
             t.home.h1.split(' ').map((w, i) => (
@@ -90,17 +90,13 @@ const ogBild =
         <p class="hero__aktionen auftritt">
           <a class="knopf knopf--gross" href={path(lang, 'kontakt')}>
             {t.allgemein.angebotAnfragen}
-            <Icon name="pfeil" size={20} />
+            <span class="hero__pfeil"><Icon name="pfeil" size={20} /></span>
           </a>
           <a class="knopf knopf--gross knopf--hell" href={telHref}>
             <Icon name="telefon" size={20} />
             <span class="sr-only">{t.allgemein.telefon} </span><span class="zahl">{site.telefon.anzeige}</span>
           </a>
         </p>
-        <ul class="hero__fakten auftritt">
-          <li><Icon name="team" size={18} /><span><strong class="zahl">{site.mitarbeitende}</strong> {t.home.fakten.leute}</span></li>
-          <li><Icon name="ort" size={18} /><span><strong>{t.home.fakten.ortTitel}</strong>, {t.home.fakten.ort}</span></li>
-        </ul>
       </div>
     </div>
 
@@ -124,6 +120,13 @@ const ogBild =
           }
         </ul>
       </nav>
+    </div>
+
+    <div class="raster">
+      <ul class="hero__fakten auftritt">
+        <li><Icon name="team" size={18} /><span><strong class="zahl">{site.mitarbeitende}</strong> {t.home.fakten.leute}</span></li>
+        <li><Icon name="ort" size={18} /><span><strong>{t.home.fakten.ortTitel}</strong>, {t.home.fakten.ort}</span></li>
+      </ul>
     </div>
   </section>
 

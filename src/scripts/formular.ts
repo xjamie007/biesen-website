@@ -10,6 +10,12 @@ const MAX_DATEIEN = 5;
 const MAX_BYTES = 10 * 1024 * 1024;
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
+/** Dateigröße lesbar: unter 1 MB in KB, sonst in MB mit einer Nachkommastelle */
+function groesse(bytes: number): string {
+  const zahl = (n: number, stellen: number) => n.toLocaleString(document.documentElement.lang, { maximumFractionDigits: stellen });
+  return bytes < 1024 * 1024 ? `${zahl(Math.max(1, Math.round(bytes / 1024)), 0)} KB` : `${zahl(bytes / 1024 / 1024, 1)} MB`;
+}
+
 export function initFormular(): void {
   const form = document.querySelector<HTMLFormElement>('[data-formular]');
   if (!form) return;
@@ -162,7 +168,7 @@ export function initFormular(): void {
     dateiliste.replaceChildren(
       ...liste.map((d) => {
         const li = document.createElement('li');
-        li.textContent = `${d.name} (${(d.size / 1024 / 1024).toLocaleString(document.documentElement.lang, { maximumFractionDigits: 1 })} MB)`;
+        li.textContent = `${d.name} (${groesse(d.size)})`;
         return li;
       }),
     );

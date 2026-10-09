@@ -60,7 +60,7 @@ const istLeistung = aktuell === 'leistungen' || (SERVICE_PAGES as readonly strin
     <div class="kopf__zeile">
       <a class="kopf__logo" href={home}><Logo alt={t.a11y.logo} /></a>
       <div class="kopf__mobil">
-        <a class="knopf kopf__anrufen" href={telHref}><Icon name="telefon" size={18} />{t.a11y.anrufen}</a>
+        <a class="knopf kopf__anrufen" href={telHref}><Icon name="telefon" size={18} /><span class="kopf__anrufen-text">{t.a11y.anrufen}</span></a>
         <button class="menueknopf" type="button" aria-expanded="false" aria-controls="navigation" data-menue-auf>
           <span class="menueknopf__striche" aria-hidden="true"></span>
           {t.a11y.menue}

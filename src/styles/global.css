@@ -307,6 +307,7 @@
     *::after {
       transition-duration: 0s !important;
       animation-duration: 0s !important;
+      animation-delay: 0s !important;
       animation-iteration-count: 1 !important;
       scroll-behavior: auto !important;
     }
@@ -1005,6 +1006,34 @@
     font-size: 1rem;
   }
 
+  /* Handys: Logo, Anrufen und Menü in einer Zeile */
+  @media (max-width: 47.999rem) {
+    .kopf__zeile {
+      gap: 10px;
+    }
+
+    .kopf__anrufen {
+      padding-inline: 12px;
+    }
+  }
+
+  /* Sehr schmale Handys (unter 360 px): Anrufen nur als Symbol, der Name bleibt für Vorleser */
+  @media (max-width: 22.4rem) {
+    .kopf__anrufen {
+      min-width: 48px;
+      justify-content: center;
+    }
+
+    .kopf__anrufen-text {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+  }
+
   .menueknopf {
     min-height: 48px;
     min-width: 48px;
@@ -1621,7 +1650,9 @@
       radial-gradient(38% 50% at 28% 42%, rgb(0 112 192 / 0.2), transparent 70%),
       radial-gradient(34% 46% at 72% 32%, rgb(255 202 36 / 0.26), transparent 70%),
       radial-gradient(28% 40% at 52% 72%, rgb(31 157 85 / 0.1), transparent 70%);
-    filter: blur(30px);
+    /* Kein Weichzeichner: die Verläufe sind schon weich, ein Filter auf der großen Fläche kostet
+       bei jedem Bild Rechenzeit. Nur transform wird animiert (läuft auf der Grafikkarte). */
+    will-change: transform;
     animation: licht-wandern 18s ease-in-out infinite alternate;
   }
 
@@ -1635,7 +1666,7 @@
 
   .hero__titel {
     margin-top: 4px;
-    max-width: 19ch;
+    max-width: 24ch;
     font-size: clamp(2.5rem, 1.3rem + 4.6vw, 5.25rem);
     line-height: 1;
     letter-spacing: -0.045em;
@@ -1670,7 +1701,7 @@
     justify-content: center;
     gap: 8px 28px;
     list-style: none;
-    margin: 28px 0 0;
+    margin: 24px 0 0;
     padding: 0;
     color: var(--color-leiendaach);
     font-size: 0.9375rem;
@@ -1705,6 +1736,45 @@
     animation-delay: 580ms;
   }
 
+  .hero__pfeil {
+    display: contents;
+  }
+
+  /* Mobil: Knöpfe nebeneinander, damit die Leistungen noch in den ersten Bildschirm passen */
+  @media (max-width: 47.999rem) {
+    .hero__aktionen {
+      margin-top: 24px;
+      gap: 10px;
+    }
+
+    .hero__aktionen .knopf--gross {
+      min-height: 52px;
+      padding: 14px 20px;
+      font-size: 1rem;
+    }
+  }
+
+  /* Schmale Handys: Logo und Kopfleiste nennen den Betrieb schon, die Pille würde zweizeilig.
+     Der Pfeil fällt weg, damit beide Knöpfe in eine Reihe passen. */
+  @media (max-width: 29.999rem) {
+    .hero {
+      padding-top: 28px;
+    }
+
+    .hero__marke,
+    .hero__pfeil {
+      display: none;
+    }
+
+    .hero__aktionen {
+      gap: 8px;
+    }
+
+    .hero__aktionen .knopf--gross {
+      padding-inline: 12px;
+    }
+  }
+
   /* ---------------- Fünf Kacheln: was wir machen, auf einen Blick ---------------- */
   .wahl {
     margin-top: 40px;
@@ -1732,6 +1802,34 @@
     list-style: none;
     margin: 0;
     padding: 0;
+  }
+
+  /* Mobil: eine Reihe zum Wischen, jede Kachel mit Symbol und Name */
+  @media (max-width: 47.999rem) {
+    .wahl {
+      margin-top: 28px;
+    }
+
+    .wahl__titel {
+      margin-bottom: 10px;
+      text-align: left;
+    }
+
+    .wahl__liste {
+      display: flex;
+      gap: 10px;
+      margin-inline: calc(var(--rand) * -1);
+      padding: 4px var(--rand) 14px;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: var(--rand);
+      scrollbar-width: none;
+    }
+
+    .wahl__liste::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   @media (min-width: 48rem) {
@@ -1896,6 +1994,125 @@
     .kachel__pfeil {
       align-self: end;
       margin-top: 16px;
+    }
+  }
+
+  /* Handys: Kachel mit Symbol über dem Namen, für die Wischreihe. Steht hinter den Grundregeln,
+     damit es sie überschreibt. */
+  @media (max-width: 47.999rem) {
+    .kachel {
+      flex: 0 0 9.5rem;
+      scroll-snap-align: start;
+    }
+
+    .kachel__link {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas: 'symbol' 'name';
+      align-content: start;
+      row-gap: 10px;
+      padding: 14px;
+    }
+
+    .kachel__symbol {
+      width: 44px;
+      height: 44px;
+      border-radius: 13px;
+    }
+
+    .kachel__name {
+      font-size: 0.9375rem;
+    }
+
+    .kachel__kurz,
+    .kachel__pfeil {
+      display: none;
+    }
+  }
+
+  /* Tablets hochkant: zwei Reihen Kacheln, deshalb kürzer, damit beide Reihen sichtbar sind */
+  @media (min-width: 48rem) and (max-width: 63.999rem) {
+    .kachel__link {
+      min-height: 0;
+      padding: 18px 18px 16px;
+    }
+
+    .kachel__symbol {
+      width: 48px;
+      height: 48px;
+      border-radius: 15px;
+      margin-bottom: 12px;
+    }
+
+    .kachel__name {
+      font-size: 1.0625rem;
+    }
+
+    .kachel__kurz {
+      font-size: 0.875rem;
+    }
+
+    .kachel__pfeil {
+      display: none;
+    }
+  }
+
+  /* Laptops mit wenig Höhe (1366 × 768, 1280 × 720 …): Hero kompakter, damit die Kacheln im
+     ersten Bildschirm stehen. Steht hinter den Kachel-Regeln, damit es sie überschreibt. Die Schrift richtet sich hier nach der Höhe, nicht nach der Breite. */
+  @media (min-width: 64rem) and (max-height: 880px) {
+    .hero {
+      padding-top: 22px;
+    }
+
+    .hero__titel {
+      font-size: clamp(2.5rem, 7.6vh, 4.25rem);
+    }
+
+    .hero__lead {
+      max-width: 46rem;
+      margin-top: 12px;
+      font-size: 1.125rem;
+    }
+
+    .hero__aktionen {
+      margin-top: 18px;
+    }
+
+    .hero__aktionen .knopf--gross {
+      min-height: 50px;
+      padding: 12px 24px;
+    }
+
+    .wahl {
+      margin-top: 24px;
+    }
+
+    .wahl__titel {
+      margin-bottom: 10px;
+    }
+
+    .kachel__link {
+      min-height: 0;
+      padding: 16px 18px;
+    }
+
+    .kachel__symbol {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      margin-bottom: 10px;
+    }
+
+    .kachel__name {
+      font-size: 1rem;
+    }
+
+    .kachel__kurz {
+      margin-top: 2px;
+      font-size: 0.8125rem;
+    }
+
+    .kachel__pfeil {
+      display: none;
     }
   }
 
@@ -4540,13 +4757,11 @@
   from {
     opacity: 0;
     translate: 0 0.35em;
-    filter: blur(6px);
   }
 
   to {
     opacity: 1;
     translate: none;
-    filter: none;
   }
 }
 
