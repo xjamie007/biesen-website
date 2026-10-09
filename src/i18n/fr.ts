@@ -110,14 +110,12 @@ const fr: Dict = {
       ortTitel: 'Nothum',
       ort: 'dans la commune du Lac de la Haute-Sûre, à environ 8 km de Wiltz',
     },
-    tagAbendText: 'De jour, on remarque à peine l’éclairage. Le soir, on voit où tombe la lumière : sur la façade, sur le chemin jusqu’à la porte et dans le jardin. Déplacez le curseur.',
     markenH2: 'Marques et affiliations',
     marken: 'L’électroménager que nous vendons',
-    bildAlt: 'Dessin d’une maison, d’une ferme et d’un hall dans l’Oesling le soir, avec la lumière allumée',
     projekteH2: 'Là où nous avons travaillé',
     alleProjekte: 'Toutes nos réalisations',
     teamH2: '26 personnes à Nothum',
-    team: 'Electricité Biesen est une entreprise familiale. 26 personnes y travaillent, sur les chantiers et au bureau. Quand vous appelez, vous parlez à quelqu’un qui peut vous aider.',
+    team: 'Electricité Biesen est une entreprise familiale. Elle compte 26 personnes, sur les chantiers et au bureau. Quand vous appelez, vous parlez à quelqu’un qui peut vous aider.',
     teamLeitung: '[UNBESTÄTIGT — Leitung und Ansprechpartner mit Rollen, siehe B3]',
     teamFoto: 'photo de l’équipe',
     jobs: 'Nous recrutons des monteuses et des monteurs.',
@@ -304,7 +302,7 @@ const fr: Dict = {
     },
     ueberUns: {
       h1: 'Une entreprise familiale à Nothum',
-      intro: 'Electricité Biesen est une entreprise familiale. 26 personnes y travaillent, sur les chantiers et au bureau. Quand vous appelez, vous parlez à quelqu’un qui peut vous aider.',
+      intro: 'Electricité Biesen est une entreprise familiale. Elle compte 26 personnes, sur les chantiers et au bureau. Quand vous appelez, vous parlez à quelqu’un qui peut vous aider.',
       leitungH2: 'Direction et interlocuteurs',
       leitung: '[UNBESTÄTIGT — Leitung und Ansprechpartner mit Rollen, siehe B3]',
       geschichteH2: 'Histoire',
@@ -354,7 +352,7 @@ const fr: Dict = {
     },
     kontakt: {
       h1: 'Demander un devis',
-      intro: 'Plus vous décrivez précisément votre projet, plus vite vous recevez un devis. Des plans ou des photos aident le plus.',
+      intro: 'Plus vous décrivez précisément votre projet, plus vite vous recevrez un devis. Des plans ou des photos nous aident beaucoup.',
       direktH2: 'Appeler ou écrire',
       anfahrt: 'Itinéraire sur OpenStreetMap',
       ablaufH2: 'Ce qui se passe après l’envoi',
@@ -558,8 +556,8 @@ const fr: Dict = {
 
   /** Prüfmodus der Vorschau (intern, in allen Sprachen deutsch) */
   pruefung: {
-    zeigen: 'Offene Punkte zeigen',
-    ausblenden: 'Offene Punkte ausblenden',
+    zeigen: 'Afficher les points ouverts',
+    ausblenden: 'Masquer les points ouverts',
   },
 
   footer: {

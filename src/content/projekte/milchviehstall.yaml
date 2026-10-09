@@ -35,12 +35,12 @@ owend:
     tag:
       de: Milchviehstall am Nachmittag, vom Futtergang aus, mit Tageslicht
       fr: L’étable l’après-midi, vue du couloir d’alimentation, à la lumière du jour
-      lb: De Stall mëttes, vum Fuddergank aus, mam Daglicht
+      lb: De Stall mëttes, vum Fuddergank aus, am Dagesliicht
       en: The cowshed in the afternoon, seen from the feed alley, in daylight
     abend:
       de: Derselbe Stall am Abend, mit eingeschalteter LED-Beleuchtung
       fr: La même étable le soir, éclairage LED allumé
-      lb: Deeselwechte Stall owes, mat der LED-Beliichtung un
+      lb: Dee selwechte Stall owes, mat der LED-Beliichtung un
       en: The same cowshed in the evening, with the LED lighting on
 startseite: true
 reihenfolge: 2

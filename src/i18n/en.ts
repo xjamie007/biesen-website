@@ -107,14 +107,12 @@ const en: Dict = {
       ortTitel: 'Nothum',
       ort: 'in the Lac de la Haute-Sûre municipality, about 8 km from Wiltz',
     },
-    tagAbendText: 'By day you hardly notice lighting. In the evening you see where the light falls: on the façade, along the path to the door and in the garden. Move the slider.',
     markenH2: 'Brands and memberships',
     marken: 'Home appliances we sell',
-    bildAlt: 'Drawing of a house, a farm and a hall in the Oesling in the evening, with the lights on',
     projekteH2: 'Where we have worked',
     alleProjekte: 'All projects',
     teamH2: '26 people in Nothum',
-    team: 'Electricité Biesen is a family business. 26 people work with us, on site and in the office. When you call, you reach someone who can help.',
+    team: 'Electricité Biesen is a family business. We are a team of 26, on site and in the office. When you call, you reach someone who can help.',
     teamLeitung: '[UNBESTÄTIGT — Leitung und Ansprechpartner mit Rollen, siehe B3]',
     teamFoto: 'team photo',
     jobs: 'We are looking for electricians.',
@@ -301,7 +299,7 @@ const en: Dict = {
     },
     ueberUns: {
       h1: 'A family business in Nothum',
-      intro: 'Electricité Biesen is a family business. 26 people work with us, on site and in the office. When you call, you reach someone who can help.',
+      intro: 'Electricité Biesen is a family business. We are a team of 26, on site and in the office. When you call, you reach someone who can help.',
       leitungH2: 'Management and contacts',
       leitung: '[UNBESTÄTIGT — Leitung und Ansprechpartner mit Rollen, siehe B3]',
       geschichteH2: 'History',
@@ -340,8 +338,8 @@ const en: Dict = {
       vertragsart: 'Contract',
       unbefristet: 'permanent',
       arbeitszeit: 'Hours',
-      vollzeit: 'full time',
-      teilzeit: 'part time',
+      vollzeit: 'full-time',
+      teilzeit: 'part-time',
       arbeitszeitFehlt: '[UNBESTÄTIGT — Vollzeit?]',
       veroeffentlicht: 'Published on {datum}',
       veroeffentlichtFehlt: '[FEHLT — Datum der Veröffentlichung]',
@@ -555,8 +553,8 @@ const en: Dict = {
 
   /** Prüfmodus der Vorschau (intern, in allen Sprachen deutsch) */
   pruefung: {
-    zeigen: 'Offene Punkte zeigen',
-    ausblenden: 'Offene Punkte ausblenden',
+    zeigen: 'Show open points',
+    ausblenden: 'Hide open points',
   },
 
   footer: {

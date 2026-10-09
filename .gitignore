@@ -10,3 +10,5 @@ deno.lock
 fonts-src/*.ttf
 scripts/dev/out/
 scripts/dev/tmp/
+scripts/sprache/lib/
+scripts/sprache/target/

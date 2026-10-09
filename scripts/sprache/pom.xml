@@ -1,0 +1,9 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>biesen</groupId><artifactId>lt</artifactId><version>1</version>
+  <dependencies>
+    <dependency><groupId>org.languagetool</groupId><artifactId>language-de</artifactId><version>6.8</version></dependency>
+    <dependency><groupId>org.languagetool</groupId><artifactId>language-fr</artifactId><version>6.8</version></dependency>
+    <dependency><groupId>org.languagetool</groupId><artifactId>language-en</artifactId><version>6.8</version></dependency>
+  </dependencies>
+</project>

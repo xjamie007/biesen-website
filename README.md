@@ -6,6 +6,7 @@ Die Besonderheit ist **„Owend“**: Ein Biesen-Projekt wird vom selben Stativ 
 
 - Offene Punkte, Fragen an den Kunden und fehlende Fotos: [`OFFENE-PUNKTE.md`](OFFENE-PUNKTE.md)
 - Luxemburgische Texte zur Prüfung durch einen Muttersprachler: [`LB-REVIEW.md`](LB-REVIEW.md)
+- Maschinelle Sprachprüfung aller vier Sprachen (Werkzeuge, Funde, Korrekturen): [`SPRACHPRUEFUNG.md`](SPRACHPRUEFUNG.md)
 
 **Stand 09.10.2026:** Dritte Runde der Gestaltung (siehe „Gestaltung“): helle Startseite, die in 15 Sekunden sagt, wer Biesen ist, was der Betrieb macht und wie man ihn erreicht; Kontaktformular in drei Schritten. Es ist noch kein Projekt freigegeben und es gibt noch kein Fotopaar. Fotostellen zeigen eine helle Fläche mit Kamerasymbol („Foto folgt: …“), offene Angaben eine kleine Marke „Fehlt“ oder „Offen“ (Wortlaut über den Schalter „Offene Punkte zeigen“). So nicht live schalten.
 
@@ -174,7 +175,7 @@ Sind die Zeiten mit dem Kunden geklärt, `"bestaetigt": true` setzen; dann versc
 
 ### Luxemburgisch prüfen lassen
 
-Jeder luxemburgische Text ist ein Entwurf und trägt das Flag `review: "lb-native"` (`src/i18n/lb.ts`, gilt auch für alle `lb`-Felder in `src/content/` und die luxemburgischen URLs). Die vollständige Liste mit deutschem Ausgangstext steht in [`LB-REVIEW.md`](LB-REVIEW.md) (heute 514 Texte), gruppiert nach Datei. Ablauf:
+Jeder luxemburgische Text ist ein Entwurf und trägt das Flag `review: "lb-native"` (`src/i18n/lb.ts`, gilt auch für alle `lb`-Felder in `src/content/` und die luxemburgischen URLs). Die vollständige Liste mit deutschem Ausgangstext steht in [`LB-REVIEW.md`](LB-REVIEW.md) (heute 512 Texte), gruppiert nach Datei. Vorher maschinell geprüft (Hunspell mit dem Wörterbuch von spellchecker.lu und die Eifeler Regel, siehe [`SPRACHPRUEFUNG.md`](SPRACHPRUEFUNG.md)); das ersetzt die Durchsicht nicht. Ablauf:
 
 1. Muttersprachler korrigiert direkt in `src/i18n/lb.ts` bzw. in den YAML-Dateien.
 2. Geprüfte Schlüssel in `src/i18n/lb-geprueft.json` eintragen (z. B. `"home.h1"`, `"projekte/milchviehstall.titel"`, `"slug.licht"`).
@@ -352,6 +353,8 @@ Die erste Fassung war sehr zurückhaltend (Weiß und Kalkputz, keine Symbole, ke
 - **TypeScript 6 statt 7:** `astro check` unterstützt TypeScript 7 noch nicht.
 
 ## Prüfprotokoll
+
+**09.10.2026, Sprachprüfung:** alle 2144 Texte der vier Sprachen maschinell geprüft, Einzelheiten in [`SPRACHPRUEFUNG.md`](SPRACHPRUEFUNG.md). Luxemburgisch: Hunspell (`dictionary-lb` von spellchecker.lu, mit `spylls`) und eine eigene Prüfung der Eifeler Regel; 54 Rechtschreibfehler und 30 Verstöße gegen die n-Regel korrigiert, 10 Wendungen umformuliert. Deutsch, Französisch, Englisch: LanguageTool 6.8 offline und Hunspell; 8 Korrekturen, der Rest als Eigennamen, Fachwörter oder Fehlalarme bewertet. Vitest 102 Tests grün.
 
 **09.10.2026, vierte Runde (Effekte nach der Nave-Website, 15-Sekunden-Test, Handy-Kacheln):**
 

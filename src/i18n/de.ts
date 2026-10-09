@@ -116,14 +116,12 @@ const de = {
       ortTitel: 'Noutem',
       ort: 'in der Stauseegemeinde, etwa 8 km von Wiltz',
     },
-    tagAbendText: 'Am Tag sieht man Licht kaum. Am Abend zeigt sich, wo es hinfällt: an der Fassade, am Weg zur Tür und im Garten. Bewegen Sie den Regler.',
     markenH2: 'Marken und Mitgliedschaften',
     marken: 'Hausgeräte, die wir verkaufen',
-    bildAlt: 'Zeichnung eines Hauses, eines Hofs und einer Halle im Ösling am Abend, mit eingeschaltetem Licht',
     projekteH2: 'Wo wir gearbeitet haben',
     alleProjekte: 'Alle Projekte',
     teamH2: '26 Leute in Noutem',
-    team: 'Electricité Biesen ist ein Familienbetrieb. 26 Leute arbeiten bei uns, auf den Baustellen und im Büro. Wenn Sie anrufen, erreichen Sie jemanden, der Ihnen weiterhilft.',
+    team: 'Electricité Biesen ist ein Familienbetrieb. Bei uns arbeiten 26 Leute, auf den Baustellen und im Büro. Wenn Sie anrufen, erreichen Sie jemanden, der Ihnen weiterhilft.',
     teamLeitung: '[UNBESTÄTIGT — Leitung und Ansprechpartner mit Rollen, siehe B3]',
     teamFoto: 'Teamfoto',
     jobs: 'Wir suchen Monteurinnen und Monteure.',
@@ -310,7 +308,7 @@ const de = {
     },
     ueberUns: {
       h1: 'Ein Familienbetrieb in Noutem',
-      intro: 'Electricité Biesen ist ein Familienbetrieb. 26 Leute arbeiten bei uns, auf den Baustellen und im Büro. Wenn Sie anrufen, erreichen Sie jemanden, der Ihnen weiterhilft.',
+      intro: 'Electricité Biesen ist ein Familienbetrieb. Bei uns arbeiten 26 Leute, auf den Baustellen und im Büro. Wenn Sie anrufen, erreichen Sie jemanden, der Ihnen weiterhilft.',
       leitungH2: 'Leitung und Ansprechpartner',
       leitung: '[UNBESTÄTIGT — Leitung und Ansprechpartner mit Rollen, siehe B3]',
       geschichteH2: 'Geschichte',
@@ -461,7 +459,7 @@ const de = {
     schrittProjekt: 'Ihr Projekt',
     schrittKontakt: 'Ihre Kontaktdaten',
     vertrauen: 'Ihre Anfrage und Ihre Dateien werden in einem Rechenzentrum in der Europäischen Union gespeichert.',
-    dateienZiehen: 'Dateien auswählen oder hierher ziehen',
+    dateienZiehen: 'Dateien auswählen oder hierherziehen',
     anliegen: {
       legende: 'Worum geht es?',
       optionen: {
