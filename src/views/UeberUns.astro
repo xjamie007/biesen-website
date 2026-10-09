@@ -1,6 +1,8 @@
 ---
-/** Über uns (E5): Familienbetrieb, Leitung [UNBESTÄTIGT], Geschichte [FEHLT], Sprachen, Mitgliedschaften als Text, Ort. */
+/** Über uns (E5): Familienbetrieb, Leitung [UNBESTÄTIGT], Geschichte [FEHLT], Sprachen, Mitgliedschaften als
+ * Markenband (Namen als Schrift), Ort. */
 import Base from '@/layouts/Base.astro';
+import Markenband from '@/components/Markenband.astro';
 import Seitenkopf from '@/components/Seitenkopf.astro';
 import Foto from '@/components/Foto.astro';
 import { escapeHtml, rich, useT } from '@/i18n';
@@ -51,7 +53,7 @@ const pfad = [
         </div>
         <div class="block">
           <h2>{s.mitgliedH2}</h2>
-          <ul class="stichpunkte stichpunkte--gross">{s.mitglied.map((m) => <li>{m}</li>)}</ul>
+          <Markenband marken={s.mitglied} label={s.mitgliedH2} id="markenband-mitglied" groesse="klein" />
           <p class="klein" set:html={rich(s.mitgliedHinweis)} />
         </div>
         <div class="block">
