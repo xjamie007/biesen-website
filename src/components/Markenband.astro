@@ -1,12 +1,15 @@
 ---
 /**
- * Markenband: die Marken als Laufband, über das ein Lichtstrahl zieht. Markennamen als Schrift,
- * keine Hersteller-Logos (D3, E3). Die erste Liste ist für Screenreader; die Kopien für das
- * nahtlose Laufen sind aria-hidden. Hält beim Überfahren an. Bei reduzierter Bewegung steht nur
- * die erste Liste da, ruhig und umbrechend.
+ * Markenband: die Marken als Laufband, über das ein Lichtstrahl zieht. Gibt es ein Logo
+ * (src/lib/marken.ts), steht es einfarbig da und zeigt beim Überfahren seine Farbe; sonst steht
+ * der Name als Schrift (D3, E3). Die erste Liste ist für Screenreader (Logo mit role="img" und dem
+ * Namen); die Kopien für das nahtlose Laufen sind aria-hidden. Hält beim Überfahren an. Bei
+ * reduzierter Bewegung steht nur die erste Liste da, ruhig und umbrechend.
  *
  * Nur Marken eintragen, die der Kunde bestätigt hat (src/lib/leistungen.ts).
  */
+import { logoFaktor, MARKEN_LOGOS } from '@/lib/marken';
+
 interface Props {
   marken: readonly string[];
   /** Überschrift über dem Band; ohne Titel braucht es ein label für die Liste */
@@ -14,23 +17,42 @@ interface Props {
   label?: string;
   id?: string;
   groesse?: 'gross' | 'klein';
+  /** läuft andersherum (für ein zweites Band direkt darunter) */
+  rueckwaerts?: boolean;
 }
-const { marken, titel, label, id = 'markenband', groesse = 'gross' } = Astro.props;
+const { marken, titel, label, id = 'markenband', groesse = 'gross', rueckwaerts = false } = Astro.props;
 const titelId = `${id}-titel`;
+const eintraege = marken.map((name) => {
+  const logo = MARKEN_LOGOS[name];
+  return {
+    name,
+    stil: logo
+      ? `--logo:url(${logo.bild.src});--seite:${(logo.bild.width / logo.bild.height).toFixed(3)};--faktor:${logoFaktor(logo)};--farbe:${logo.farbe}`
+      : undefined,
+  };
+});
 ---
-<div class:list={['markenband', `markenband--${groesse}`]}>
+<div class:list={['markenband', `markenband--${groesse}`, { 'markenband--rueckwaerts': rueckwaerts }]}>
   {titel && <p class="markenband__titel" id={titelId}>{titel}</p>}
   <div class="markenband__fenster">
     <div class="markenband__spur">
-      <ul class="markenband__liste" aria-labelledby={titel ? titelId : undefined} aria-label={titel ? undefined : label}>
-        {marken.map((m) => <li class="markenband__marke">{m}</li>)}
-      </ul>
       {
-        [1, 2, 3].map(() => (
-          <ul class="markenband__liste" aria-hidden="true">
-            {marken.map((m) => (
-              <li class="markenband__marke">{m}</li>
-            ))}
+        [0, 1, 2, 3].map((n) => (
+          <ul
+            class="markenband__liste"
+            aria-hidden={n > 0 ? 'true' : undefined}
+            aria-labelledby={n === 0 && titel ? titelId : undefined}
+            aria-label={n === 0 && !titel ? label : undefined}
+          >
+            {eintraege.map((m) =>
+              m.stil ? (
+                <li class="markenband__marke markenband__marke--logo" style={m.stil}>
+                  <span class="markenband__logo" role={n === 0 ? 'img' : undefined} aria-label={n === 0 ? m.name : undefined} />
+                </li>
+              ) : (
+                <li class="markenband__marke">{m.name}</li>
+              ),
+            )}
           </ul>
         ))
       }

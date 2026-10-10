@@ -8,7 +8,8 @@
  * 3. Die Leistungen ausführlich (Karten).
  * 4. Über uns: ein Satz, der beim Scrollen Wort für Wort aufleuchtet, Zahlen, offene Stellen.
  * 5. Weg zum Angebot in vier Schritten mit Fortschrittslinie.
- * 6. Projekte (erst, wenn welche freigegeben sind), Marken und Mitgliedschaften, Fragen, Kontakt.
+ * 6. Projekte (erst, wenn welche freigegeben sind), Marken und Mitgliedschaften (zwei Laufbänder mit
+ *    Logos, gegenläufig), Fragen, Kontakt.
  */
 import type { ImageMetadata } from 'astro';
 import Base from '@/layouts/Base.astro';
@@ -320,16 +321,15 @@ const ogBild =
       <h2 id="marken-h" class="sektion__kopf sektion__kopf--mitte">{t.home.markenH2}</h2>
     </div>
     <Markenband marken={MARKEN} titel={t.home.marken} />
+    <Markenband
+      marken={t.seiten.ueberUns.mitglied}
+      titel={t.seiten.ueberUns.mitgliedH2}
+      id="markenband-mitglied-start"
+      groesse="klein"
+      rueckwaerts
+    />
     <div class="raster">
-      <div class="marken__inhalt">
-        <div class="marken__gruppe">
-          <p class="label">{t.seiten.ueberUns.mitgliedH2}</p>
-          <ul class="stichpunkte stichpunkte--gross">
-            {t.seiten.ueberUns.mitglied.map((m) => <li>{m}</li>)}
-          </ul>
-          <p class="klein marken__hinweis" set:html={rich(t.seiten.ueberUns.mitgliedHinweis)} />
-        </div>
-      </div>
+      <p class="klein marken__hinweis" set:html={rich(t.seiten.ueberUns.mitgliedHinweis)} />
     </div>
   </section>
 

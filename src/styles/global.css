@@ -2292,6 +2292,47 @@
     color: var(--color-nuecht);
   }
 
+  /* Logos: einfarbig als Maske in derselben Farbe wie die Namen, beim Überfahren in Markenfarbe.
+     Höhe mit optischem Ausgleich (--faktor aus src/lib/marken.ts) */
+  .markenband {
+    --logo-hoehe: clamp(30px, 18px + 2.1vw, 50px);
+  }
+
+  .markenband--klein {
+    --logo-hoehe: clamp(20px, 15px + 0.7vw, 28px);
+  }
+
+  .markenband__logo {
+    display: block;
+    height: calc(var(--logo-hoehe) * var(--faktor, 1));
+    aspect-ratio: var(--seite, 3);
+    background-color: color-mix(in srgb, var(--color-nuecht) 46%, transparent);
+    -webkit-mask: var(--logo) center / contain no-repeat;
+    mask: var(--logo) center / contain no-repeat;
+    transition: background-color 260ms ease;
+  }
+
+  .markenband__marke--logo:hover .markenband__logo {
+    background-color: var(--farbe, var(--color-nuecht));
+  }
+
+  @media (forced-colors: active) {
+    .markenband__logo {
+      background-color: CanvasText;
+      forced-color-adjust: none;
+    }
+  }
+
+  /* Zweites Band darunter läuft andersherum */
+  .markenband--rueckwaerts .markenband__spur {
+    animation-direction: reverse;
+  }
+
+  .markenband--rueckwaerts .markenband__fenster::before {
+    animation-direction: reverse;
+    animation-delay: -3s;
+  }
+
   .markenband--klein {
     padding-block: 12px;
   }
@@ -3165,6 +3206,23 @@
     line-height: 1.4;
   }
 
+  /* Lange Wörter (z. B. „Gemeinschaftsantennen“) dürfen auf schmalen Handys trennen */
+  .haken li > span {
+    min-width: 0;
+  }
+
+  /* Sehr schmale Handys: etwas weniger Innenabstand, damit „Gemeinschaftsantennen“ ganz in die Zeile
+     passt (ohne Trennwörterbuch würde der Browser das Wort sonst mitten durchbrechen oder überstehen) */
+  @media (max-width: 24.99rem) {
+    .leistungsblock {
+      padding: 20px 16px;
+    }
+
+    .leistungsblock__punkte {
+      padding: 18px 14px;
+    }
+  }
+
   .haken svg {
     margin-top: 1px;
     padding: 3px;
@@ -3601,20 +3659,9 @@
     margin-bottom: 8px;
   }
 
-  .marken__inhalt {
-    display: grid;
-    gap: 12px;
-    max-width: 52rem;
-    margin: 12px auto 0;
-    text-align: center;
-  }
-
-  .marken__inhalt .stichpunkte {
-    justify-content: center;
-  }
-
   .marken__hinweis {
-    margin-top: 12px;
+    margin-top: 4px;
+    text-align: center;
   }
 
   /* Hausgeräte: das Band direkt unter dem Seitenkopf */

@@ -39,5 +39,5 @@ export function kartenPunkte(t: Dict, page: ServicePage): string[] {
   return leistungsPunkte(t, page);
 }
 
-/** Marken der Hausgeräte, als Text (keine Hersteller-Logos), wie in den Texten der Hausgeräte */
+/** Marken der Hausgeräte, wie in den Texten der Hausgeräte; im Markenband mit Logo (src/lib/marken.ts) */
 export const MARKEN = ['AEG', 'Miele', 'Liebherr', 'Bosch', 'Siemens'] as const;
