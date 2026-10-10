@@ -3,8 +3,12 @@
  * Owend auf der Lichtseite (C6): Überblendung mit einem Regler, den die Besucher selbst bewegen.
  * Ohne JavaScript ist der Regler ausgeblendet und beide Fotos stehen nebeneinander (ab 768 px)
  * oder untereinander, jedes mit seiner Uhrzeit. Kein Vorher-Nachher-Schieber mit Trennlinie.
+ * Fehlt das Paar, steht ein einzelnes Symbolbild da (wenn eines passt) oder der Platzhalter;
+ * ein Paar wird nie aus Stockfotos gebaut.
  */
 import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Foto from './Foto.astro';
 import { fmt, rich, type Dict } from '@/i18n';
 import type { Paar } from '@/lib/projekte';
 
@@ -12,8 +16,10 @@ interface Props {
   t: Dict;
   paar: Paar;
   headingLevel?: 'h2' | 'h3' | null;
+  /** Symbolbild, solange das Paar fehlt */
+  symbol?: { bild: ImageMetadata; alt: string; fokus?: string };
 }
-const { t, paar } = Astro.props;
+const { t, paar, symbol } = Astro.props;
 const b = paar.bilder;
 const id = `regler-${paar.id}`;
 const sizes = '(min-width: 1024px) 1240px, 100vw';
@@ -60,6 +66,17 @@ const caption =
       </div>
       <figcaption class="klein neben" set:html={caption} />
     </figure>
+  ) : symbol ? (
+    <Foto
+      class="paar-symbol"
+      bild={symbol.bild}
+      alt={symbol.alt}
+      folgt={t.allgemein.fotopaarFolgt}
+      motiv={paar.motiv}
+      fokus={symbol.fokus}
+      hinweis={`${t.allgemein.symbolbild} · ${fmt(t.allgemein.fotopaarFolgt, { motiv: paar.motiv })}`}
+      sizes="(min-width: 1024px) 400px, 100vw"
+    />
   ) : (
     <figure class="foto foto--3-2">
       <div class="platzhalter" role="img" aria-label={fmt(t.allgemein.fotopaarFolgt, { motiv: paar.motiv })}>

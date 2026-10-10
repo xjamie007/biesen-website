@@ -31,11 +31,11 @@ export function commonTypo(s: string): string {
     .replace(/(\+352) 95/g, `$1${NBSP}95`);
 }
 
-type Deep = string | string[] | { [k: string]: Deep };
+type Deep = string | Deep[] | { [k: string]: Deep };
 
 function mapDeep(v: Deep, f: (s: string) => string, key = ''): Deep {
   if (typeof v === 'string') return key === 'title' || key === 'description' ? v : f(v);
-  if (Array.isArray(v)) return v.map(f);
+  if (Array.isArray(v)) return v.map((x) => mapDeep(x, f));
   const out: Record<string, Deep> = {};
   for (const [k, x] of Object.entries(v)) out[k] = mapDeep(x, f, k);
   return out;

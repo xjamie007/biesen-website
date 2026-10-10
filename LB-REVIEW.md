@@ -3,7 +3,7 @@
 Jeder luxemburgische Text ist ein Entwurf und trägt das Flag `review: "lb-native"`, bis er in `src/i18n/lb-geprueft.json` eingetragen ist.
 Diese Datei schreibt `npm run lb-review`; bitte nicht von Hand ändern. Korrekturen direkt in `src/i18n/lb.ts` bzw. in den YAML-Dateien, danach den Schlüssel in `lb-geprueft.json` eintragen.
 
-Stand: 512 Texte offen, 0 geprüft.
+Stand: 531 Texte offen, 0 geprüft.
 
 ## Übersetzungsdatei src/i18n/lb.ts
 
@@ -38,9 +38,19 @@ Stand: 512 Texte offen, 0 geprüft.
 | `allgemein.adresse` | Adresse | Adress |
 | `allgemein.fotoFolgt` | Foto folgt: {motiv} | Foto kënnt nach: {motiv} |
 | `allgemein.fotopaarFolgt` | Fotopaar folgt: {motiv} | Fotopaar kënnt nach: {motiv} |
+| `allgemein.symbolbild` | Symbolbild | Symbolbild |
 | `allgemein.nichtFreigegeben` | nicht freigegeben | net fräiginn |
 | `allgemein.passendeProjekte` | Projekte | Projeten |
 | `allgemein.passendeFragen` | Häufige Fragen | Heefeg Froen |
+| `stock.verteiler` | Offener Verteiler mit Leitungsschutzschaltern und verdrahteten Klemmen | En oppene Verdeeler mat Sécherungen a Kabelen |
+| `stock.monteur` | Elektriker bohrt mit dem Akkuschrauber an einer Holzfassade | En Elektriker schafft mat der Buermaschinn un enger Fassad aus Holz |
+| `stock.montage` | Techniker mit Schutzhelm montiert ein Gerät an einer Glaswand | En Techniker mat Helm montéiert en Apparat un enger Wand aus Glas |
+| `stock.wohnhausGarten` | Modernes Wohnhaus mit Garten und Terrasse | Modernt Wunnhaus mat Gaart an Terrass |
+| `stock.pvMontage` | Montage von Photovoltaikmodulen mit dem Akkuschrauber | Photovoltaik-Modulle gi mat der Buermaschinn montéiert |
+| `stock.pvDach` | Photovoltaikanlage auf einem Dach in der Abenddämmerung, dahinter Berge | Photovoltaikanlag op engem Daach am Owend, mat Bierger am Hannergrond |
+| `stock.pendelleuchten` | Leuchtende Pendelleuchten vor einer dunklen Holzwand | Luuchten, déi brennen, virun enger donkeler Mauer aus Holz |
+| `stock.kueche` | Küchenzeile aus Holz mit Steinplatte und Wasserkocher | Kichemiwwel aus Holz, drop Uebst an e Waasserkessel |
+| `stock.linienlicht` | Arbeitsplätze unter Linienleuchten an der Decke | Aarbechtsplazen ënner laange Luuchten |
 | `leistungen.installation.name` | Neubau und Renovierung | Neibau a Renovatioun |
 | `leistungen.installation.kurz` | Elektrik für neue und alte Häuser | Elektresch fir nei an al Haiser |
 | `leistungen.installation.text` | Wir planen und verlegen die Elektrik für neue Häuser, auch für Fertighäuser, und bringen alte Anlagen auf den heutigen Stand: Verteiler, Leitungen, Steckdosen, Gemeinschaftsantennen und Gebäudesteuerung mit KNX. | Mir plangen a leeën d’Elektresch fir nei Haiser, och fir Fäerdeghaiser, a bréngen al Installatiounen op den aktuelle Stand: Verdeeler, Leedungen, Steckdousen, Gemeinschaftsantennen a Gebaisteierung mat KNX. |
@@ -216,6 +226,15 @@ Stand: 512 Texte offen, 0 geprüft.
 | `seiten.ueberUns.intro` | Electricité Biesen ist ein Familienbetrieb. Bei uns arbeiten 26 Leute, auf den Baustellen und im Büro. Wenn Sie anrufen, erreichen Sie jemanden, der Ihnen weiterhilft. | Electricité Biesen ass e Familljebetrib. Bei eis schaffe 26 Leit, op de Chantieren an am Büro. Wann Dir urufft, kritt Dir een um Telefon, deen Iech weiderhëlleft. |
 | `seiten.ueberUns.leitungH2` | Leitung und Ansprechpartner | Leedung an Uspriechpartner |
 | `seiten.ueberUns.geschichteH2` | Geschichte | Geschicht |
+| `seiten.ueberUns.geschichteSchritte[0].jahr` | 1976 | 1976 |
+| `seiten.ueberUns.geschichteSchritte[0].titel` | Der Anfang | Den Ufank |
+| `seiten.ueberUns.geschichteSchritte[0].text` | Ein Biesen gründet mit Partnern einen Elektrobetrieb im Ösling. | E Biesen grënnt mat Partner eng Elektrofirma am Éislek. |
+| `seiten.ueberUns.geschichteSchritte[1].jahr` | 2020 | 2020 |
+| `seiten.ueberUns.geschichteSchritte[1].titel` | Electricité Biesen SA | Electricité Biesen SA |
+| `seiten.ueberUns.geschichteSchritte[1].text` | Aus dem Betrieb wird die Electricité Biesen SA, mit Sitz in Noutem. | Aus der Firma gëtt d’Electricité Biesen SA, mam Sëtz zu Noutem. |
+| `seiten.ueberUns.geschichteSchritte[2].jahr` | Heute | Haut |
+| `seiten.ueberUns.geschichteSchritte[2].titel` | In Familienhand | E Familljebetrib |
+| `seiten.ueberUns.geschichteSchritte[2].text` | Die Familie Biesen führt den Betrieb. 26 Leute arbeiten bei uns, auf den Baustellen und im Büro. | D’Famill Biesen féiert de Betrib. Bei eis schaffe 26 Leit, op de Chantieren an am Büro. |
 | `seiten.ueberUns.spracheH2` | Sprachen | Sproochen |
 | `seiten.ueberUns.sprache` | Im Team sprechen wir Französisch und Deutsch, viele auch Luxemburgisch oder Portugiesisch. [UNBESTÄTIGT — welche Sprachen Kunden angeboten werden] | An der Equipe schwätze mir Franséisch an Däitsch, vill och Lëtzebuergesch oder Portugisesch. [UNBESTÄTIGT — welche Sprachen Kunden angeboten werden] |
 | `seiten.ueberUns.mitgliedH2` | Mitgliedschaften und Labels | Memberschaften a Labelen |

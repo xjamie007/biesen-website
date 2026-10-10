@@ -9,7 +9,7 @@ import de from '../src/i18n/de.ts';
 import site from '../src/content/site.json' with { type: 'json' };
 import zeiten from '../src/content/oeffnungszeiten.json' with { type: 'json' };
 
-type Deep = string | string[] | { [k: string]: Deep };
+type Deep = string | Deep[] | { [k: string]: Deep };
 const MARKE = /\[(FEHLT|UNBESTÄTIGT)(?:\s*[—–:-]\s*([^\]]*))?\]/g;
 
 /** Wo ein Übersetzungsschlüssel auf der Website erscheint */
@@ -48,7 +48,7 @@ function seiteVon(key: string): string {
 
 function blaetter(d: Deep, pfad = ''): [string, string][] {
   if (typeof d === 'string') return [[pfad, d]];
-  if (Array.isArray(d)) return d.map((x, i) => [`${pfad}[${i}]`, x]);
+  if (Array.isArray(d)) return d.flatMap((x, i) => blaetter(x, `${pfad}[${i}]`));
   return Object.entries(d).flatMap(([k, v]) => blaetter(v, pfad ? `${pfad}.${k}` : k));
 }
 
@@ -110,13 +110,14 @@ const md = [
   '## 1. Fragen an den Kunden (B9)',
   '',
   '1. **Öffnungs- und Telefonzeiten:** 08:00 mit Mittagspause oder 07:30–16:30 durchgehend? Feiertage, Betriebsferien. → `src/content/oeffnungszeiten.json`',
-  '2. **Freigegebener Absatz zur Geschichte** (B4). Bis dahin keine Jahreszahlen, kein „seit“, kein `foundingDate`. → `seiten.ueberUns.geschichte`',
+  '2. **Geschichte freigeben** (B4). Auf „Über uns“ steht ein Entwurf als Zeitleiste: 1976 Gründung eines Elektrobetriebs im Ösling, ein Biesen ist Mitgründer; 2020 Electricité Biesen SA in Noutem; heute in Familienhand mit 26 Leuten. Quellen: heutige Website (Über uns), wedo.lu, Handelsregister (RCS B243775, gegründet 27.04.2020). Zu klären: Stimmt 1976 (ein Verzeichnis nennt Erfahrung seit 1965)? Darf die Trennung im Jahr 2000 erwähnt werden? Vorgängerfirmen werden nicht genannt, kein „seit“, kein `foundingDate`. → `seiten.ueberUns.geschichte`, `geschichteSchritte`',
   '3. **Vertretung der S.A. und Verantwortlicher fürs Impressum;** MwSt-Nummer in VIES prüfen. → Impressum',
   '4. **Hausgeräte:** Ausstellung in Nothum? Lieferung, Anschluss, Reparatur? Aktuelle Marken, Recht zur Nennung. → Hausgeräte, FAQ 7',
   '4a. **Marken für Photovoltaik, Wechselrichter, Ladestationen, Licht, Alarm und Kameras**, die genannt werden dürfen? Dann bekommt jede dieser Leistungsseiten ein Markenband wie die Hausgeräte. (Weder diese Website noch die heutige nennen bisher welche.)',
   '5. **Einsatzgebiet** (Gemeinden; auch Belgien?), **Störungsdienst** ja oder nein. Bis dahin kein `areaServed`, keine Notdienst-Frage. → FAQ 1',
   '6. **Anfragen:** Wer liest sie (`FORM_RECIPIENT`), wie schnell kommt eine Antwort, ist das Angebot kostenlos (auch mit Termin vor Ort)? → Danke-Seite, FAQ 3',
   '7. **Shooting der Tag-und-Abend-Fotopaare** (C5, Anleitung im README); Freigabe der Projekte mit Ortschaft; welcher Stollen; Teamfoto und Namen. → Abschnitt 3',
+  '7a. **Symbolbilder ersetzen.** Bis eigene Fotos da sind, stehen Stockfotos (Unsplash-Lizenz, Herkunft in `src/assets/stock/QUELLEN.md`) in den Leistungskarten der Startseite, oben auf drei Leistungsseiten, auf „Über uns“ statt des Teamfotos und auf der Lichtseite statt zweier Fotopaare. Unter jedem steht „Symbolbild“. Eigene Fotos für Elektroinstallation, Photovoltaik, Alarm und Hausgeräte? Sollen die Symbolbilder bis dahin online gehen?',
   '8. **Logo als Vektordatei.** Danach Favicon aus dem gelben Blitz auf Noutem-Blau (`scripts/assets/favicon.py`) und `Logo.astro` auf SVG umstellen.',
   '9. **DNS-Zugang** für electricite-biesen.lu und biesen.lu (vermutlich bei Wedo Solutions); Mailversand über einen EU-Anbieter (SPF/DKIM für die Absenderadresse). → README „Livegang“',
   '10. **Facebook-URL;** Google-Unternehmensprofil übernehmen (README, G4).',

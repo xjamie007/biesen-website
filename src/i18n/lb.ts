@@ -49,12 +49,24 @@ const lb: Dict = {
     adresse: 'Adress',
     fotoFolgt: 'Foto kënnt nach: {motiv}',
     fotopaarFolgt: 'Fotopaar kënnt nach: {motiv}',
+    symbolbild: 'Symbolbild',
     nichtFreigegeben: 'net fräiginn',
     projekteFehlen: '[FEHLT — freigegebene Projekte mit Ortschaft, Jahr und Text]',
     passendeProjekte: 'Projeten',
     passendeFragen: 'Heefeg Froen',
   },
 
+  stock: {
+    verteiler: 'En oppene Verdeeler mat Sécherungen a Kabelen',
+    monteur: 'En Elektriker schafft mat der Buermaschinn un enger Fassad aus Holz',
+    montage: 'En Techniker mat Helm montéiert en Apparat un enger Wand aus Glas',
+    wohnhausGarten: 'Modernt Wunnhaus mat Gaart an Terrass',
+    pvMontage: 'Photovoltaik-Modulle gi mat der Buermaschinn montéiert',
+    pvDach: 'Photovoltaikanlag op engem Daach am Owend, mat Bierger am Hannergrond',
+    pendelleuchten: 'Luuchten, déi brennen, virun enger donkeler Mauer aus Holz',
+    kueche: 'Kichemiwwel aus Holz, drop Uebst an e Waasserkessel',
+    linienlicht: 'Aarbechtsplazen ënner laange Luuchten',
+  },
   leistungen: {
     installation: {
       name: 'Neibau a Renovatioun',
@@ -311,7 +323,12 @@ const lb: Dict = {
       leitungH2: 'Leedung an Uspriechpartner',
       leitung: '[UNBESTÄTIGT — Leitung und Ansprechpartner mit Rollen, siehe B3]',
       geschichteH2: 'Geschicht',
-      geschichte: '[FEHLT — freigegebener Absatz zur Geschichte, siehe B4]',
+      geschichte: '[UNBESTÄTIGT — nach der heutigen Website (Über uns), wedo.lu und dem Handelsregister (RCS B243775, gegründet 27.04.2020); Jahreszahlen und Wortlaut gibt der Kunde frei, siehe B4]',
+      geschichteSchritte: [
+        { jahr: '1976', titel: 'Den Ufank', text: 'E Biesen grënnt mat Partner eng Elektrofirma am Éislek.' },
+        { jahr: '2020', titel: 'Electricité Biesen SA', text: 'Aus der Firma gëtt d’Electricité Biesen SA, mam Sëtz zu Noutem.' },
+        { jahr: 'Haut', titel: 'E Familljebetrib', text: 'D’Famill Biesen féiert de Betrib. Bei eis schaffe 26 Leit, op de Chantieren an am Büro.' },
+      ],
       spracheH2: 'Sproochen',
       sprache: 'An der Equipe schwätze mir Franséisch an Däitsch, vill och Lëtzebuergesch oder Portugisesch. [UNBESTÄTIGT — welche Sprachen Kunden angeboten werden]',
       mitgliedH2: 'Memberschaften a Labelen',

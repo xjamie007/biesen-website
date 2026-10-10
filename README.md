@@ -118,7 +118,7 @@ freigabe: true                  # nur true erscheint im Produktiv-Build
 
 - Fotos in Originalauflösung nach `src/assets/projekte/` legen; der Build rechnet sie in AVIF und WebP (480, 768, 1080, 1600, 2000 px) um, nie größer als das Original. Hausnummern, Kennzeichen und Gesichter von Unbeteiligten vorher unkenntlich machen.
 - Die vorhandenen Einträge (Milchviehstall, Fertighaus-Module, Ösling-Haus, Halle, Treppe, Stollen) haben `freigabe: false` und leere Felder. In jeder Datei steht oben, welches Original aus der alten Galerie anzufragen ist.
-- Die Fotos der Leistungskarten auf der Startseite (Neubau und Licht) kommen aus den Projekten `fertighaus-module` und `milchviehstall`, sobald diese freigegeben sind. Bis dahin sind es Karten ohne Foto.
+- Die Fotos der Leistungskarten auf der Startseite (Neubau und Licht) kommen aus den Projekten `fertighaus-module` und `milchviehstall`, sobald diese freigegeben sind. Bis dahin, und für die anderen drei Leistungen, steht dort ein Symbolbild (siehe unten).
 
 ### Fotopaare (Owend)
 
@@ -134,9 +134,18 @@ owend:
 ```
 
 - **Startseite:** zeigt seit 09.10.2026 kein Fotopaar mehr. Das erste Projekt mit Fotopaar und `startseite: true` (heute das Ösling-Haus als Kandidat) liefert weiter das Open-Graph-Bild.
-- **Lichtseite:** alle Projekte mit Fotopaar, höchstens fünf, jedes mit Regler. Geplante Paare erscheinen bis zum Shooting als „Fotopaar folgt: [Motiv]“; solange es nur Platzhalter sind, stehen sie klein nebeneinander.
+- **Lichtseite:** alle Projekte mit Fotopaar, höchstens fünf, jedes mit Regler. Geplante Paare erscheinen bis zum Shooting als „Fotopaar folgt: [Motiv]“; solange es nur Platzhalter sind, stehen sie klein nebeneinander. Für Ösling-Haus und Halle steht bis dahin ein einzelnes Symbolbild mit „Symbolbild · Fotopaar folgt: …“ darunter (`STOCK_PAAR` in `src/lib/stock.ts`); es ersetzt nie ein Paar und hat keinen Regler. Bilder stehen vor den Platzhaltern, dann in zwei Spalten.
 - **Uhrzeiten:** Bleibt `uhrzeit` leer, liest der Build die Aufnahmezeit (EXIF DateTimeOriginal) aus der JPEG-Datei. Die Bildunterschrift lautet dann z. B. „Eschweiler, Milchviehstall mit LED-Licht. Fotografiert um 14:10 und um 21:40 Uhr.“
 - **Open-Graph-Bild:** Ist das Startseiten-Paar freigegeben, erzeugt der Build `og/startseite.png` aus dem Abendfoto (Logo klein unten links auf einem weißen Streifen). Bis dahin gilt `public/og/biesen.png`.
+
+### Symbolbilder (Stockfotos)
+
+Bis eigene Fotos da sind, füllen Stockfotos die leeren Stellen: die fünf Leistungskarten der Startseite, ein breites Foto unter dem Seitenkopf von Neubau, Photovoltaik und Alarm (die Lichtseite hat die Fotopaare, die Hausgeräte-Seite das Markenband), „Über uns“ statt des Teamfotos und zwei der vier Fotopaare der Lichtseite. Unter jedem steht klein „Symbolbild“ (FR „Photo d’illustration“, EN „Stock photo“), auf „Über uns“ und der Lichtseite zusätzlich, was folgt („Symbolbild · Foto folgt: Teamfoto“). Kein Text auf dem Foto.
+
+- Dateien in `src/assets/stock/`, Herkunft und Lizenz je Datei in [`src/assets/stock/QUELLEN.md`](src/assets/stock/QUELLEN.md) (alle Unsplash-Lizenz; bezogen über öffentliche Demo-Repositories, weil Unsplash, Pexels, Pixabay und Wikimedia aus der Arbeitsumgebung gesperrt sind). Lesbare Herstellernamen (Schütze im Verteiler, Bohrmaschine, Handschuh) sind weichgezeichnet; ein Foto mit Markenhandschuh ist wieder rausgeflogen.
+- Zuordnung in `src/lib/stock.ts` (`STOCK_KARTE`, `STOCK_SEITE`, `STOCK_PAAR`, Ausschnitt in `STOCK_FOKUS`), Alt-Texte unter `stock.*` in den vier Sprachen.
+- Ein freigegebenes Projektfoto geht auf der Startseite automatisch vor. Für die übrigen Stellen: Datei in `src/assets/stock/` durch ein eigenes Foto ersetzen (oder die Zuordnung entfernen) und den Alt-Text anpassen; das Wort „Symbolbild“ gehört dann weg (`hinweis` in `Home.astro`, `LeistungsSeite.astro`, `UeberUns.astro`, `OwendRegler.astro`).
+- Bewusst nicht: Porträts als „Team“, Paare aus zwei Stockfotos, Fotos anderer Nave-Kunden. Für Milchviehstall und Treppenhaus gab es kein passendes freies Foto, dort bleibt der Platzhalter. Offener Punkt 7a.
 
 ### Stellen
 
@@ -343,6 +352,7 @@ Die erste Fassung war sehr zurückhaltend (Weiß und Kalkputz, keine Symbole, ke
 - **JobPosting erst mit Datum:** `datePosted` fehlt [FEHLT]; ohne Datum wären die strukturierten Daten ungültig. Die Job-Seiten stehen, das `JobPosting` erscheint, sobald `veroeffentlicht` eingetragen ist.
 - **FAQPage nur mit bestätigten Antworten:** Fragen mit `[UNBESTÄTIGT]`/`[FEHLT]` stehen sichtbar auf der Seite, aber nicht im JSON-LD. Heute sind es zwei (Angebot, Fertighaus).
 - **Kein `areaServed`, kein Zitat, keine Sterne, kein `foundingDate`** (B4, B5, G3).
+- **Geschichte mit Jahreszahlen (Abweichung von B4, Wunsch von Nave am 10.10.2026):** Das Briefing wollte bis zum freigegebenen Absatz keine Jahreszahlen. Auf Wunsch von Nave steht auf „Über uns“ jetzt ein recherchierter Entwurf als Zeitleiste (1976 · 2020 · heute), markiert `[UNBESTÄTIGT …]` bis zur Freigabe. Quellen: die heutige Website [electricite-biesen.lu/uber-uns](https://electricite-biesen.lu/uber-uns/), [wedo.lu](https://wedo.lu/en/company/entreprise-d-electricite-biesen), Handelsregister über [pappers.lu](https://www.pappers.lu/en/company/entreprise-delectricite-biesen-sa-B243775) und [northdata.com](https://www.northdata.com/Entreprise%20d'%C3%89lectricit%C3%A9%20Biesen%20SA,%20Nothum/B243775) (Entreprise d’électricité Biesen S.A., RCS B243775, gegründet 27.04.2020, 14 Duerfstrooss, Nothum). Weiter gilt aus B4: **keine Vorgängerfirma beim Namen** (die heutige Website nennt sie; ein Betrieb gleichen Namensteils besteht weiter, Verwechslungsgefahr), deshalb „ein Biesen gründet mit Partnern …“; die Trennung im Jahr 2000 steht nicht da; kein „seit …“, keine „Jahre Erfahrung“, kein `foundingDate`. Widerspruch zum Klären: ein Verzeichnis nennt Erfahrung seit 1965. Der Test (`tests/inhalt.test.ts`) erlaubt die Jahreszahlen nur in `geschichteSchritte` und nur, solange davor die Marke `[UNBESTÄTIGT …]` steht.
 - **Fehlerseite der Function:** siehe „Formular“ (HTML nur mit eigener Supabase-Domain).
 - **Fehlerfarbe:** Die Palette hat kein Rot. Fehler stehen in Lei, fett, mit einem Balken davor; das Feld bekommt einen 2-px-Rahmen in Lei. Farbe ist nie der einzige Hinweis.
 - **„Leistungen“ im Kopf:** Mit JavaScript klappt eine Karte mit allen fünf Leistungen (Symbol und Name) und dem Link „Alle Leistungen im Überblick“ auf. Der Knopf trägt `aria-expanded`; ohne JavaScript ist er ein Link auf die Übersichtsseite.
@@ -354,6 +364,16 @@ Die erste Fassung war sehr zurückhaltend (Weiß und Kalkputz, keine Symbole, ke
 - **TypeScript 6 statt 7:** `astro check` unterstützt TypeScript 7 noch nicht.
 
 ## Prüfprotokoll
+
+**10.10.2026, Geschichte und Symbolbilder:**
+
+| Prüfung | Ergebnis |
+|---|---|
+| Vitest, `astro check`, Build-Prüfung | 103 Tests grün (neu: Jahreszahlen der Geschichte nur mit Marke); 0 Fehler, 0 Warnungen; 73 HTML-Dateien ohne Befund (keine Vorgängerfirma, kein `foundingDate`) |
+| Lighthouse 13.5 mobil | `/de/`, `/de/ueber-uns/`, `/de/elektroinstallation/`, `/de/licht/`, `/lb/iwwer-eis/`: Performance 99–100, sonst 100; LCP 1,5–1,7 s, CLS 0 (jetzt mit Fotos) |
+| Layout | 12 Seiten (DE, FR, LB, EN) bei 360, 390, 768, 1024 und 1440 px: kein waagerechtes Scrollen, keine Konsolenfehler; Screenshots von Karten, Seitenfotos, Lichtpaaren und Zeitleiste am Handy und Desktop |
+| Sprache | neue Texte (Alt-Texte, Zeitleiste) mit Hunspell in vier Sprachen und der n-Regel geprüft; LB umformuliert, bis nur Eigennamen und „Elektrofirma“, „Symbolbild“ (Zusammensetzungen) übrig blieben; 0 Verstöße gegen die n-Regel. In `LB-REVIEW.md` zur muttersprachlichen Durchsicht. |
+| Fotos | jedes Foto in voller Größe angesehen: lesbare Herstellernamen weichgezeichnet (Verteiler, Bohrmaschine, Handschuh), ein Foto mit Markenhandschuh entfernt |
 
 **09.10.2026, Markenband:** Hausgeräte-Seite, Startseite, Leistungsübersicht in vier Sprachen und von 360 bis 1366 px geprüft: Liste mit Namen für Screenreader, nur eine Liste bei reduzierter Bewegung, Strahl im Bild messbar (gelbe Pixel je Bild). Lighthouse fand dabei einen echten Fehler: auf dem Handy war der Hausgeräte-Block der Leistungsübersicht 2152 px breit (Text abgeschnitten, Barrierefreiheit 96); mit `contain: inline-size` behoben, danach `/de/`, `/de/leistungen/`, `/lb/leeschtungen/`, `/de/hausgeraete/` mobil und Desktop achtmal 100 / 100 / 100 / 100. Kein Element mehr breiter als der Bildschirm (sechs Seiten, vier Breiten); erster Bildschirm weiter 40 von 40.
 

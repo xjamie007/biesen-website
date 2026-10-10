@@ -1,13 +1,15 @@
 ---
-/** Über uns (E5): Familienbetrieb, Leitung [UNBESTÄTIGT], Geschichte [FEHLT], Sprachen, Mitgliedschaften als
+/** Über uns (E5): Symbolbild (bis das Teamfoto da ist), Familienbetrieb, Leitung [UNBESTÄTIGT], Geschichte als
+ * Zeitleiste [UNBESTÄTIGT, nach der heutigen Website und dem Handelsregister], Sprachen, Mitgliedschaften als
  * Markenband (Namen als Schrift), Ort. */
 import Base from '@/layouts/Base.astro';
 import Markenband from '@/components/Markenband.astro';
 import Seitenkopf from '@/components/Seitenkopf.astro';
 import Foto from '@/components/Foto.astro';
-import { escapeHtml, rich, useT } from '@/i18n';
+import { escapeHtml, fmt, rich, useT } from '@/i18n';
 import { path, type Lang } from '@/i18n/config';
 import { breadcrumbs } from '@/lib/jsonld';
+import { STOCK, STOCK_FOKUS } from '@/lib/stock';
 import { adresseZeile, site } from '@/lib/site';
 
 interface Props {
@@ -30,11 +32,20 @@ const pfad = [
 >
   <Seitenkopf pfadLabel={t.a11y.pfad} pfad={pfad} h1={s.h1} intro={s.intro} />
 
-  <section class="sektion" aria-label={t.home.teamFoto}>
+  <div class="sektion">
     <div class="raster">
-      <Foto class="voll sp-bild-links" bild={null} alt="" folgt={t.allgemein.fotoFolgt} motiv={t.home.teamFoto} sizes="(min-width: 1024px) 66vw, 100vw" />
+      <Foto
+        class="voll sp-bild-links"
+        bild={STOCK.monteur}
+        alt={t.stock.monteur}
+        folgt={t.allgemein.fotoFolgt}
+        motiv={t.home.teamFoto}
+        fokus={STOCK_FOKUS.monteur}
+        hinweis={`${t.allgemein.symbolbild} · ${fmt(t.allgemein.fotoFolgt, { motiv: t.home.teamFoto })}`}
+        sizes="(min-width: 1024px) 66vw, 100vw"
+      />
     </div>
-  </section>
+  </div>
 
   <section class="sektion" aria-labelledby="leitung-h">
     <div class="raster">
@@ -45,7 +56,18 @@ const pfad = [
         </div>
         <div class="block">
           <h2>{s.geschichteH2}</h2>
-          <p class="prosa" set:html={rich(s.geschichte)} />
+          <ol class="zeitleiste">
+            {
+              s.geschichteSchritte.map((x) => (
+                <li class="zeitleiste__schritt zeigen">
+                  <span class="zeitleiste__jahr zahl">{x.jahr}</span>
+                  <h3 class="zeitleiste__titel">{x.titel}</h3>
+                  <p class="zeitleiste__text">{x.text}</p>
+                </li>
+              ))
+            }
+          </ol>
+          <p class="klein" set:html={rich(s.geschichte)} />
         </div>
         <div class="block">
           <h2>{s.spracheH2}</h2>

@@ -1,6 +1,7 @@
 ---
 /**
- * Gemeinsamer Rahmen der Leistungsseiten (D3): Seitenkopf mit Symbol, h1, Einleitung, Inhalt (Slot),
+ * Gemeinsamer Rahmen der Leistungsseiten (D3): Seitenkopf mit Symbol, h1, Einleitung, ein breites
+ * Foto (bis eigene Fotos da sind: Symbolbild aus src/lib/stock.ts), Inhalt (Slot),
  * passende Projekte, passende Fragen, die anderen vier Leistungen als Karten und der Abschluss
  * „Anrufen oder schreiben“ mit vorgewähltem Anliegen.
  * JSON-LD: Service (provider = Firma), BreadcrumbList, FAQPage (nur Fragen ohne offene Punkte).
@@ -12,12 +13,14 @@ import Faq from './Faq.astro';
 import Aufruf from './Aufruf.astro';
 import Icon from './Icon.astro';
 import Leistungskarte from './Leistungskarte.astro';
+import Foto from './Foto.astro';
 import { rich, stripOpenPoints, useT } from '@/i18n';
 import { path, SERVICE_PAGES, type Lang, type ServicePage } from '@/i18n/config';
 import { breadcrumbs, faqPage, service } from '@/lib/jsonld';
 import { faqJsonItems, type FaqKey } from '@/lib/faq';
 import { paarFuer, projekteNachArt, type Art } from '@/lib/projekte';
 import { LEISTUNG_ICON } from '@/lib/icons';
+import { STOCK, STOCK_FOKUS, STOCK_SEITE } from '@/lib/stock';
 
 interface Props {
   lang: Lang;
@@ -48,9 +51,29 @@ const jsonld = [
   ...(faqItems.length ? [faqPage(faqItems)] : []),
 ];
 const seo = t.seo[page];
+const seitenFoto = STOCK_SEITE[page];
 ---
 <Base lang={lang} route={{ page }} title={seo.title} description={seo.description} jsonld={jsonld}>
   <Seitenkopf pfadLabel={t.a11y.pfad} pfad={pfad} h1={h1} intro={intro} icon={LEISTUNG_ICON[page]} farbe={page} />
+
+  {
+    seitenFoto && (
+      <div class="raster seitenfoto">
+        <Foto
+          class="seitenfoto__bild"
+          bild={STOCK[seitenFoto]}
+          alt={t.stock[seitenFoto]}
+          folgt={t.allgemein.fotoFolgt}
+          motiv={t.leistungen[page].name}
+          format="breit"
+          fokus={STOCK_FOKUS[seitenFoto]}
+          hinweis={t.allgemein.symbolbild}
+          loading="eager"
+          sizes="(min-width: 1024px) 1240px, 100vw"
+        />
+      </div>
+    )
+  }
 
   <slot />
 

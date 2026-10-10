@@ -10,12 +10,12 @@ import de from '../src/i18n/de.ts';
 import lb, { REVIEW } from '../src/i18n/lb.ts';
 import { PAGE_SLUGS } from '../src/i18n/config.ts';
 
-type Deep = string | string[] | { [k: string]: Deep };
+type Deep = string | Deep[] | { [k: string]: Deep };
 const geprueft = new Set<string>(JSON.parse(readFileSync(new URL('../src/i18n/lb-geprueft.json', import.meta.url), 'utf8')).geprueft);
 
 function blaetter(d: Deep, pfad = ''): [string, string][] {
   if (typeof d === 'string') return [[pfad, d]];
-  if (Array.isArray(d)) return d.map((x, i) => [`${pfad}[${i}]`, x]);
+  if (Array.isArray(d)) return d.flatMap((x, i) => blaetter(x, `${pfad}[${i}]`));
   return Object.entries(d).flatMap(([k, v]) => blaetter(v, pfad ? `${pfad}.${k}` : k));
 }
 

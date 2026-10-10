@@ -41,12 +41,24 @@ const en: Dict = {
     adresse: 'Address',
     fotoFolgt: 'Photo to follow: {motiv}',
     fotopaarFolgt: 'Photo pair to follow: {motiv}',
+    symbolbild: 'Stock photo',
     nichtFreigegeben: 'not approved',
     projekteFehlen: '[FEHLT — freigegebene Projekte mit Ortschaft, Jahr und Text]',
     passendeProjekte: 'Projects',
     passendeFragen: 'Frequently asked questions',
   },
 
+  stock: {
+    verteiler: 'Open distribution board with circuit breakers and wired terminals',
+    monteur: 'Electrician drilling into a timber facade with a cordless drill',
+    montage: 'Technician in a hard hat mounting a device on a glass wall',
+    wohnhausGarten: 'Modern house with garden and terrace',
+    pvMontage: 'Fitting solar panels with a cordless drill',
+    pvDach: 'Solar panels on a roof at dusk, mountains behind',
+    pendelleuchten: 'Glowing pendant lights against a dark timber wall',
+    kueche: 'Timber kitchen unit with a stone worktop and a kettle',
+    linienlicht: 'Workstations under linear ceiling lights',
+  },
   leistungen: {
     installation: {
       name: 'New builds and renovation',
@@ -303,7 +315,12 @@ const en: Dict = {
       leitungH2: 'Management and contacts',
       leitung: '[UNBESTÄTIGT — Leitung und Ansprechpartner mit Rollen, siehe B3]',
       geschichteH2: 'History',
-      geschichte: '[FEHLT — freigegebener Absatz zur Geschichte, siehe B4]',
+      geschichte: '[UNBESTÄTIGT — nach der heutigen Website (Über uns), wedo.lu und dem Handelsregister (RCS B243775, gegründet 27.04.2020); Jahreszahlen und Wortlaut gibt der Kunde frei, siehe B4]',
+      geschichteSchritte: [
+        { jahr: '1976', titel: 'The beginning', text: 'A Biesen and partners found an electrical firm in the north of Luxembourg.' },
+        { jahr: '2020', titel: 'Electricité Biesen SA', text: 'The business becomes Electricité Biesen SA, based in Nothum.' },
+        { jahr: 'Today', titel: 'Family-run', text: 'The Biesen family runs the business. We are a team of 26, on site and in the office.' },
+      ],
       spracheH2: 'Languages',
       sprache: 'In our team we speak French and German, many of us also Luxembourgish or Portuguese. [UNBESTÄTIGT — welche Sprachen Kunden angeboten werden]',
       mitgliedH2: 'Memberships and labels',

@@ -34,11 +34,29 @@ const REGELN: [RegExp, string][] = [
   [/\bStreif\b/i, 'Herstellername nur nach Freigabe'],
 ];
 
+/**
+ * Ausnahme (Nave, 10.10.2026): Die Zeitleiste der Geschichte auf „Über uns“ darf Jahreszahlen nennen,
+ * solange der Absatz davor als [UNBESTÄTIGT …] markiert ist, bis der Kunde ihn freigibt (B4).
+ * Vorgängerfirmen, „seit X“, „Jahre Erfahrung“ und foundingDate bleiben überall verboten.
+ */
+const GESCHICHTE = /\n\s*geschichte: '\[UNBESTÄTIGT[^\n]*\n\s*geschichteSchritte: \[[\s\S]*?\n\s*\],/;
+const AUSNAHMEN = new Map<string, RegExp>([['keine Gründungsjahre', GESCHICHTE]]);
+
 describe('Inhaltsregeln', () => {
   for (const f of ORDNER.flatMap(dateien)) {
     it(f.slice(ROOT.length), () => {
       const text = readFileSync(f, 'utf8');
-      for (const [re, regel] of REGELN) expect(re.test(text), `${regel} (${re})`).toBe(false);
+      for (const [re, regel] of REGELN) {
+        const geprueft = AUSNAHMEN.has(regel) ? text.replace(AUSNAHMEN.get(regel)!, '') : text;
+        expect(re.test(geprueft), `${regel} (${re})`).toBe(false);
+      }
     });
   }
+
+  it('Jahreszahlen der Geschichte nur mit Marke [UNBESTÄTIGT …]', () => {
+    for (const l of ['de', 'fr', 'en', 'lb']) {
+      const text = readFileSync(join(ROOT, 'i18n', `${l}.ts`), 'utf8');
+      if (/geschichteSchritte/.test(text)) expect(GESCHICHTE.test(text), l).toBe(true);
+    }
+  });
 });

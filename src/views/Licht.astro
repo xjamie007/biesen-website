@@ -9,6 +9,7 @@ import ProjektEintrag from '@/components/ProjektEintrag.astro';
 import { rich, useT } from '@/i18n';
 import type { Lang } from '@/i18n/config';
 import { lichtPaare, projekteNachArt, type Art } from '@/lib/projekte';
+import { STOCK, STOCK_FOKUS, STOCK_PAAR } from '@/lib/stock';
 
 interface Props {
   lang: Lang;
@@ -19,6 +20,13 @@ const s = t.seiten.licht;
 const testTexte = { tag: t.owend.testTag, abend: t.owend.testAbend };
 // Seit 09.10.2026 zeigt die Startseite kein Fotopaar mehr: hier stehen alle Paare, auch das der Startseite
 const paare = await lichtPaare(lang, testTexte, '');
+/** Solange ein Paar fehlt: Symbolbild, wenn eines passt; Paare und Symbolbilder stehen vor den Platzhaltern */
+const symbol = (id: string) => {
+  const s = STOCK_PAAR[id];
+  return s ? { bild: STOCK[s], alt: t.stock[s], fokus: STOCK_FOKUS[s] } : undefined;
+};
+const mitBild = (p: (typeof paare)[number]) => (p.bilder || symbol(p.id) ? 0 : 1);
+const paareSortiert = [...paare].sort((a, b) => mitBild(a) - mitBild(b));
 const BEREICHE: { key: keyof typeof s.bereiche; arten: Art[] }[] = [
   { key: 'innen', arten: ['licht-innen'] },
   { key: 'aussen', arten: ['licht-aussen'] },
@@ -51,7 +59,7 @@ const bereiche = await Promise.all(
     <div class="raster">
       <h2 id="paare-h" class="sr-only">{s.paareH2}</h2>
       <div class="paare">
-        {paare.map((p) => <OwendRegler t={t} paar={p} />)}
+        {paareSortiert.map((p) => <OwendRegler t={t} paar={p} symbol={p.bilder ? undefined : symbol(p.id)} />)}
       </div>
     </div>
   </section>

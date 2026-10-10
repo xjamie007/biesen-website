@@ -48,6 +48,7 @@ const de = {
     adresse: 'Adresse',
     fotoFolgt: 'Foto folgt: {motiv}',
     fotopaarFolgt: 'Fotopaar folgt: {motiv}',
+    symbolbild: 'Symbolbild',
     nichtFreigegeben: 'nicht freigegeben',
     projekteFehlen: '[FEHLT — freigegebene Projekte mit Ortschaft, Jahr und Text]',
     passendeProjekte: 'Projekte',
@@ -55,6 +56,17 @@ const de = {
   },
 
   /** Die fünf Leistungen (Name = Navigation, h3 auf der Startseite, Anliegen im Formular) */
+  stock: {
+    verteiler: 'Offener Verteiler mit Leitungsschutzschaltern und verdrahteten Klemmen',
+    monteur: 'Elektriker bohrt mit dem Akkuschrauber an einer Holzfassade',
+    montage: 'Techniker mit Schutzhelm montiert ein Gerät an einer Glaswand',
+    wohnhausGarten: 'Modernes Wohnhaus mit Garten und Terrasse',
+    pvMontage: 'Montage von Photovoltaikmodulen mit dem Akkuschrauber',
+    pvDach: 'Photovoltaikanlage auf einem Dach in der Abenddämmerung, dahinter Berge',
+    pendelleuchten: 'Leuchtende Pendelleuchten vor einer dunklen Holzwand',
+    kueche: 'Küchenzeile aus Holz mit Steinplatte und Wasserkocher',
+    linienlicht: 'Arbeitsplätze unter Linienleuchten an der Decke',
+  },
   leistungen: {
     installation: {
       name: 'Neubau und Renovierung',
@@ -312,7 +324,12 @@ const de = {
       leitungH2: 'Leitung und Ansprechpartner',
       leitung: '[UNBESTÄTIGT — Leitung und Ansprechpartner mit Rollen, siehe B3]',
       geschichteH2: 'Geschichte',
-      geschichte: '[FEHLT — freigegebener Absatz zur Geschichte, siehe B4]',
+      geschichte: '[UNBESTÄTIGT — nach der heutigen Website (Über uns), wedo.lu und dem Handelsregister (RCS B243775, gegründet 27.04.2020); Jahreszahlen und Wortlaut gibt der Kunde frei, siehe B4]',
+      geschichteSchritte: [
+        { jahr: '1976', titel: 'Der Anfang', text: 'Ein Biesen gründet mit Partnern einen Elektrobetrieb im Ösling.' },
+        { jahr: '2020', titel: 'Electricité Biesen SA', text: 'Aus dem Betrieb wird die Electricité Biesen SA, mit Sitz in Noutem.' },
+        { jahr: 'Heute', titel: 'In Familienhand', text: 'Die Familie Biesen führt den Betrieb. 26 Leute arbeiten bei uns, auf den Baustellen und im Büro.' },
+      ],
       spracheH2: 'Sprachen',
       sprache: 'Im Team sprechen wir Französisch und Deutsch, viele auch Luxemburgisch oder Portugiesisch. [UNBESTÄTIGT — welche Sprachen Kunden angeboten werden]',
       mitgliedH2: 'Mitgliedschaften und Labels',

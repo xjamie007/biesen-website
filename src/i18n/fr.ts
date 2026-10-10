@@ -44,12 +44,24 @@ const fr: Dict = {
     adresse: 'Adresse',
     fotoFolgt: 'Photo à venir : {motiv}',
     fotopaarFolgt: 'Paire de photos à venir : {motiv}',
+    symbolbild: 'Photo d’illustration',
     nichtFreigegeben: 'non validé',
     projekteFehlen: '[FEHLT — freigegebene Projekte mit Ortschaft, Jahr und Text]',
     passendeProjekte: 'Réalisations',
     passendeFragen: 'Questions fréquentes',
   },
 
+  stock: {
+    verteiler: 'Tableau électrique ouvert avec disjoncteurs et bornes câblées',
+    monteur: 'Électricien perçant une façade en bois avec une visseuse',
+    montage: 'Technicien casqué fixant un appareil sur une paroi vitrée',
+    wohnhausGarten: 'Maison moderne avec jardin et terrasse',
+    pvMontage: 'Montage de panneaux photovoltaïques avec une visseuse',
+    pvDach: 'Installation photovoltaïque sur un toit au crépuscule, montagnes à l’arrière-plan',
+    pendelleuchten: 'Suspensions allumées devant un mur en bois sombre',
+    kueche: 'Meuble de cuisine en bois avec plan en pierre et bouilloire',
+    linienlicht: 'Postes de travail sous des luminaires linéaires au plafond',
+  },
   leistungen: {
     installation: {
       name: 'Neuf et rénovation',
@@ -306,7 +318,12 @@ const fr: Dict = {
       leitungH2: 'Direction et interlocuteurs',
       leitung: '[UNBESTÄTIGT — Leitung und Ansprechpartner mit Rollen, siehe B3]',
       geschichteH2: 'Histoire',
-      geschichte: '[FEHLT — freigegebener Absatz zur Geschichte, siehe B4]',
+      geschichte: '[UNBESTÄTIGT — nach der heutigen Website (Über uns), wedo.lu und dem Handelsregister (RCS B243775, gegründet 27.04.2020); Jahreszahlen und Wortlaut gibt der Kunde frei, siehe B4]',
+      geschichteSchritte: [
+        { jahr: '1976', titel: 'Les débuts', text: 'Un Biesen fonde avec des associés une entreprise d’électricité dans l’Oesling.' },
+        { jahr: '2020', titel: 'Electricité Biesen SA', text: 'L’entreprise devient Electricité Biesen SA, avec son siège à Nothum.' },
+        { jahr: 'Aujourd’hui', titel: 'Une entreprise familiale', text: 'La famille Biesen dirige l’entreprise. Nous sommes 26, sur les chantiers et au bureau.' },
+      ],
       spracheH2: 'Langues',
       sprache: 'Dans l’équipe, nous parlons français et allemand, beaucoup aussi luxembourgeois ou portugais. [UNBESTÄTIGT — welche Sprachen Kunden angeboten werden]',
       mitgliedH2: 'Adhésions et labels',
