@@ -27,7 +27,7 @@ const eintraege = marken.map((name) => {
   return {
     name,
     stil: logo
-      ? `--logo:url(${logo.bild.src});--seite:${(logo.bild.width / logo.bild.height).toFixed(3)};--faktor:${logoFaktor(logo)};--farbe:${logo.farbe}`
+      ? `--logo:url("${logo.bild.src}");--seite:${(logo.bild.width / logo.bild.height).toFixed(3)};--faktor:${logoFaktor(logo)};--farbe:${logo.farbe}`
       : undefined,
   };
 });

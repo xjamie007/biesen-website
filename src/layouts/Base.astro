@@ -6,12 +6,13 @@
  * Keine externen Einbindungen, keine Cookies.
  */
 import '@/styles/global.css';
+import '@/styles/feinschliff.css';
 import schriftUrl from '@/assets/fonts/schibsted-grotesk-var.woff2?url';
 import Kopf from '@/components/Kopf.astro';
 import Fuss from '@/components/Fuss.astro';
 import { useT } from '@/i18n';
 import { alternates as alts, pathFor, withBase, type Lang, type Route } from '@/i18n/config';
-import { firma } from '@/lib/jsonld';
+import { firma, webseite, webseiteSeite } from '@/lib/jsonld';
 import { absolute, DEV, VORSCHAU } from '@/lib/site';
 
 interface Props {
@@ -32,7 +33,14 @@ const canonical = absolute(pathFor(lang, route));
 const og = ogBild ?? { src: withBase('/og/biesen.png'), width: 1200, height: 630, alt: t.meta.ogAlt };
 const ogUrl = absolute(og.src);
 const OG_LOCALE: Record<Lang, string> = { fr: 'fr_LU', de: 'de_LU', lb: 'lb_LU', en: 'en_GB' };
-const ld = [firma(), ...jsonld];
+const ld = [
+  firma(),
+  webseite(),
+  webseiteSeite({ page: route.page, url: pathFor(lang, route), name: title, description, lang, bild: ogUrl }),
+  ...jsonld,
+];
+/** Live: große Vorschaubilder und volle Snippets erlauben; Vorschau und noindex-Seiten: nicht indexieren */
+const robots = noindex || VORSCHAU ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
 const json = (d: unknown) => JSON.stringify(d).replace(/\u00AD/g, '').replace(/</g, '\\u003c');
 ---
 <!doctype html>
@@ -42,7 +50,7 @@ const json = (d: unknown) => JSON.stringify(d).replace(/\u00AD/g, '').replace(/<
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    {(noindex || VORSCHAU) && <meta name="robots" content="noindex, follow" />}
+    <meta name="robots" content={robots} />
     <link rel="canonical" href={canonical} />
     {!noindex && alternates.map((a) => <link rel="alternate" hreflang={a.lang} href={absolute(a.href)} />)}
     {!noindex && <link rel="alternate" hreflang="x-default" href={absolute(alternates.find((a) => a.lang === 'fr')!.href)} />}
@@ -50,6 +58,7 @@ const json = (d: unknown) => JSON.stringify(d).replace(/\u00AD/g, '').replace(/<
     <link rel="icon" href={withBase('/favicon.svg')} type="image/svg+xml" />
     <link rel="icon" href={withBase('/favicon-32.png')} type="image/png" sizes="32x32" />
     <link rel="apple-touch-icon" href={withBase('/apple-touch-icon.png')} />
+    <link rel="manifest" href={withBase('/manifest.webmanifest')} />
     <meta name="theme-color" content="#ffffff" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={t.meta.siteName} />
@@ -57,6 +66,7 @@ const json = (d: unknown) => JSON.stringify(d).replace(/\u00AD/g, '').replace(/<
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content={OG_LOCALE[lang]} />
+    {alternates.filter((a) => a.lang !== lang).map((a) => <meta property="og:locale:alternate" content={OG_LOCALE[a.lang]} />)}
     <meta property="og:image" content={ogUrl} />
     <meta property="og:image:width" content={String(og.width)} />
     <meta property="og:image:height" content={String(og.height)} />
@@ -71,6 +81,7 @@ const json = (d: unknown) => JSON.stringify(d).replace(/\u00AD/g, '').replace(/<
     <slot name="head" />
   </head>
   <body>
+    <div class="fortschritt" aria-hidden="true"></div>
     <a class="skip knopf" href="#inhalt">{t.a11y.skip}</a>
     <Kopf lang={lang} t={t} alternates={alternates} aktuell={aktuell ?? route.page} />
     <main id="inhalt" tabindex="-1">
@@ -103,7 +114,10 @@ const json = (d: unknown) => JSON.stringify(d).replace(/\u00AD/g, '').replace(/<
               function setzen(v) {
                 an = v;
                 d.classList.toggle('pruefmodus', v);
-                b.textContent = (v ? b.dataset.ausblenden : b.dataset.zeigen) + ' (' + n + ')';
+                var text = v ? b.dataset.ausblenden : b.dataset.zeigen;
+                b.innerHTML = '<span class="pruefschalter__zahl">' + n + '</span><span class="pruefschalter__text"></span>';
+                b.lastChild.textContent = text;
+                b.setAttribute('aria-label', text + ' (' + n + ')');
                 b.setAttribute('aria-pressed', String(v));
                 try { localStorage.setItem(k, v ? '1' : '0'); } catch (e) {}
               }

@@ -125,3 +125,54 @@ export function leistungsKatalog(name: string, items: { name: string; descriptio
     })),
   };
 }
+
+/** Die Website als Ganzes, auf jeder Seite (verknüpft Seiten, Sprachen und Firma). */
+export const WEBSITE_ID = absolute(withBase('/#website'));
+
+export function webseite() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': WEBSITE_ID,
+    name: site.name,
+    alternateName: site.legalName,
+    url: absolute(withBase('/fr/')),
+    inLanguage: ['fr', 'de', 'lb', 'en'],
+    publisher: { '@id': ORG_ID },
+    copyrightHolder: { '@id': ORG_ID },
+  };
+}
+
+/**
+ * Die einzelne Seite: Typ nach Inhalt (Kontakt, Über uns, Sammlung), Sprache, Bild und Bezug zur Firma.
+ * Hilft Suchmaschinen, Seite, Website und Betrieb als Einheit zu verstehen.
+ */
+export function webseiteSeite(opts: {
+  page: string;
+  url: string;
+  name: string;
+  description: string;
+  lang: string;
+  bild: string;
+}) {
+  const typ: Record<string, string> = {
+    kontakt: 'ContactPage',
+    ueberUns: 'AboutPage',
+    projekte: 'CollectionPage',
+    jobs: 'CollectionPage',
+    leistungen: 'CollectionPage',
+  };
+  const url = absolute(opts.url);
+  return {
+    '@context': 'https://schema.org',
+    '@type': typ[opts.page] ?? 'WebPage',
+    '@id': `${url}#seite`,
+    url,
+    name: opts.name,
+    description: opts.description,
+    inLanguage: opts.lang,
+    isPartOf: { '@id': WEBSITE_ID },
+    about: { '@id': ORG_ID },
+    primaryImageOfPage: { '@type': 'ImageObject', url: opts.bild },
+  };
+}

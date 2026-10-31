@@ -1,0 +1,444 @@
+/*
+ * Feinschliff und Bewegung (Oktober 2026)
+ *
+ * Wird nach global.css geladen (src/layouts/Base.astro).
+ * 1. Ruhigere, einheitliche Farben in Karten und Listen (Links und Stichpunkte in Noutem-Blau,
+ *    die Akzentfarbe je Leistung bleibt nur am Symbol und an der Leiste oben).
+ * 2. Hover: Fußlinks mit wachsender Unterstreichung, Zahlen und Schritte heben sich an,
+ *    Knöpfe geben beim Drücken nach, Fotos zoomen langsam.
+ * 3. Scroll-Animationen: Abschnittsköpfe, Karten und Listen kommen gestaffelt von unten
+ *    (Intersection Observer in src/scripts/effekte.ts, in allen Browsern gleich); Fotos öffnen
+ *    sich und gleiten (Parallax), Fortschrittsleiste oben (CSS Scroll-Timelines, wo vorhanden).
+ *
+ * Regeln für alle Effekte:
+ * - nur opacity, translate, scale und clip-path: nichts verschiebt das Layout (CLS 0)
+ * - Bewegung über translate/scale, damit transform für das Anheben beim Überfahren frei bleibt
+ * - fill-mode forwards: Was beim Laden schon im Bild ist, steht sofort; was darunter liegt, bleibt
+ *   für Druck, Ganzseiten-Screenshots und Suchmaschinen sichtbar
+ * - bei prefers-reduced-motion: reduce ist alles aus, alle Inhalte stehen sofort da
+ */
+
+/* ------------------------------------------------------------------
+   1. Ruhigere Farben
+------------------------------------------------------------------- */
+@layer components {
+  .karte .stichpunkte li {
+    background: var(--color-himmel);
+    color: var(--color-noutem-blau-tief);
+  }
+
+  .karte__link a {
+    color: var(--color-noutem-blau);
+  }
+
+  .karte:hover .karte__link a {
+    color: var(--color-noutem-blau-tief);
+  }
+
+  /* Satz über den Betrieb: groß, aber nicht erschlagend */
+  .aufleuchten {
+    font-size: clamp(1.625rem, 1.05rem + 2.3vw, 3rem);
+    line-height: 1.18;
+    max-width: 30ch;
+    margin-inline: auto;
+  }
+
+  /* Fotos: Zoom und Parallax brauchen einen Rahmen, der den Überstand abschneidet */
+  .seitenfoto__bild picture,
+  .team__foto picture,
+  .projekt__bild picture,
+  .eintrag__fotos picture {
+    overflow: hidden;
+  }
+
+  @media (min-width: 64rem) {
+    .seitenfoto__bild picture {
+      border-radius: var(--radius-karte);
+    }
+
+    .seitenfoto__bild img {
+      border-radius: 0;
+    }
+  }
+
+  .seitenfoto__bild img,
+  .team__foto img,
+  .projekt__bild img {
+    transition: transform 900ms var(--sanft);
+  }
+
+  .seitenfoto__bild:hover img,
+  .team__foto:hover img,
+  .projekt__bild:hover img {
+    transform: scale(1.03);
+  }
+
+  /* ------------------------------------------------------------------
+     2. Hover
+  ------------------------------------------------------------------- */
+
+  /* Knöpfe geben beim Drücken etwas nach */
+  .knopf:active {
+    scale: 0.97;
+  }
+
+  .knopf {
+    transition-property: background-color, color, box-shadow, transform, translate, scale, border-color;
+  }
+
+  /* Fuß: Unterstreichung wächst von links, in Bletz-Giel */
+  .fuss a:not(.knopf):not(.fuss__logo):not(.sprachen__link) {
+    background: linear-gradient(var(--color-bletz-giel), var(--color-bletz-giel)) 0 100% / 0 2px no-repeat;
+    padding-bottom: 2px;
+    transition:
+      background-size 320ms var(--sanft),
+      color 200ms ease;
+  }
+
+  .fuss a:not(.knopf):not(.fuss__logo):not(.sprachen__link):hover {
+    background-size: 100% 2px;
+    text-decoration: none;
+  }
+
+  /* Zahlen über den Betrieb */
+  .zahl-kachel {
+    border: 1px solid transparent;
+    transition:
+      transform 320ms var(--sanft),
+      box-shadow 320ms var(--sanft),
+      border-color 220ms ease;
+  }
+
+  .zahl-kachel:hover {
+    transform: translateY(-6px);
+    border-color: var(--color-himmel-rand);
+    box-shadow: var(--schatten-hoch);
+  }
+
+  /* Weg zum Angebot: der Schritt rückt etwas vor, die Nummer leuchtet auf */
+  .weg__schritt > span {
+    transition:
+      transform 320ms var(--sanft),
+      border-color 220ms ease,
+      box-shadow 320ms var(--sanft);
+  }
+
+  .weg__schritt:hover > span {
+    transform: translateX(6px);
+    border-color: var(--color-mound);
+    box-shadow: var(--schatten-hoch);
+  }
+
+  .weg__schritt::before {
+    transition:
+      scale 320ms var(--sanft),
+      background-color 220ms ease,
+      color 220ms ease;
+  }
+
+  .weg__schritt:hover::before {
+    scale: 1.1;
+    background-color: var(--color-bletz-giel);
+    color: var(--color-nuecht);
+  }
+
+  /* Stichpunkte in den Leistungsblöcken: ruhiges Aufhellen */
+  .liste > li {
+    transition: color 200ms ease;
+  }
+
+  /* Formular: Anliegen-Kacheln trennen keine Wörter mitten im Wort */
+  .option--kachel {
+    hyphens: manual;
+    overflow-wrap: normal;
+    line-height: 1.25;
+  }
+
+  @media (min-width: 40rem) {
+    .option--kachel {
+      font-size: 0.96875rem;
+    }
+  }
+
+  /* Schalter „Offene Punkte zeigen“ (nur Vorschau und Dev): klein und ruhig, mobil nur die Zahl */
+  .pruefschalter {
+    min-height: 36px;
+    padding: 6px 12px 6px 6px;
+    border-color: rgb(7 26 51 / 0.12);
+    background: rgb(255 255 255 / 0.92);
+    color: var(--color-nuecht);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 6px 20px -10px rgb(7 26 51 / 0.45);
+    transition:
+      background-color 200ms ease,
+      box-shadow 200ms ease;
+  }
+
+  .pruefschalter:hover {
+    background: var(--color-weiss);
+    box-shadow: 0 10px 28px -10px rgb(7 26 51 / 0.5);
+  }
+
+  .pruefschalter__zahl {
+    display: inline-grid;
+    place-items: center;
+    min-width: 24px;
+    height: 24px;
+    padding-inline: 6px;
+    border-radius: 999px;
+    background: var(--color-bletz-giel);
+    color: var(--color-nuecht);
+    font-size: 0.75rem;
+    font-weight: 800;
+  }
+
+  @media (max-width: 47.99rem) {
+    .pruefschalter {
+      padding-right: 6px;
+      opacity: 0.85;
+    }
+
+    .pruefschalter__text {
+      display: none;
+    }
+  }
+
+  /* Fortschrittsleiste: nur sichtbar, wo der Browser Scroll-Timelines kann */
+  .fortschritt {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .seitenfoto__bild:hover img,
+    .team__foto:hover img,
+    .projekt__bild:hover img,
+    .zahl-kachel:hover,
+    .weg__schritt:hover > span {
+      transform: none;
+    }
+
+    .knopf:active,
+    .weg__schritt:hover::before {
+      scale: none;
+    }
+  }
+}
+
+/* ------------------------------------------------------------------
+   3. Scroll-Animationen
+   Staffelung über --n (0, 1, 2 …): Geschwister, die gemeinsam hereinkommen, folgen einander.
+------------------------------------------------------------------- */
+:where(
+    .sektion__kopf > *,
+    h2.sektion__kopf,
+    .karten > li:not(.zeigen),
+    .weg__schritt,
+    .faq__eintrag,
+    .jobliste > li,
+    .stellen > li,
+    .leistungsblock,
+    .gruppe__liste > *,
+    .block,
+    .liste > li,
+    .ablauf > li,
+    .markenband,
+    .kontakt__links,
+    .kontakt__rechts,
+    .fuss__spalten > *,
+    .ueber__jobs,
+    .aufruf__inhalt > *
+  ) {
+  --n: 0;
+}
+
+:where(.sektion__kopf, .karten, .weg__schritte, .faq, .jobliste, .liste, .ablauf, .fuss__spalten, .aufruf__inhalt) > * {
+  --n: 0;
+}
+
+:where(.sektion__kopf, .karten, .weg__schritte, .faq, .jobliste, .liste, .ablauf, .fuss__spalten, .aufruf__inhalt) > :nth-child(2) {
+  --n: 1;
+}
+
+:where(.sektion__kopf, .karten, .weg__schritte, .faq, .jobliste, .liste, .ablauf, .fuss__spalten, .aufruf__inhalt) > :nth-child(3) {
+  --n: 2;
+}
+
+:where(.sektion__kopf, .karten, .weg__schritte, .faq, .jobliste, .liste, .ablauf, .fuss__spalten, .aufruf__inhalt) > :nth-child(4) {
+  --n: 3;
+}
+
+:where(.sektion__kopf, .karten, .weg__schritte, .faq, .jobliste, .liste, .ablauf, .fuss__spalten, .aufruf__inhalt) > :nth-child(5) {
+  --n: 4;
+}
+
+:where(.sektion__kopf, .karten, .weg__schritte, .faq, .jobliste, .liste, .ablauf, .fuss__spalten, .aufruf__inhalt) > :nth-child(n + 6) {
+  --n: 5;
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* Fortschrittsleiste oben: wächst mit dem Scrollweg der Seite */
+    .fortschritt {
+      display: block;
+      position: fixed;
+      z-index: 120;
+      inset: 0 0 auto;
+      height: 3px;
+      background: linear-gradient(90deg, var(--color-noutem-blau), var(--color-bletz-giel));
+      transform-origin: 0 50%;
+      scale: 0 1;
+      pointer-events: none;
+      animation-name: fortschritt;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: scroll(root block);
+    }
+
+    /* Die alten scroll-gekoppelten Auftritte (.zeigen) übernimmt jetzt der Intersection Observer,
+       damit nichts halb transparent am Bildschirmrand stehen bleibt */
+    html .zeigen {
+      animation-name: none;
+    }
+
+    /* Fotos: öffnen sich von unten und zoomen dabei sanft auf ihre Größe */
+    :where(.karte__foto, .team__foto, .projekt__bild, .eintrag__fotos .foto, .paar-symbol) picture {
+      animation-name: foto-auf;
+      animation-timing-function: cubic-bezier(0.2, 0.7, 0.2, 1);
+      animation-fill-mode: forwards;
+      animation-timeline: view(block);
+      animation-range: entry 0% entry 90%;
+    }
+
+    :where(.karte__foto, .team__foto, .projekt__bild, .eintrag__fotos .foto, .paar-symbol) img {
+      animation-name: foto-zoom;
+      animation-timing-function: cubic-bezier(0.2, 0.7, 0.2, 1);
+      animation-fill-mode: forwards;
+      animation-timeline: view(block);
+      animation-range: entry 0% cover 50%;
+    }
+
+    /* Breites Foto unter dem Seitenkopf: gleitet langsamer als die Seite (Parallax) */
+    :where(.seitenfoto__bild) img {
+      scale: 1.12;
+      animation-name: parallax;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: view(block);
+      animation-range: cover 0% cover 100%;
+    }
+  }
+}
+
+/* Seitenkopf der Unterseiten: kurzer Auftritt beim Laden, gestaffelt.
+   Die h1 bewegt sich nur (ohne Deckkraft), damit sie sofort als größtes Element zählt (LCP). */
+@media (prefers-reduced-motion: no-preference) {
+  :where(.seitenkopf__inhalt) > * {
+    animation: auftritt 720ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  :where(.seitenkopf__inhalt) > h1 {
+    animation-name: auftritt-ohne-deckkraft;
+  }
+
+  :where(.seitenkopf__inhalt) > :nth-child(2) {
+    animation-delay: 60ms;
+  }
+
+  :where(.seitenkopf__inhalt) > :nth-child(3) {
+    animation-delay: 120ms;
+  }
+
+  :where(.seitenkopf__inhalt) > :nth-child(n + 4) {
+    animation-delay: 180ms;
+  }
+}
+
+/* Auftritte beim Scrollen: src/scripts/effekte.ts markiert, was beim Laden unter dem Bildschirm liegt
+   (.wartet), und gibt es frei, sobald es hereinkommt (.ist-da). Zeitbasiert statt an den Scrollweg
+   gekoppelt: Ein Element ist entweder noch nicht da oder ganz da, nie halb transparent.
+   Ohne JavaScript und bei reduzierter Bewegung wird nichts versteckt. */
+@media (prefers-reduced-motion: no-preference) {
+  .zeigen-io .wartet {
+    opacity: 0;
+    translate: 0 36px;
+  }
+
+  .zeigen-io .sektion__kopf > .eyebrow.wartet {
+    translate: -18px 0;
+  }
+
+  .zeigen-io .wartet,
+  .zeigen-io .ist-da {
+    transition:
+      opacity 800ms cubic-bezier(0.2, 0.7, 0.2, 1),
+      translate 800ms cubic-bezier(0.2, 0.7, 0.2, 1);
+    transition-delay: calc(var(--n, 0) * 80ms);
+  }
+}
+
+@media print {
+  .wartet {
+    opacity: 1 !important;
+    translate: none !important;
+  }
+}
+
+@keyframes fortschritt {
+  to {
+    scale: 1 1;
+  }
+}
+
+@keyframes auftauchen {
+  from {
+    opacity: 0;
+    translate: 0 36px;
+  }
+
+  to {
+    opacity: 1;
+    translate: none;
+  }
+}
+
+@keyframes von-links {
+  from {
+    opacity: 0;
+    translate: -18px 0;
+  }
+
+  to {
+    opacity: 1;
+    translate: none;
+  }
+}
+
+@keyframes foto-auf {
+  from {
+    clip-path: inset(14% 0 0 0 round var(--radius-karte));
+  }
+
+  to {
+    clip-path: inset(0 0 0 0 round 0);
+  }
+}
+
+@keyframes foto-zoom {
+  from {
+    scale: 1.14;
+  }
+
+  to {
+    scale: 1;
+  }
+}
+
+@keyframes parallax {
+  from {
+    translate: 0 -5%;
+  }
+
+  to {
+    translate: 0 5%;
+  }
+}

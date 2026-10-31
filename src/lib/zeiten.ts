@@ -53,7 +53,8 @@ export function tageText(t: Dict, von: TagKey, bis: TagKey, kurz = false): strin
 
 export function intervallText(t: Dict, iv: Intervall[]): string {
   if (iv.length === 0) return t.zeiten.geschlossen;
-  const teile = iv.map(([a, b]) => `${a}–${b}`);
+  // Wortverbinder (U+2060) um den Strich: „13:30–16:30“ bricht nie am Strich um
+  const teile = iv.map(([a, b]) => `${a}\u2060–\u2060${b}`);
   return teile.length === 2 ? fmt(t.zeiten.paar, { a: teile[0], b: teile[1] }) : teile.join(', ');
 }
 

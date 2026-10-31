@@ -3,9 +3,19 @@
  * Die Danke-Seite (noindex) fehlt bewusst; Job-Seiten nur für offene Stellen.
  */
 import type { APIRoute } from 'astro';
+import { execSync } from 'node:child_process';
 import { LANGS, PAGE_SLUGS, alternates, pathFor, type PageKey, type Route } from '@/i18n/config';
 import { jobRoute, offeneJobs } from '@/lib/jobs';
 import { absolute } from '@/lib/site';
+
+/** Datum der letzten Änderung: Tag des letzten Commits (ehrlicher als der Tag des Builds) */
+const LASTMOD = (() => {
+  try {
+    return execSync('git log -1 --format=%cs', { encoding: 'utf8' }).trim() || new Date().toISOString().slice(0, 10);
+  } catch {
+    return new Date().toISOString().slice(0, 10);
+  }
+})();
 
 export const GET: APIRoute = async () => {
   const routes: Route[] = [
@@ -17,7 +27,7 @@ export const GET: APIRoute = async () => {
       ...alternates(route).map((a) => `    <xhtml:link rel="alternate" hreflang="${a.lang}" href="${absolute(a.href)}"/>`),
       `    <xhtml:link rel="alternate" hreflang="x-default" href="${absolute(pathFor('fr', route))}"/>`,
     ].join('\n');
-    return LANGS.map((lang) => `  <url>\n    <loc>${absolute(pathFor(lang, route))}</loc>\n${links}\n  </url>`);
+    return LANGS.map((lang) => `  <url>\n    <loc>${absolute(pathFor(lang, route))}</loc>\n    <lastmod>${LASTMOD}</lastmod>\n${links}\n  </url>`);
   });
   const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${urls.join('\n')}\n</urlset>\n`;
   return new Response(xml, { headers: { 'Content-Type': 'application/xml; charset=utf-8' } });

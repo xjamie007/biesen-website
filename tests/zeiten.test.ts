@@ -30,7 +30,7 @@ describe('Zeiten', () => {
     expect(g.map((x) => `${x.von}-${x.bis}`)).toEqual(['mo-fr', 'sa-so']);
   });
   it('Kurzform im Footer', () => {
-    expect(kurzText(useT('de'))).toBe('Mo bis Fr 08:00–12:00 und 13:30–16:30');
+    expect(kurzText(useT('de')).replace(/\u2060/g, '')).toBe('Mo bis Fr 08:00–12:00 und 13:30–16:30');
   });
   it('nächste Schließtage: Allerheiligen 2026 (Sonntag) und 26.12.2026 (Samstag) werden nicht genannt', () => {
     const s = naechsteSchliessungen('de', '2026-10-06', 3, 120);

@@ -12,6 +12,28 @@
 const RUHIG = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const MAUS = matchMedia('(hover: hover) and (pointer: fine)').matches;
 const klemmen = (v: number, min: number, max: number) => Math.min(max, Math.max(min, v));
+/** Elemente mit Auftritt beim Scrollen (wie in src/styles/feinschliff.css) */
+const AUFTRITT = [
+  '.sektion__kopf > *',
+  'h2.sektion__kopf',
+  '.karten > li',
+  '.weg__schritt',
+  '.faq__eintrag',
+  '.jobliste > li',
+  '.stellen > li',
+  '.leistungsblock',
+  '.gruppe__liste > *',
+  '.block',
+  '.liste > li',
+  '.ablauf > li',
+  '.markenband',
+  '.kontakt__links',
+  '.kontakt__rechts',
+  '.fuss__spalten > *',
+  '.ueber__jobs',
+  '.aufruf__inhalt > *',
+  '.zeigen',
+].join(',');
 
 export function initEffekte(): void {
   const aufgaben: (() => void)[] = [];
@@ -103,6 +125,28 @@ export function initEffekte(): void {
       k.addEventListener('pointerleave', () => {
         k.style.translate = '';
       });
+    }
+  }
+
+  // Auftritte beim Scrollen (src/styles/feinschliff.css). Versteckt wird nur, was beim Laden unter
+  // dem Bildschirm liegt; es kommt herein, sobald es ins Bild scrollt.
+  if (!RUHIG && 'IntersectionObserver' in window) {
+    document.documentElement.classList.add('zeigen-io');
+    const io = new IntersectionObserver(
+      (eintraege) => {
+        for (const e of eintraege) {
+          if (!e.isIntersecting) continue;
+          e.target.classList.replace('wartet', 'ist-da');
+          io.unobserve(e.target);
+        }
+      },
+      { rootMargin: '0px 0px -8% 0px' },
+    );
+    const unten = innerHeight;
+    for (const el of document.querySelectorAll<HTMLElement>(AUFTRITT)) {
+      if (el.getBoundingClientRect().top <= unten) continue;
+      el.classList.add('wartet');
+      io.observe(el);
     }
   }
 
